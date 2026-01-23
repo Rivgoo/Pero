@@ -1,0 +1,37 @@
+name: Create Pero Release
+'on':
+  push:
+    tags:
+      - v*
+  workflow_dispatch: null
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Package
+        id: zip
+        run: |
+          VERSION=$(node -p "require('./public/manifest.json').version")
+          NAME=Pero_v${VERSION}.zip
+          zip -r ${NAME} dist
+          echo "filename=${NAME}" >> $GITHUB_OUTPUT
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: '${{ steps.zip.outputs.filename }}'
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
