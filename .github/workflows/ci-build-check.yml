@@ -1,0 +1,19 @@
+name: CI Build Check
+'on':
+  pull_request:
+    branches:
+      - main
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch
+        uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Setup
+        run: npm install
+      - name: Build
+        run: npm run build
