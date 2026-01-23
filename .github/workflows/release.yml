@@ -24,13 +24,26 @@ jobs:
       - name: Package
         id: zip
         run: |
+          # Extract version from manifest
           VER=$(grep '"version":' public/manifest.json | cut -d '"' -f 4)
-          NAME=Pero_v${VER}.zip
-          zip -r ${NAME} dist
-          echo "filename=${NAME}" >> $GITHUB_OUTPUT
+
+          # Define names
+          FOLDER_NAME="Pero_v${VER}"
+          ZIP_NAME="${FOLDER_NAME}.zip"
+
+          # Rename dist folder to Pero_vX.X
+          mv dist $FOLDER_NAME
+
+          # Zip the renamed folder
+          zip -r $ZIP_NAME $FOLDER_NAME
+
+          # Output variables for the next step
+          echo "filename=${ZIP_NAME}" >> $GITHUB_OUTPUT
+          echo "version=${VER}" >> $GITHUB_OUTPUT
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
+          name: 'Pero_v${{ steps.zip.outputs.version }}'
           files: '${{ steps.zip.outputs.filename }}'
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
