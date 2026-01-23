@@ -3,7 +3,6 @@ name: Create Pero Release
   push:
     tags:
       - v*
-  workflow_dispatch: null
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,8 +24,8 @@ jobs:
       - name: Package
         id: zip
         run: |
-          VERSION=$(node -p "require('./public/manifest.json').version")
-          NAME=Pero_v${VERSION}.zip
+          VER=$(grep '"version":' public/manifest.json | cut -d '"' -f 4)
+          NAME=Pero_v${VER}.zip
           zip -r ${NAME} dist
           echo "filename=${NAME}" >> $GITHUB_OUTPUT
       - name: Release
