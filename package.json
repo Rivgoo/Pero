@@ -1,5 +1,5 @@
 {
-  "name": "ukrainian-grammar-checker",
+  "name": "pero",
   "version": "1.0",
   "scripts": {
     "version": "node scripts/version.js",
