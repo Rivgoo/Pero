@@ -1,27 +1,22 @@
-import { CheckRequest, CheckResponse, ValidationResult } from '../../shared/types';
+import { AnalysisResponse } from '../../shared/contracts';
 
+/**
+ * A simple bridge for sending messages from the content script to the background.
+ */
 export class Bridge {
-  static async checkText(text: string): Promise<ValidationResult[]> {
+  static async checkText(text: string): Promise<AnalysisResponse> {
     try {
-      if (!chrome.runtime?.id) {
-        throw new Error('Extension context invalidated');
-      }
+      if (!chrome.runtime?.id) throw new Error('Extension context invalidated');
 
-      const request: CheckRequest = {
+      const request = {
         type: 'CHECK_TEXT',
         payload: { text }
       };
 
-      const response = await chrome.runtime.sendMessage(request) as CheckResponse;
-
-      if (!response.success) {
-        throw new Error(response.error || 'Unknown error');
-      }
-
-      return response.errors;
+      return await chrome.runtime.sendMessage(request);
     } catch (error) {
       console.warn('Pero Bridge Error:', error);
-      return [];
+      return { requestId: '', isSuccess: false, issues: [] };
     }
   }
 }

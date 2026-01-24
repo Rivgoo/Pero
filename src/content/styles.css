@@ -1,5 +1,5 @@
 /* Container for the mirror overlay */
-.ukr-checker-overlay {
+.pero-overlay {
   position: absolute;
   pointer-events: none; /* Let ALL clicks pass through to the textarea */
   color: transparent;
@@ -11,13 +11,13 @@
 }
 
 /* The actual error highlight */
-.ukr-checker-error {
+.pero-error {
   /* No pointer-events: auto, no cursor: pointer. It's purely visual. */
   border-bottom: 2px solid #ff4444;
 }
 
 /* Tooltip styles remain unchanged */
-.ukr-checker-tooltip {
+.pero-tooltip {
   position: absolute;
   z-index: 10000;
   background: #202124;

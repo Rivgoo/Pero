@@ -8,20 +8,18 @@ export const COPY_STYLES = [
 
 export function mirrorStyles(source: HTMLElement, target: HTMLElement) {
   const computed = window.getComputedStyle(source);
+  const rect = source.getBoundingClientRect();
   
-  const styleUpdates: Partial<CSSStyleDeclaration> = {};
+  const styleUpdates: Partial<CSSStyleDeclaration> = {
+    top: `${rect.top + window.scrollY}px`,
+    left: `${rect.left + window.scrollX}px`,
+    width: `${rect.width}px`,
+    height: `${rect.height}px`
+  };
   
   COPY_STYLES.forEach(prop => {
     styleUpdates[prop] = computed[prop];
   });
-
-  // Critical for overlay alignment
-  const rect = source.getBoundingClientRect();
-  
-  styleUpdates.top = `${rect.top + window.scrollY}px`;
-  styleUpdates.left = `${rect.left + window.scrollX}px`;
-  styleUpdates.width = `${rect.width}px`;
-  styleUpdates.height = `${rect.height}px`;
 
   Object.assign(target.style, styleUpdates);
 }

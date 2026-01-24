@@ -1,5 +1,5 @@
 import { computePosition, flip, shift, offset } from '@floating-ui/dom';
-import { ValidationResult } from '../../shared/types';
+import { HydratedIssue } from '../../shared/contracts';
 
 export class Tooltip {
   private static instance: Tooltip;
@@ -12,10 +12,9 @@ export class Tooltip {
 
   private constructor() {
     this.el = document.createElement('div');
-    this.el.className = 'ukr-checker-tooltip';
+    this.el.className = 'pero-tooltip';
     this.el.style.display = 'none';
     document.body.appendChild(this.el);
-    
     document.addEventListener('mousedown', this.handleOutsideClick, true);
   }
 
@@ -29,13 +28,11 @@ export class Tooltip {
   show(
     target: HTMLElement, 
     contextElement: HTMLElement, 
-    error: ValidationResult, 
+    error: HydratedIssue, 
     uniqueId: string, 
     onFix: (val: string) => void
   ) {
-    if (this.el.style.display !== 'none' && this.activeErrorId === uniqueId) {
-      return;
-    }
+    if (this.el.style.display !== 'none' && this.activeErrorId === uniqueId) return;
 
     this.activeErrorId = uniqueId;
     this.currentTarget = target;
@@ -49,46 +46,36 @@ export class Tooltip {
 
   hide() {
     this.el.style.display = 'none';
-    this.onFixCallback = null;
+    this.activeErrorId = null;
     this.currentTarget = null;
     this.activeContextElement = null;
-    this.activeErrorId = null;
+    this.onFixCallback = null;
   }
 
   private handleOutsideClick = (e: MouseEvent) => {
     if (this.el.contains(e.target as Node)) return;
-    
-    if (this.activeContextElement && this.activeContextElement.contains(e.target as Node)) {
-      return;
-    }
-    
-    if (this.el.style.display !== 'none') {
-      this.hide();
-    }
+    if (this.activeContextElement?.contains(e.target as Node)) return;
+    if (this.el.style.display !== 'none') this.hide();
   };
 
-  private render(error: ValidationResult) {
-    this.el.textContent = '';
+  private render(error: HydratedIssue) {
+    this.el.innerHTML = '';
 
     const header = document.createElement('div');
     header.className = 'tooltip-header-row';
-
     const brand = document.createElement('div');
     brand.className = 'tooltip-brand';
     brand.textContent = 'Pero 🪶';
-
     const infoBtn = document.createElement('div');
     infoBtn.className = 'tooltip-info-btn';
     infoBtn.textContent = 'i';
-    
     header.appendChild(brand);
     header.appendChild(infoBtn);
-    
     this.el.appendChild(header);
 
     const reasonBox = document.createElement('div');
     reasonBox.className = 'tooltip-reason';
-    reasonBox.textContent = error.message; 
+    reasonBox.textContent = error.description; 
     this.el.appendChild(reasonBox);
 
     infoBtn.onclick = (e) => {
@@ -98,41 +85,31 @@ export class Tooltip {
       this.updatePosition();
     };
 
-    if (error.replacements.length > 0) {
+    if (error.suggestions.length > 0) {
       const list = document.createElement('div');
       list.className = 'suggestions-list';
-      
-      error.replacements.forEach(rep => {
+      error.suggestions.forEach(suggestion => {
         const pill = document.createElement('div');
         pill.className = 'suggestion-pill';
-        pill.textContent = rep.value;
-        if (rep.description) pill.title = rep.description;
+        pill.textContent = suggestion;
         
         pill.onclick = (e) => {
           e.stopPropagation();
-          if (this.onFixCallback) this.onFixCallback(rep.value);
+          this.onFixCallback?.(suggestion);
           this.hide();
         };
-        
         list.appendChild(pill);
       });
       this.el.appendChild(list);
-    } else {
-      const empty = document.createElement('div');
-      empty.className = 'no-suggestions';
-      empty.textContent = 'Немає варіантів';
-      this.el.appendChild(empty);
     }
   }
 
   private async updatePosition() {
     if (!this.currentTarget) return;
-
     const { x, y } = await computePosition(this.currentTarget, this.el, {
       placement: 'top-start',
       middleware: [offset(6), flip(), shift({ padding: 10 })]
     });
-    
     Object.assign(this.el.style, { left: `${x}px`, top: `${y}px` });
   }
 }

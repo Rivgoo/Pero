@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "GEN_DOUBLE_SPACE": {
+      "title": "Зайві пробіли",
+      "description": "Між словами повинен бути лише один пробіл."
+    },
+    "TYPO_SPACE_BEFORE_PUNCT": {
+      "title": "Пробіл перед розділовим знаком",
+      "description": "Перед знаком '{punct}' пробіл не ставиться."
+    },
+    "TYPO_MISSING_SPACE_AFTER": {
+      "title": "Відсутній пробіл",
+      "description": "Після знаку '{punct}' потрібен пробіл."
+    },
+    "SPELL_RUSSIAN_LETTER": {
+      "title": "Російська літера",
+      "description": "Знайдено літеру '{char}', якої немає в українській абетці."
+    }
+  }
+}

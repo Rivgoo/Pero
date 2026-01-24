@@ -1,19 +1,22 @@
-import { ValidationResult } from '../../shared/types';
+import { HydratedIssue } from '../../shared/contracts';
+import { IssuePresenter } from '../../core/i18n/IssuePresenter';
 import { Bridge } from './bridge';
 import { Overlay } from '../ui/overlay';
 import { Tooltip } from '../ui/tooltip';
 
+/**
+ * Manages the lifecycle of interaction with a single text input field.
+ */
 export class InputSession {
   private element: HTMLInputElement | HTMLTextAreaElement;
   private overlay: Overlay;
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
   private animationFrameId: number | null = null;
-  private errors: ValidationResult[] = [];
+  private errors: HydratedIssue[] = [];
 
   constructor(element: HTMLInputElement | HTMLTextAreaElement) {
     this.element = element;
     this.overlay = new Overlay(element);
-    
     this.bindEvents();
     this.runCheck(); 
   }
@@ -40,7 +43,6 @@ export class InputSession {
 
   private onWindowResize = () => {
     if (this.animationFrameId) return;
-
     this.animationFrameId = requestAnimationFrame(() => {
       this.overlay.refreshPosition();
       this.animationFrameId = null;
@@ -49,29 +51,26 @@ export class InputSession {
 
   private onInput = () => {
     Tooltip.getInstance().hide();
-    
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
-    
-    this.debounceTimer = setTimeout(() => {
-      this.runCheck();
-    }, 500);
+    this.debounceTimer = setTimeout(() => this.runCheck(), 500);
   };
 
   private onScroll = () => {
     Tooltip.getInstance().hide();
   };
 
-  private onClick = () => {
+  private onClick = (event: Event) => {
     const caret = this.element.selectionStart;
     if (caret === null) return;
 
-    const error = this.errors.find(e => caret >= e.range.start && caret <= e.range.end);
+    const error = this.errors.find(e => caret >= e.start && caret <= e.end);
     
     if (error) {
-      const errorId = `${error.range.start}-${error.range.end}`;
+      const errorId = `${error.start}-${error.end}`;
       const targetEl = this.overlay.getElementByErrorId(errorId);
       
       if (targetEl) {
+        event.stopPropagation();
         Tooltip.getInstance().show(
           targetEl, 
           this.element, 
@@ -82,7 +81,7 @@ export class InputSession {
         return;
       }
     }
-    
+
     Tooltip.getInstance().hide();
   };
 
@@ -94,36 +93,30 @@ export class InputSession {
       return;
     }
 
-    const errors = await Bridge.checkText(text);
-    
-    if (this.element.value !== text) return;
+    const response = await Bridge.checkText(text);
+    if (this.element.value !== text) return; 
 
-    this.errors = errors;
-    this.overlay.renderErrors(text, errors);
+    if (response.isSuccess) {
+      this.errors = response.issues.map(IssuePresenter.hydrate);
+      this.overlay.renderErrors(text, this.errors);
+    }
   }
 
-  private applyFix(error: ValidationResult, fixValue: string) {
+  private applyFix(error: HydratedIssue, fixValue: string) {
     const originalText = this.element.value;
-    
-    const currentSegment = originalText.substring(error.range.start, error.range.end);
+    const currentSegment = originalText.substring(error.start, error.end);
     if (currentSegment !== error.original) {
-      this.runCheck();
+      this.runCheck(); 
       return;
     }
 
-    const newText = 
-      originalText.substring(0, error.range.start) + 
-      fixValue + 
-      originalText.substring(error.range.end);
+    const newText = originalText.substring(0, error.start) + fixValue + originalText.substring(error.end);
+    const newCursorPos = error.start + fixValue.length;
 
     this.element.value = newText;
-    
-    this.element.dispatchEvent(new Event('input', { bubbles: true })); 
-    
     this.element.focus();
-    const newCursorPos = error.range.start + fixValue.length;
     this.element.setSelectionRange(newCursorPos, newCursorPos);
 
-    this.runCheck(); 
+    this.element.dispatchEvent(new Event('input', { bubbles: true })); 
   }
 }

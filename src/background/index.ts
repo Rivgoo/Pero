@@ -1,31 +1,21 @@
-import { AnalysisEngine } from '../core/engine';
-import { RegexChecker } from '../core/modules/regex';
-import { CheckRequest, CheckResponse } from '../shared/types';
+import { AnalysisService } from '../core/services/AnalysisService';
 
-const engine = new AnalysisEngine();
-engine.register(new RegexChecker());
+const service = new AnalysisService();
+service.init(); // Pre-load WASM on extension startup
 
-console.log('Pero: Background Service Started');
-
-chrome.runtime.onMessage.addListener(
-  (message: CheckRequest, _sender, sendResponse) => {
-    if (message.type === 'CHECK_TEXT') {
-      // Async handler pattern
-      handleCheck(message.payload.text)
-        .then(response => sendResponse(response));
-      
-      return true; // Keep channel open
-    }
-    return false; // No response
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.type === 'CHECK_TEXT') {
+    service.analyze(message.payload.text)
+      .then(sendResponse)
+      .catch((error) => {
+        console.error('Pero: Analysis failed', error);
+        sendResponse({ isSuccess: false, issues: [] });
+      });
+    
+    return true; // Indicates an asynchronous response
   }
-);
 
-async function handleCheck(text: string): Promise<CheckResponse> {
-  try {
-    const errors = await engine.analyze(text);
-    return { success: true, errors };
-  } catch (err) {
-    console.error('Analysis fatal error:', err);
-    return { success: false, errors: [], error: (err as Error).message };
-  }
-}
+  return false; // No response for other message types
+});
+
+console.log('Pero: Background Service Ready');

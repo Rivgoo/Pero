@@ -1,4 +1,4 @@
-import { ValidationResult } from '../../shared/types';
+import { HydratedIssue } from '../../shared/contracts';
 import { mirrorStyles } from '../dom/styles';
 
 export class Overlay {
@@ -11,7 +11,7 @@ export class Overlay {
     this.target = target;
     
     this.el = document.createElement('div');
-    this.el.className = 'ukr-checker-overlay';
+    this.el.className = 'pero-overlay';
     document.body.appendChild(this.el);
 
     this.resizeObserver = new ResizeObserver(() => {
@@ -20,31 +20,27 @@ export class Overlay {
     this.resizeObserver.observe(target);
     
     this.target.addEventListener('scroll', this.handleScroll);
-    
     this.syncGeometry();
   }
 
-  renderErrors(text: string, errors: ValidationResult[]) {
+  renderErrors(text: string, errors: HydratedIssue[]) {
     if (this.isDestroyed) return;
 
     const fragment = document.createDocumentFragment();
     let cursor = 0;
     
-    const sorted = [...errors].sort((a, b) => a.range.start - b.range.start);
-
-    sorted.forEach(error => {
-      if (cursor < error.range.start) {
-        fragment.appendChild(document.createTextNode(text.substring(cursor, error.range.start)));
+    errors.sort((a, b) => a.start - b.start).forEach(error => {
+      if (cursor < error.start) {
+        fragment.appendChild(document.createTextNode(text.substring(cursor, error.start)));
       }
 
       const span = document.createElement('span');
-      span.className = 'ukr-checker-error';
-
-      span.dataset.errorId = `${error.range.start}-${error.range.end}`;
-      span.textContent = text.substring(error.range.start, error.range.end);
+      span.className = 'pero-error';
+      span.dataset.errorId = `${error.start}-${error.end}`;
+      span.textContent = text.substring(error.start, error.end);
       fragment.appendChild(span);
 
-      cursor = error.range.end;
+      cursor = error.end;
     });
 
     if (cursor < text.length) {
@@ -53,9 +49,6 @@ export class Overlay {
 
     this.el.innerHTML = '';
     this.el.appendChild(fragment);
-    
-    this.el.appendChild(document.createTextNode('\u200b'));
-    
     this.syncGeometry();
   }
 
