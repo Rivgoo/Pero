@@ -30,5 +30,3 @@ document.addEventListener('focusin', (e) => {
     currentSession = new InputSession(target);
   }
 }, true);
-
-console.log('Pero: Content Script Loaded');

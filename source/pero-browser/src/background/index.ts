@@ -1,45 +1,27 @@
-let creating: Promise<void> | null = null;
+import { OffscreenManager } from './OffscreenManager';
+import { isAnalyzeRequest } from '../shared/messages';
 
-async function setupOffscreenDocument(path: string) {
-  // Check if an offscreen document already exists
-  const existingContexts = await chrome.runtime.getContexts({
-    contextTypes: [chrome.runtime.ContextType.OFFSCREEN_DOCUMENT],
-  });
-
-  if (existingContexts.length > 0) {
-    return;
-  }
-
-  // Create one if not
-  if (creating) {
-    await creating;
-  } else {
-    creating = chrome.offscreen.createDocument({
-      url: path,
-      reasons: [chrome.offscreen.Reason.WORKERS],
-      justification: 'Hosting .NET WASM runtime for text analysis',
-    });
-    await creating;
-    creating = null;
-  }
-}
+const offscreenManager = new OffscreenManager();
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if (message.type === 'CHECK_TEXT') {
-    
-    setupOffscreenDocument('src/offscreen/index.html')
+  
+  if (isAnalyzeRequest(message)) {
+    offscreenManager.ensureCreated()
       .then(() => {
         return chrome.runtime.sendMessage(message);
       })
-      .then(sendResponse)
-      .catch((err) => {
-        console.error('Pero: Background error', err);
-        sendResponse({ isSuccess: false, issues: [] });
+      .then(response => {
+        sendResponse(response);
+      })
+      .catch(err => {
+        console.error('Pero: Background Error', err);
+        sendResponse({ success: false, error: 'Background orchestration failed' });
       });
 
-    return true; // Keep channel open
+    return true; // Keep channel open for async response
   }
+
   return false;
 });
 
-console.log('Pero: Background Manager Ready');
+console.log('Pero: Background Service Worker Ready');

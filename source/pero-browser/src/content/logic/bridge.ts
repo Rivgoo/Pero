@@ -1,22 +1,40 @@
-import { AnalysisResponse } from '../../shared/contracts';
+import { AnalysisResponse, AnalysisRequest } from '../../shared/contracts';
+import { AnalyzeRequestMessage, MessageResponse } from '../../shared/messages';
 
-/**
- * A simple bridge for sending messages from the content script to the background.
- */
 export class Bridge {
   static async checkText(text: string): Promise<AnalysisResponse> {
     try {
-      if (!chrome.runtime?.id) throw new Error('Extension context invalidated');
+      if (!chrome.runtime?.id) {
+        throw new Error('Extension context invalidated');
+      }
 
-      const request = {
-        type: 'CHECK_TEXT',
-        payload: { text }
+      const payload: AnalysisRequest = {
+        requestId: crypto.randomUUID(),
+        text: text,
+        languageCode: 'uk-UA'
       };
 
-      return await chrome.runtime.sendMessage(request);
+      const message: AnalyzeRequestMessage = {
+        type: 'ANALYZE_REQUEST',
+        payload
+      };
+
+      const response = await chrome.runtime.sendMessage(message) as MessageResponse<AnalysisResponse>;
+
+      if (response.success && response.data) {
+        return response.data;
+      }
+
+      console.warn('Pero: Analysis failed with error:', response.error);
+      return this.createEmptyResponse();
+
     } catch (error) {
       console.warn('Pero Bridge Error:', error);
-      return { requestId: '', isSuccess: false, issues: [] };
+      return this.createEmptyResponse();
     }
+  }
+
+  private static createEmptyResponse(): AnalysisResponse {
+    return { requestId: '', isSuccess: false, issues: [] };
   }
 }
