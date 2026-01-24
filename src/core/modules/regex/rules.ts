@@ -1,5 +1,5 @@
 import { RegexRule } from './types';
-import { IssueType, Severity } from '../../types';
+import { IssueType, Severity } from '../../../shared/types';
 
 export const commonRules: RegexRule[] = [
   {

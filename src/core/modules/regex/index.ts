@@ -1,5 +1,5 @@
 import { BaseChecker } from '../base';
-import { CheckerContext, ValidationResult } from '../../types';
+import { CheckerContext, ValidationResult } from '../../../shared/types';
 import { commonRules } from './rules';
 import { RegexRule } from './types';
 

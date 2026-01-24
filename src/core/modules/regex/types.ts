@@ -1,4 +1,4 @@
-import { IssueType, Severity } from '../../types';
+import { IssueType, Severity } from '../../../shared/types';
 
 export interface RegexRule {
   id: string;

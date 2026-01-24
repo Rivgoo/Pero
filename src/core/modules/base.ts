@@ -1,5 +1,5 @@
 import { IChecker } from '../interfaces';
-import { ValidationResult, CheckerContext, TextRange, Severity, IssueType, Replacement } from '../types';
+import { ValidationResult, CheckerContext, TextRange, Severity, IssueType, Replacement } from '../../shared/types';
 
 export abstract class BaseChecker implements IChecker {
   abstract readonly id: string;
