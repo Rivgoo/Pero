@@ -1,18 +1,28 @@
 {
   "name": "pero",
-  "version": "1.0",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "source/pero-browser",
+    "source/pero-engine"
+  ],
   "scripts": {
-    "version": "node scripts/version.js",
-    "dev": "npm run version && vite build --watch",
-    "build": "npm run version && vite build"
+    "//--- BUILD SCRIPTS ---//": "",
+    "build:engine": "dotnet publish ./source/pero-engine/src/Pero.WasmHost -c Release -o ./build/engine/",
+    "copy:wasm": "shx mkdir -p ./source/pero-browser/public/wasm/ && shx cp -r ./build/engine/wwwroot/_framework/* ./source/pero-browser/public/wasm/",
+    "build:browser": "npm run build -w pero-browser",
+    "clean:wasm": "shx rm -rf ./source/pero-browser/public/wasm/",
+    "build": "npm run build:engine && npm run copy:wasm && npm run build:browser && npm run clean:wasm",
+    
+    "//--- DEV SCRIPTS ---//": "",
+    "dev:engine": "dotnet watch --project ./source/pero-engine/src/Pero.WasmHost/ publish -c Debug -o ./build/engine/wwwroot/_framework/",
+    "watch:wasm": "onchange './build/engine/wwwroot/_framework/**' -- npm run copy:wasm",
+    "dev:browser": "npm run dev -w pero-browser",
+    "dev": "npm-run-all --parallel dev:engine watch:wasm dev:browser"
   },
   "devDependencies": {
-    "@types/chrome": "^0.1.36",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.1",
-    "vitest": "^4.0.18"
-  },
-  "dependencies": {
-    "@floating-ui/dom": "^1.7.4"
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "shx": "^0.4.0"
   }
 }

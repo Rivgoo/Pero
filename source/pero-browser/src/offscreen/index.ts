@@ -1,21 +1,22 @@
 import { AnalysisService } from '../core/services/AnalysisService';
 
 const service = new AnalysisService();
-service.init(); // Pre-load WASM on extension startup
+service.init();
+
+console.log('Pero: Offscreen Document Initialized');
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type === 'CHECK_TEXT') {
+    // Perform analysis
     service.analyze(message.payload.text)
       .then(sendResponse)
       .catch((error) => {
-        console.error('Pero: Analysis failed', error);
+        console.error('Pero: Offscreen Analysis failed', error);
         sendResponse({ isSuccess: false, issues: [] });
       });
     
-    return true; // Indicates an asynchronous response
+    return true; 
   }
 
-  return false; // No response for other message types
+    return false;
 });
-
-console.log('Pero: Background Service Ready');

@@ -15,7 +15,7 @@ function getCommitCountSinceTag(tag) {
   return execSync(`git rev-list ${tag}..HEAD --count`).toString().trim();
 }
 
-console.log('🚀 Starting versioning script...');
+console.log('🚀 Starting browser extension versioning...');
 
 const latestTag = getLatestTag();
 const majorVersion = latestTag.replace('v', '');
@@ -28,7 +28,7 @@ console.log(`✅ Commits since tag: ${commitCount}`);
 console.log(`📦 New extension version: ${newVersion}`);
 
 try {
-  const manifestPath = path.join(process.cwd(), 'public', 'manifest.json');
+  const manifestPath = path.join(__dirname, '..', 'public', 'manifest.json');
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
   manifest.version = newVersion;

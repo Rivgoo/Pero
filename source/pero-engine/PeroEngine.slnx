@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Pero.Contracts/Pero.Contracts.csproj" />
+    <Project Path="src/Pero.Core/Pero.Core.csproj" />
+    <Project Path="src/Pero.WasmHost/Pero.WasmHost.csproj" />
+  </Folder>
+</Solution>

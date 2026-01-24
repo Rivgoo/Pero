@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<PublishTrimmed>true</PublishTrimmed>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<InvariantGlobalization>true</InvariantGlobalization>
+		<WasmEmitSymbolMap>false</WasmEmitSymbolMap>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Pero.Core\Pero.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Pero.Core\Pero.Core.csproj" />
+	</ItemGroup>
+</Project>

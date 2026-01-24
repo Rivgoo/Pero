@@ -2,7 +2,7 @@ import { AnalysisRequest, AnalysisResponse } from '../../shared/contracts';
 
 type DotnetExports = {
   Pero: {
-    Core: {
+    WasmHost: {
       Engine: {
         Process: (json: string) => string;
       };
@@ -26,10 +26,15 @@ export class AnalysisService {
 
   private async loadRuntime(): Promise<void> {
     try {
-      const runtimeUrl = chrome.runtime.getURL('wasm/dotnet.js');
-      const { dotnet } = await import(/* @vite-ignore */ runtimeUrl);
+      const dotnetUrl = chrome.runtime.getURL('wasm/dotnet.js');
       
-      const { getAssemblyExports, getConfig } = await dotnet.withDiagnosticTracing(false).create();
+      // @ts-ignore
+      const { dotnet } = await import(/* @vite-ignore */ dotnetUrl);
+      
+      const { getAssemblyExports, getConfig } = await dotnet
+        .withDiagnosticTracing(false)
+        .create();
+
       const config = getConfig();
       this.dotnet = await getAssemblyExports(config.mainAssemblyName);
 
@@ -44,6 +49,7 @@ export class AnalysisService {
     await this.init();
 
     if (!this.dotnet) {
+      console.error('Pero: WASM runtime not initialized');
       return { requestId: '', isSuccess: false, issues: [] };
     }
 
@@ -53,8 +59,7 @@ export class AnalysisService {
       languageCode: 'uk-UA'
     };
 
-    const jsonRequest = JSON.stringify(request);
-    const jsonResponse = this.dotnet.Pero.Core.Engine.Process(jsonRequest);
+    const jsonResponse = this.dotnet.Pero.WasmHost.Engine.Process(JSON.stringify(request));
     
     return JSON.parse(jsonResponse);
   }
