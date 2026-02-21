@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using Pero.Contracts;
+using Pero.Abstractions.Transport;
 
 namespace Pero.WasmHost
 {

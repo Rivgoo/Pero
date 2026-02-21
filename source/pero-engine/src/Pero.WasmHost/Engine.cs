@@ -1,18 +1,33 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
-using Pero.Contracts;
-using Pero.Core;
+using Pero.Abstractions;
+using Pero.Abstractions.Constants;
+using Pero.Abstractions.Transport;
+using Pero.Kernel;
+using Pero.Kernel.Registry;
 
 namespace Pero.WasmHost;
 
 public partial class Engine
 {
-	private static readonly Analyzer _analyzer = new();
+	private static Analyzer _analyzer = null!;
+	private static bool _isInitialized = false;
+
+	private static void Initialize()
+	{
+		var registry = new LanguageRegistry();
+		_analyzer = new Analyzer(registry);
+
+		_isInitialized = true;
+	}
 
 	[JSExport]
 	public static string Process(string jsonRequest)
 	{
+		if(_isInitialized == false)
+			Initialize();
+
 		var stopwatch = Stopwatch.StartNew();
 
 		try
@@ -28,13 +43,13 @@ public partial class Engine
 			if (request == null)
 				return CreateErrorResponse("Invalid JSON");
 
-			var issues = _analyzer.Analyze(request.Text);
+			var issues = _analyzer.Analyze(request.Text, LanguageCodes.Ukrainian);
 
 			var response = new AnalysisResponse
 			{
 				RequestId = request.RequestId,
 				IsSuccess = true,
-				Issues = issues
+				Issues = issues.ToList()
 			};
 
 			stopwatch.Stop();

@@ -1,0 +1,151 @@
+﻿=== TEST: 01_Basic_Text_Preservation ===
+COMMENT: Ensure standard text, numbers, and basic punctuation are NOT altered.
+MODE: RAW
+[INPUT]
+Hello, world! It is 2024. How are you?
+[EXPECTED]
+Hello, world! It is 2024. How are you?
+[END]
+
+=== TEST: 02_Unicode_Normalization_NFC_Cyrillic ===
+COMMENT: Decomposed Cyrillic characters must be combined. 'И' + '̆' -> 'Й', 'і' + '̈' -> 'ї'.
+MODE: HEX
+[INPUT]
+D0 98 CC 86 20 0A D1 96 CC 88
+[EXPECTED]
+D0 99 20 0A D1 97
+[END]
+
+=== TEST: 03_Unicode_Normalization_NFC_Latin ===
+COMMENT: Decomposed Latin characters must be combined. 'e' + '́' -> 'é'.
+MODE: HEX
+[INPUT]
+65 CC 81
+[EXPECTED]
+C3 A9
+[END]
+
+=== TEST: 04_NonBreakingSpaces ===
+COMMENT: NBSP (U+00A0) and Narrow NBSP (U+202F) must become standard spaces (U+0020).
+MODE: HEX
+[INPUT]
+41 C2 A0 42 E2 80 AF 43
+[EXPECTED]
+41 20 42 20 43
+[END]
+
+=== TEST: 05_Exotic_Whitespace ===
+COMMENT: En Space (U+2002), Em Space (U+2003), Thin Space (U+2009) must become standard spaces.
+MODE: HEX
+[INPUT]
+41 E2 80 82 42 E2 80 83 43 E2 80 89 44
+[EXPECTED]
+41 20 42 20 43 20 44
+[END]
+
+=== TEST: 06_Soft_Hyphen_Removal ===
+COMMENT: Soft hyphens (U+00AD) are visual formatting and must be completely removed.
+MODE: HEX
+[INPUT]
+54 65 73 74 C2 AD 69 6E 67
+[EXPECTED]
+54 65 73 74 69 6E 67
+[END]
+
+=== TEST: 07_Zero_Width_Garbage ===
+COMMENT: ZWSP (U+200B), Word Joiner (U+2060), and BOM (U+FEFF) must be completely removed.
+MODE: HEX
+[INPUT]
+48 E2 80 8B 65 E2 81 A0 6C EF BB BF 6C 6F
+[EXPECTED]
+48 65 6C 6C 6F
+[END]
+
+=== TEST: 08_Directional_Bidi_Marks ===
+COMMENT: Left-to-Right (U+200E) and Right-to-Left (U+200F) marks mess up token logic. Remove them.
+MODE: HEX
+[INPUT]
+4C E2 80 8E 52 E2 80 8F 4C
+[EXPECTED]
+4C 52 4C
+[END]
+
+=== TEST: 09_Line_and_Paragraph_Separators ===
+COMMENT: Line Separator (U+2028) and Paragraph Separator (U+2029) must become standard Newline (\n).
+MODE: HEX
+[INPUT]
+41 E2 80 A8 42 E2 80 A9 43
+[EXPECTED]
+41 0A 42 0A 43
+[END]
+
+=== TEST: 10_ASCII_Control_Characters_Removal ===
+COMMENT: Null (00), Bell (07), Vertical Tab (0B), Escape (1B) must be removed.
+MODE: HEX
+[INPUT]
+41 00 42 07 43 0B 44 1B 45
+[EXPECTED]
+41 42 43 44 45
+[END]
+
+=== TEST: 11_Keep_Valid_Control_Characters ===
+COMMENT: Tab (\t), Newline (\n), Carriage Return (\r) MUST be preserved for layout.
+MODE: HEX
+[INPUT]
+41 09 42 0A 43 0D 44
+[EXPECTED]
+41 09 42 0A 43 0D 44
+[END]
+
+=== TEST: 12_NEGATIVE_Keep_ZWJ_in_Emojis ===
+COMMENT: Zero Width Joiner (U+200D) is critical for complex emojis. Do NOT remove it.
+MODE: RAW
+[INPUT]
+Family: 👨‍👩‍👧‍👦
+[EXPECTED]
+Family: 👨‍👩‍👧‍👦
+[END]
+
+=== TEST: 13_NEGATIVE_Keep_Emoji_Variation_Selectors ===
+COMMENT: Variation Selector-16 (U+FE0F) tells text to render as an emoji. Do NOT remove it.
+MODE: RAW
+[INPUT]
+Heart: ❤️
+[EXPECTED]
+Heart: ❤️
+[END]
+
+=== TEST: 14_NEGATIVE_Keep_Typographic_Punctuation ===
+COMMENT: Em-dash (—), En-dash (–), Smart Quotes («» “”) must not be corrupted or replaced.
+MODE: RAW
+[INPUT]
+Він сказав: «Це — шедевр!»
+[EXPECTED]
+Він сказав: «Це — шедевр!»
+[END]
+
+=== TEST: 15_NEGATIVE_Keep_Foreign_Scripts ===
+COMMENT: Asian characters, Greek, Math symbols should pass through safely.
+MODE: RAW
+[INPUT]
+日本語, Ελληνικά, ∑(x+y)=∞
+[EXPECTED]
+日本語, Ελληνικά, ∑(x+y)=∞
+[END]
+
+=== TEST: 16_Extreme_Mixed_Garbage ===
+COMMENT: A realistic nightmare string copied from a badly encoded PDF.
+MODE: HEX
+[INPUT]
+54 68 69 73 00 20 C2 A0 69 73 E2 80 8B 20 62 61 C2 AD 64 2E EF BB BF
+[EXPECTED]
+54 68 69 73 20 20 69 73 20 62 61 64 2E
+[END]
+
+=== TEST: 17_Empty_Input ===
+COMMENT: Should return empty string without throwing exceptions.
+[INPUT]
+
+[EXPECTED]
+
+[END]

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Pero.Contracts\Pero.Contracts.csproj" />
+    <ProjectReference Include="..\Pero.Abstractions\Pero.Abstractions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

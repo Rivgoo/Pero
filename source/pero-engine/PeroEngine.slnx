@@ -1,7 +1,11 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/Pero.Contracts/Pero.Contracts.csproj" />
-    <Project Path="src/Pero.Core/Pero.Core.csproj" />
+    <Project Path="src/Pero.Abstractions/Pero.Abstractions.csproj" />
+    <Project Path="src/Pero.Kernel/Pero.Kernel.csproj" />
     <Project Path="src/Pero.WasmHost/Pero.WasmHost.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Pero.Testing.Shared/Pero.Testing.Shared.csproj" Id="78b4166c-1350-4183-9567-6b03002fa33f" />
+    <Project Path="tests/Pero.Tests.Kernel/Pero.Tests.Kernel.csproj" Id="bc1abaf9-2927-4a50-862b-eeaaf3c0a974" />
   </Folder>
 </Solution>

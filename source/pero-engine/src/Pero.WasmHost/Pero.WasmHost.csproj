@@ -9,11 +9,8 @@
 		<InvariantGlobalization>true</InvariantGlobalization>
 		<WasmEmitSymbolMap>false</WasmEmitSymbolMap>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<ProjectReference Include="..\Pero.Core\Pero.Core.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Pero.Core\Pero.Core.csproj" />
+	  <ProjectReference Include="..\Pero.Abstractions\Pero.Abstractions.csproj" />
+	  <ProjectReference Include="..\Pero.Kernel\Pero.Kernel.csproj" />
 	</ItemGroup>
 </Project>
