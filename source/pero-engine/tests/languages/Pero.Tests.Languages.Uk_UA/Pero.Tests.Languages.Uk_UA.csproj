@@ -30,8 +30,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="TestCases\uk-UA\Segmentation\" />
-  </ItemGroup>
-
 </Project>

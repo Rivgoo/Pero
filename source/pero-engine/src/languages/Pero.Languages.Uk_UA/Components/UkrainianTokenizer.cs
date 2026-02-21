@@ -1,7 +1,6 @@
 ﻿using Pero.Kernel.Components;
 using System.Globalization;
 using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Pero.Languages.Uk_UA.Components;
 
