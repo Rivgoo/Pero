@@ -62,7 +62,7 @@ public class StandardPreTokenizerTests
 
 	public static IEnumerable<object[]> GetTestCases()
 	{
-		var suites = JsonLoader.Load<PreTokenizationTestSuite>("TestCases/PreTokenization/Standard");
+		var suites = JsonLoader.Load<PreTokenizationTestSuite>("TestCases/Kernel/PreTokenization/Standard");
 
 		foreach (var (suite, fileName) in suites)
 		{

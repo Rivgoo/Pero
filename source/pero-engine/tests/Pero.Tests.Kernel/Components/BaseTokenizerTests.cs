@@ -20,7 +20,7 @@ public class BaseTokenizerTests : TokenizerTestBase
 
 	public static IEnumerable<object[]> GetTestCases()
 	{
-		var suites = JsonLoader.Load<TokenizerTestSuite>("TestCases/Tokenization/Base");
+		var suites = JsonLoader.Load<TokenizerTestSuite>("TestCases/Kernel/Tokenization");
 
 		foreach (var (suite, fileName) in suites)
 			foreach (var testCase in suite.Cases)

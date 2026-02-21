@@ -20,6 +20,6 @@ public class StandardTextCleanerTests
 
 	public static IEnumerable<object[]> GetTestCases()
 	{
-		return PtfLoader.Load("TestCases/Cleaning");
+		return PtfLoader.Load("TestCases/Kernel/Cleaning");
 	}
 }

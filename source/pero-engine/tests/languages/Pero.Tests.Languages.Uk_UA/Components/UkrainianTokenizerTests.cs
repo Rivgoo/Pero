@@ -21,8 +21,8 @@ public class UkrainianTokenizerTests : TokenizerTestBase
 	{
 		var directories = new[]
 		{
-			"TestCases/Tokenization/Base",
-			"TestCases/Tokenization/uk-UA"
+			"TestCases/Kernel/Tokenization",
+			"TestCases/uk-UA/Tokenization"
 		};
 
 		foreach (var directory in directories)

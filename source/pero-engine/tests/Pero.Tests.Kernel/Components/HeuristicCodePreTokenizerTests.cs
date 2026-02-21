@@ -68,7 +68,7 @@ public class HeuristicCodePreTokenizerTests
 
 	public static IEnumerable<object[]> GetCodeTestCases()
 	{
-		var suites = JsonLoader.Load<CodeTestSuite>("TestCases/PreTokenization");
+		var suites = JsonLoader.Load<CodeTestSuite>("TestCases/Kernel/PreTokenization");
 
 		foreach (var (suite, fileName) in suites)
 			foreach (var testCase in suite.Cases)
