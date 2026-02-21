@@ -1,0 +1,618 @@
+﻿{
+  "description": "Exhaustive tests for StandardPreTokenizer. Includes deep FilePath edge cases and complex mixed entity scenarios.",
+  "cases": [
+    {
+      "name": "Only Raw Text",
+      "input": "Just a normal sentence with some punctuation!",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Just a normal sentence with some punctuation!",
+          "start": 0,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "name": "Date Formats (Dots and Dashes)",
+      "input": "Event is on 12.05.2024 or maybe 2024-05-13.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Event is on ",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "Date",
+          "text": "12.05.2024",
+          "start": 12,
+          "end": 22
+        },
+        {
+          "type": "Raw",
+          "text": " or maybe ",
+          "start": 22,
+          "end": 32
+        },
+        {
+          "type": "Date",
+          "text": "2024-05-13",
+          "start": 32,
+          "end": 42
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 42,
+          "end": 43
+        }
+      ]
+    },
+    {
+      "name": "Time Formats",
+      "input": "Meeting at 14:30 or 08:00 AM.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Meeting at ",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "Time",
+          "text": "14:30",
+          "start": 11,
+          "end": 16
+        },
+        {
+          "type": "Raw",
+          "text": " or ",
+          "start": 16,
+          "end": 20
+        },
+        {
+          "type": "Time",
+          "text": "08:00 AM",
+          "start": 20,
+          "end": 28
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 28,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "name": "Currency and Numbers with Decimals/Thousands",
+      "input": "Price is $1,500.99 or 1 500,00 ₴.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Price is ",
+          "start": 0,
+          "end": 9
+        },
+        {
+          "type": "Currency",
+          "text": "$1,500.99",
+          "start": 9,
+          "end": 18
+        },
+        {
+          "type": "Raw",
+          "text": " or ",
+          "start": 18,
+          "end": 22
+        },
+        {
+          "type": "Currency",
+          "text": "1 500,00 ₴",
+          "start": 22,
+          "end": 32
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 32,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "name": "IP and MAC Addresses",
+      "input": "Server 192.168.1.100 has MAC 00:1A:2B:3C:4D:5E.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Server ",
+          "start": 0,
+          "end": 7
+        },
+        {
+          "type": "IpAddress",
+          "text": "192.168.1.100",
+          "start": 7,
+          "end": 20
+        },
+        {
+          "type": "Raw",
+          "text": " has MAC ",
+          "start": 20,
+          "end": 29
+        },
+        {
+          "type": "MacAddress",
+          "text": "00:1A:2B:3C:4D:5E",
+          "start": 29,
+          "end": 46
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 46,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "name": "Phone Numbers (International)",
+      "input": "Call +380 (44) 123-45-67 or +1-800-555-0199.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Call ",
+          "start": 0,
+          "end": 5
+        },
+        {
+          "type": "PhoneNumber",
+          "text": "+380 (44) 123-45-67",
+          "start": 5,
+          "end": 24
+        },
+        {
+          "type": "Raw",
+          "text": " or ",
+          "start": 24,
+          "end": 28
+        },
+        {
+          "type": "PhoneNumber",
+          "text": "+1-800-555-0199",
+          "start": 28,
+          "end": 43
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 43,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "name": "Software Versions and GUIDs",
+      "input": "Update to v2.0.0-rc.1 with key 123e4567-e89b-12d3-a456-426614174000.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Update to ",
+          "start": 0,
+          "end": 10
+        },
+        {
+          "type": "VersionNumber",
+          "text": "v2.0.0-rc.1",
+          "start": 10,
+          "end": 21
+        },
+        {
+          "type": "Raw",
+          "text": " with key ",
+          "start": 21,
+          "end": 31
+        },
+        {
+          "type": "Guid",
+          "text": "123e4567-e89b-12d3-a456-426614174000",
+          "start": 31,
+          "end": 67
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 67,
+          "end": 68
+        }
+      ]
+    },
+    {
+      "name": "Hex Colors and Dimensions",
+      "input": "Change color to #FFAA00 on a 1920x1080 screen.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Change color to ",
+          "start": 0,
+          "end": 16
+        },
+        {
+          "type": "HexColor",
+          "text": "#FFAA00",
+          "start": 16,
+          "end": 23
+        },
+        {
+          "type": "Raw",
+          "text": " on a ",
+          "start": 23,
+          "end": 29
+        },
+        {
+          "type": "Dimensions",
+          "text": "1920x1080",
+          "start": 29,
+          "end": 38
+        },
+        {
+          "type": "Raw",
+          "text": " screen.",
+          "start": 38,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "name": "Markdown Formatting",
+      "input": "This is **bold** and __italic__ or ~~strikethrough~~.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "This is ",
+          "start": 0,
+          "end": 8
+        },
+        {
+          "type": "MarkdownFormat",
+          "text": "**bold**",
+          "start": 8,
+          "end": 16
+        },
+        {
+          "type": "Raw",
+          "text": " and ",
+          "start": 16,
+          "end": 21
+        },
+        {
+          "type": "MarkdownFormat",
+          "text": "__italic__",
+          "start": 21,
+          "end": 31
+        },
+        {
+          "type": "Raw",
+          "text": " or ",
+          "start": 31,
+          "end": 35
+        },
+        {
+          "type": "MarkdownFormat",
+          "text": "~~strikethrough~~",
+          "start": 35,
+          "end": 52
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 52,
+          "end": 53
+        }
+      ]
+    },
+    {
+      "name": "GPS Coordinates",
+      "input": "Meet at 48.858093, 2.294694 today.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Meet at ",
+          "start": 0,
+          "end": 8
+        },
+        {
+          "type": "Coordinates",
+          "text": "48.858093, 2.294694",
+          "start": 8,
+          "end": 27
+        },
+        {
+          "type": "Raw",
+          "text": " today.",
+          "start": 27,
+          "end": 34
+        }
+      ]
+    },
+
+    {
+      "name": "COMPLEX MIX: Server Log Simulation",
+      "input": "Node v1.4.2-beta rebooted. IP: 192.168.0.1 (MAC: AA:BB:CC:DD:EE:FF).",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Node ",
+          "start": 0,
+          "end": 5
+        },
+        {
+          "type": "VersionNumber",
+          "text": "v1.4.2-beta",
+          "start": 5,
+          "end": 16
+        },
+        {
+          "type": "Raw",
+          "text": " rebooted. IP: ",
+          "start": 16,
+          "end": 31
+        },
+        {
+          "type": "IpAddress",
+          "text": "192.168.0.1",
+          "start": 31,
+          "end": 42
+        },
+        {
+          "type": "Raw",
+          "text": " (MAC: ",
+          "start": 42,
+          "end": 49
+        },
+        {
+          "type": "MacAddress",
+          "text": "AA:BB:CC:DD:EE:FF",
+          "start": 49,
+          "end": 66
+        },
+        {
+          "type": "Raw",
+          "text": ").",
+          "start": 66,
+          "end": 68
+        }
+      ]
+    },
+    {
+      "name": "COMPLEX MIX: Financial Transaction",
+      "input": "On 15.10.2023 at 18:45, transfer $500.00 to 0x71C7656EC7ab88b098defB751B7401B5f6d8976F.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "On ",
+          "start": 0,
+          "end": 3
+        },
+        {
+          "type": "Date",
+          "text": "15.10.2023",
+          "start": 3,
+          "end": 13
+        },
+        {
+          "type": "Raw",
+          "text": " at ",
+          "start": 13,
+          "end": 17
+        },
+        {
+          "type": "Time",
+          "text": "18:45",
+          "start": 17,
+          "end": 22
+        },
+        {
+          "type": "Raw",
+          "text": ", transfer ",
+          "start": 22,
+          "end": 33
+        },
+        {
+          "type": "Currency",
+          "text": "$500.00",
+          "start": 33,
+          "end": 40
+        },
+        {
+          "type": "Raw",
+          "text": " to ",
+          "start": 40,
+          "end": 44
+        },
+        {
+          "type": "CryptoWalletAddress",
+          "text": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+          "start": 44,
+          "end": 86
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 86,
+          "end": 87
+        }
+      ]
+    },
+    {
+      "name": "FILE PATHS: Standard Windows and Unix",
+      "input": "Check C:\\Windows\\System32 or /usr/local/bin/script.sh file.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Check ",
+          "start": 0,
+          "end": 6
+        },
+        {
+          "type": "FilePath",
+          "text": "C:\\Windows\\System32",
+          "start": 6,
+          "end": 25
+        },
+        {
+          "type": "Raw",
+          "text": " or ",
+          "start": 25,
+          "end": 29
+        },
+        {
+          "type": "FilePath",
+          "text": "/usr/local/bin/script.sh",
+          "start": 29,
+          "end": 53
+        },
+        {
+          "type": "Raw",
+          "text": " file.",
+          "start": 53,
+          "end": 59
+        }
+      ]
+    },
+    {
+      "name": "FILE PATHS: Deeply nested Unix with dots",
+      "input": "Logs in /var/log/nginx/access.log.1 are huge.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Logs in ",
+          "start": 0,
+          "end": 8
+        },
+        {
+          "type": "FilePath",
+          "text": "/var/log/nginx/access.log.1",
+          "start": 8,
+          "end": 35
+        },
+        {
+          "type": "Raw",
+          "text": " are huge.",
+          "start": 35,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "name": "FILE PATHS: Comma-separated list with Windows drives",
+      "input": "Compare C:\\a.txt, D:\\backup\\b.txt, and /tmp/c.txt.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Compare ",
+          "start": 0,
+          "end": 8
+        },
+        {
+          "type": "FilePath",
+          "text": "C:\\a.txt",
+          "start": 8,
+          "end": 16
+        },
+        {
+          "type": "Raw",
+          "text": ", ",
+          "start": 16,
+          "end": 18
+        },
+        {
+          "type": "FilePath",
+          "text": "D:\\backup\\b.txt",
+          "start": 18,
+          "end": 33
+        },
+        {
+          "type": "Raw",
+          "text": ", and ",
+          "start": 33,
+          "end": 39
+        },
+        {
+          "type": "FilePath",
+          "text": "/tmp/c.txt",
+          "start": 39,
+          "end": 49
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 49,
+          "end": 50
+        }
+      ]
+    },
+    {
+      "name": "FILE PATHS: End of sentence boundary check",
+      "input": "Please edit /etc/hosts.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Please edit ",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "FilePath",
+          "text": "/etc/hosts",
+          "start": 12,
+          "end": 22
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 22,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "name": "FILE PATHS: URL overlap prevention",
+      "input": "Go to https://site.com/var/log not /var/log.",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Go to ",
+          "start": 0,
+          "end": 6
+        },
+        {
+          "type": "Url",
+          "text": "https://site.com/var/log",
+          "start": 6,
+          "end": 30
+        },
+        {
+          "type": "Raw",
+          "text": " not ",
+          "start": 30,
+          "end": 35
+        },
+        {
+          "type": "FilePath",
+          "text": "/var/log",
+          "start": 35,
+          "end": 43
+        },
+        {
+          "type": "Raw",
+          "text": ".",
+          "start": 43,
+          "end": 44
+        }
+      ]
+    }
+  ]
+}

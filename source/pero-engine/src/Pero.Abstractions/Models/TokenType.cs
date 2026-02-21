@@ -9,11 +9,26 @@
 		Word,
 		Whitespace,
 		Punctuation,
+		Number,
+		Symbol,
 		Url,
 		Email,
 		CodeSnippet,
 		Mention,
-		Number,
-		Symbol
+		Date,
+		Time,
+		Currency,
+		FilePath,
+		IpAddress,
+		MacAddress,
+		PhoneNumber,
+		VersionNumber,
+		Guid,
+		HexColor,
+		MarkdownFormat,
+		Coordinates,
+		CryptoWalletAddress,
+		SocialMediaHandle,
+		Dimensions
 	}
 }

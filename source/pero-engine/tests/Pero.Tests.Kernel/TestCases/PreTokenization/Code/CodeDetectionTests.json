@@ -1,0 +1,311 @@
+﻿{
+  "description": "Stress tests for detecting inline code snippets and code-like structures across 17+ programming languages.",
+  "cases": [
+    {
+      "name": "C# / Java / TypeScript (C-Style)",
+      "input": "Check this logic: if (isValid && count > 0) { return true; } else { return false; }",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Check this logic: ",
+          "start": 0,
+          "end": 18
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "if (isValid && count > 0) { return true; } else { return false; }",
+          "start": 18,
+          "end": 83
+        }
+      ]
+    },
+    {
+      "name": "Python (Indentation & Snake_case)",
+      "input": "Try this function: def calculate_sum(a, b):\n    return a + b",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Try this function: ",
+          "start": 0,
+          "end": 19
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "def calculate_sum(a, b):\n    return a + b",
+          "start": 19,
+          "end": 60
+        }
+      ]
+    },
+    {
+      "name": "HTML / XML",
+      "input": "Add a div here: <div class=\"container\" id=\"main\">Content</div>",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Add a div here: ",
+          "start": 0,
+          "end": 16
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "<div class=\"container\" id=\"main\">Content</div>",
+          "start": 16,
+          "end": 62
+        }
+      ]
+    },
+    {
+      "name": "CSS / SCSS",
+      "input": "Style it like this: .header { color: #333; margin-top: 10px; }",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Style it like this: ",
+          "start": 0,
+          "end": 20
+        },
+        {
+          "type": "CodeSnippet",
+          "text": ".header { color: #333; margin-top: 10px; }",
+          "start": 20,
+          "end": 62
+        }
+      ]
+    },
+    {
+      "name": "SQL",
+      "input": "Run query: SELECT * FROM Users WHERE Age >= 18 AND Active = 1;",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Run query: ",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "SELECT * FROM Users WHERE Age >= 18 AND Active = 1;",
+          "start": 11,
+          "end": 62
+        }
+      ]
+    },
+    {
+      "name": "Bash / Shell",
+      "input": "Install dependencies: npm install --save-dev typescript && echo \"Done\"",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Install dependencies: ",
+          "start": 0,
+          "end": 22
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "npm install --save-dev typescript && echo \"Done\"",
+          "start": 22,
+          "end": 70
+        }
+      ]
+    },
+    {
+      "name": "JSON Config",
+      "input": "Config file: { \"name\": \"pero\", \"version\": \"1.0.0\" }",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Config file: ",
+          "start": 0,
+          "end": 13
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "{ \"name\": \"pero\", \"version\": \"1.0.0\" }",
+          "start": 13,
+          "end": 51
+        }
+      ]
+    },
+    {
+      "name": "Go (Golang)",
+      "input": "Or map initialization: m := make(map[string]int)",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Or map initialization: ",
+          "start": 0,
+          "end": 23
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "m := make(map[string]int)",
+          "start": 23,
+          "end": 48
+        }
+      ]
+    },
+    {
+      "name": "Rust",
+      "input": "Pattern matching: match x { Some(v) => v, None => 0 }",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Pattern matching: ",
+          "start": 0,
+          "end": 18
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "match x { Some(v) => v, None => 0 }",
+          "start": 18,
+          "end": 53
+        }
+      ]
+    },
+    {
+      "name": "PHP",
+      "input": "Variables start with $: $users = User::all();",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Variables start with $: ",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "$users = User::all();",
+          "start": 24,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "name": "Ruby",
+      "input": "Blocks look like: 5.times { |i| puts \"Hello #{i}\" }",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Blocks look like: ",
+          "start": 0,
+          "end": 18
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "5.times { |i| puts \"Hello #{i}\" }",
+          "start": 18,
+          "end": 51
+        }
+      ]
+    },
+    {
+      "name": "Swift",
+      "input": "Optionals: let name: String? = nil",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Optionals: ",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "let name: String? = nil",
+          "start": 11,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "name": "Objective-C",
+      "input": "Method calls: [self performSelector:@selector(run)];",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Method calls: ",
+          "start": 0,
+          "end": 14
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "[self performSelector:@selector(run)];",
+          "start": 14,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "name": "Kotlin",
+      "input": "Data class: data class User(val name: String, val age: Int)",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Data class: ",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "data class User(val name: String, val age: Int)",
+          "start": 12,
+          "end": 59
+        }
+      ]
+    },
+    {
+      "name": "Assembly (x86)",
+      "input": "Low level: MOV EAX, 1; XOR EBX, EBX; INT 0x80",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Low level: ",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "MOV EAX, 1; XOR EBX, EBX; INT 0x80",
+          "start": 11,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "name": "Pascal / Delphi",
+      "input": "Assignment: var x: Integer; x := 10;",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Assignment: ",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "var x: Integer; x := 10;",
+          "start": 12,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "name": "Lua",
+      "input": "Tables: local t = { key = \"value\", list = {1, 2, 3} }",
+      "expected": [
+        {
+          "type": "Raw",
+          "text": "Tables: ",
+          "start": 0,
+          "end": 8
+        },
+        {
+          "type": "CodeSnippet",
+          "text": "local t = { key = \"value\", list = {1, 2, 3} }",
+          "start": 8,
+          "end": 53
+        }
+      ]
+    }
+  ]
+}
