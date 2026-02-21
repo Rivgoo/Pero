@@ -1,0 +1,294 @@
+﻿{
+  "description": "Targeted tests for the UkrainianTokenizer. Validates apostrophe handling, hyphenation splits, locale-specific normalization, and Ukrainian typography marks.",
+  "cases": [
+    {
+      "name": "Apostrophes Inside Words",
+      "input": "М'яч та комп’ютер",
+      "expected": [
+        {
+          "text": "М'яч",
+          "normalizedText": "м'яч",
+          "type": "Word",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 4,
+          "end": 5
+        },
+        {
+          "text": "та",
+          "normalizedText": "та",
+          "type": "Word",
+          "start": 5,
+          "end": 7
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 7,
+          "end": 8
+        },
+        {
+          "text": "комп’ютер",
+          "normalizedText": "комп’ютер",
+          "type": "Word",
+          "start": 8,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "name": "Hyphenated Words Split",
+      "input": "Будь-ласка",
+      "expected": [
+        {
+          "text": "Будь",
+          "normalizedText": "будь",
+          "type": "Word",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "text": "-",
+          "normalizedText": "-",
+          "type": "Punctuation",
+          "start": 4,
+          "end": 5
+        },
+        {
+          "text": "ласка",
+          "normalizedText": "ласка",
+          "type": "Word",
+          "start": 5,
+          "end": 10
+        }
+      ]
+    },
+    {
+      "name": "Ukrainian Typography Marks",
+      "input": "«Слово» — це сила; „текст“ – також.",
+      "expected": [
+        {
+          "text": "«",
+          "normalizedText": "«",
+          "type": "Punctuation",
+          "start": 0,
+          "end": 1
+        },
+        {
+          "text": "Слово",
+          "normalizedText": "слово",
+          "type": "Word",
+          "start": 1,
+          "end": 6
+        },
+        {
+          "text": "»",
+          "normalizedText": "»",
+          "type": "Punctuation",
+          "start": 6,
+          "end": 7
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 7,
+          "end": 8
+        },
+        {
+          "text": "—",
+          "normalizedText": "—",
+          "type": "Punctuation",
+          "start": 8,
+          "end": 9
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 9,
+          "end": 10
+        },
+        {
+          "text": "це",
+          "normalizedText": "це",
+          "type": "Word",
+          "start": 10,
+          "end": 12
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 12,
+          "end": 13
+        },
+        {
+          "text": "сила",
+          "normalizedText": "сила",
+          "type": "Word",
+          "start": 13,
+          "end": 17
+        },
+        {
+          "text": ";",
+          "normalizedText": ";",
+          "type": "Punctuation",
+          "start": 17,
+          "end": 18
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 18,
+          "end": 19
+        },
+        {
+          "text": "„",
+          "normalizedText": "„",
+          "type": "Punctuation",
+          "start": 19,
+          "end": 20
+        },
+        {
+          "text": "текст",
+          "normalizedText": "текст",
+          "type": "Word",
+          "start": 20,
+          "end": 25
+        },
+        {
+          "text": "“",
+          "normalizedText": "“",
+          "type": "Punctuation",
+          "start": 25,
+          "end": 26
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 26,
+          "end": 27
+        },
+        {
+          "text": "–",
+          "normalizedText": "–",
+          "type": "Punctuation",
+          "start": 27,
+          "end": 28
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 28,
+          "end": 29
+        },
+        {
+          "text": "також",
+          "normalizedText": "також",
+          "type": "Word",
+          "start": 29,
+          "end": 34
+        },
+        {
+          "text": ".",
+          "normalizedText": ".",
+          "type": "Punctuation",
+          "start": 34,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "name": "Specific Ukrainian Letters Normalization",
+      "input": "ҐУДЗИК ЄНОТ ЇЖАК ІНДИК",
+      "expected": [
+        {
+          "text": "ҐУДЗИК",
+          "normalizedText": "ґудзик",
+          "type": "Word",
+          "start": 0,
+          "end": 6
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 6,
+          "end": 7
+        },
+        {
+          "text": "ЄНОТ",
+          "normalizedText": "єнот",
+          "type": "Word",
+          "start": 7,
+          "end": 11
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 11,
+          "end": 12
+        },
+        {
+          "text": "ЇЖАК",
+          "normalizedText": "їжак",
+          "type": "Word",
+          "start": 12,
+          "end": 16
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 16,
+          "end": 17
+        },
+        {
+          "text": "ІНДИК",
+          "normalizedText": "індик",
+          "type": "Word",
+          "start": 17,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "name": "Edge Case: Dangling Apostrophes",
+      "input": "'Слово'",
+      "expected": [
+        {
+          "text": "'",
+          "normalizedText": "'",
+          "type": "Punctuation",
+          "start": 0,
+          "end": 1
+        },
+        {
+          "text": "Слово",
+          "normalizedText": "слово",
+          "type": "Word",
+          "start": 1,
+          "end": 6
+        },
+        {
+          "text": "'",
+          "normalizedText": "'",
+          "type": "Punctuation",
+          "start": 6,
+          "end": 7
+        }
+      ]
+    }
+  ]
+}

@@ -1,63 +1,86 @@
-﻿using Pero.Abstractions.Contracts;
+﻿using System.Text;
+using Pero.Abstractions.Contracts;
 using Pero.Abstractions.Models;
 
 namespace Pero.Kernel.Components;
 
-/// <summary>
-/// An abstract base class providing a default implementation for splitting
-/// a raw text fragment into Words, Whitespace, and Punctuation tokens.
-/// Language-specific tokenizers should inherit from this class.
-/// </summary>
 public abstract class BaseTokenizer : ITokenizer
 {
+	private const char _dotCharacter = '.';
+	private const int _ellipsisLength = 3;
+
 	public IEnumerable<Token> Tokenize(TextFragment fragment)
 	{
-		if (fragment.Type != FragmentType.Raw)
-		{
-			// This tokenizer is only designed to handle raw text fragments.
-			// Technical fragments are handled by the pipeline directly.
-			yield break;
-		}
+		if (fragment.Type != FragmentType.Raw) yield break;
 
-		int cursor = 0;
 		var text = fragment.Text;
+		var cursor = 0;
 
 		while (cursor < text.Length)
 		{
-			var character = text[cursor];
+			if (!Rune.TryGetRuneAt(text, cursor, out var rune))
+				rune = new Rune(text[cursor]);
+
 			var start = cursor;
 
-			if (char.IsWhiteSpace(character))
+			if (Rune.IsWhiteSpace(rune))
 			{
-				while (cursor < text.Length && char.IsWhiteSpace(text[cursor]))
-				{
-					cursor++;
-				}
-				var value = text.Substring(start, cursor - start);
-				yield return new Token(value, value, TokenType.Whitespace, fragment.Start + start, fragment.Start + cursor);
+				cursor = ConsumeWhile(text, cursor, (t, c, r) => Rune.IsWhiteSpace(r));
+				yield return CreateToken(text, start, cursor, fragment.Start, TokenType.Whitespace);
 			}
-			else if (IsWordCharacter(character))
+			else if (Rune.IsDigit(rune))
 			{
-				while (cursor < text.Length && IsWordCharacter(text[cursor]))
-				{
-					cursor++;
-				}
-				var value = text.Substring(start, cursor - start);
-				yield return new Token(value, value.ToLowerInvariant(), TokenType.Word, fragment.Start + start, fragment.Start + cursor);
+				cursor = ConsumeWhile(text, cursor, (t, c, r) => Rune.IsDigit(r));
+				yield return CreateToken(text, start, cursor, fragment.Start, TokenType.Number);
 			}
-			else // Assume Punctuation or Symbol
+			else if (IsWordCharacter(text, cursor, rune))
 			{
-				// TODO: More sophisticated symbol/punctuation grouping could be added here.
-				cursor++;
-				var value = text.Substring(start, 1);
-				yield return new Token(value, value, TokenType.Punctuation, fragment.Start + start, fragment.Start + cursor);
+				cursor = ConsumeWhile(text, cursor, IsWordCharacter);
+				yield return CreateToken(text, start, cursor, fragment.Start, TokenType.Word, normalize: true);
+			}
+			else if (Rune.IsPunctuation(rune))
+			{
+				cursor = ConsumePunctuation(text, cursor, rune);
+				yield return CreateToken(text, start, cursor, fragment.Start, TokenType.Punctuation);
+			}
+			else
+			{
+				cursor += rune.Utf16SequenceLength;
+				yield return CreateToken(text, start, cursor, fragment.Start, TokenType.Symbol);
 			}
 		}
 	}
 
-	/// <summary>
-	/// When overridden in a derived class, determines if a character is part
-	/// of a word. This allows language-specific handling of apostrophes or hyphens.
-	/// </summary>
-	protected abstract bool IsWordCharacter(char c);
+	protected abstract bool IsWordCharacter(string text, int cursor, Rune rune);
+
+	protected virtual string NormalizeWord(string word) => word.ToLowerInvariant();
+
+	private static int ConsumeWhile(string text, int startCursor, Func<string, int, Rune, bool> predicate)
+	{
+		var cursor = startCursor;
+
+		while (cursor < text.Length && Rune.TryGetRuneAt(text, cursor, out var next) && predicate(text, cursor, next))
+			cursor += next.Utf16SequenceLength;
+
+		return cursor;
+	}
+
+	private static int ConsumePunctuation(string text, int cursor, Rune currentRune)
+	{
+		var hasEllipsis = currentRune.Value == _dotCharacter
+			&& cursor + (_ellipsisLength - 1) < text.Length
+			&& text[cursor + 1] == _dotCharacter
+			&& text[cursor + 2] == _dotCharacter;
+
+		if (hasEllipsis) return cursor + _ellipsisLength;
+
+		return cursor + currentRune.Utf16SequenceLength;
+	}
+
+	private Token CreateToken(string text, int start, int end, int offset, TokenType type, bool normalize = false)
+	{
+		var value = text.Substring(start, end - start);
+		var normalized = normalize ? NormalizeWord(value) : value;
+		return new Token(value, normalized, type, offset + start, offset + end);
+	}
 }

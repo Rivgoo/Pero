@@ -4,8 +4,14 @@
     <Project Path="src/Pero.Kernel/Pero.Kernel.csproj" />
     <Project Path="src/Pero.WasmHost/Pero.WasmHost.csproj" />
   </Folder>
+  <Folder Name="/src/languages/">
+    <Project Path="src/languages/Pero.Languages.Uk_UA/Pero.Languages.Uk_UA.csproj" Id="83269255-c91d-4e98-a51d-98a0fee33518" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Pero.Testing.Shared/Pero.Testing.Shared.csproj" Id="78b4166c-1350-4183-9567-6b03002fa33f" />
     <Project Path="tests/Pero.Tests.Kernel/Pero.Tests.Kernel.csproj" Id="bc1abaf9-2927-4a50-862b-eeaaf3c0a974" />
+  </Folder>
+  <Folder Name="/tests/languages/">
+    <Project Path="tests/languages/Pero.Tests.Languages.Uk_UA/Pero.Tests.Languages.Uk_UA.csproj" Id="97fca7da-b5b0-4c59-b547-edf561a88109" />
   </Folder>
 </Solution>

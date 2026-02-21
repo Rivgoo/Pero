@@ -1,0 +1,383 @@
+﻿{
+  "description": "Exhaustive tests for the language-agnostic BaseTokenizer. Focuses on exhaustive punctuation, Unicode symbols, surrogate pairs, and character boundaries.",
+  "cases": [
+    {
+      "name": "Standard Sentence",
+      "input": "Hello, world!",
+      "expected": [
+        {
+          "text": "Hello",
+          "normalizedText": "hello",
+          "type": "Word",
+          "start": 0,
+          "end": 5
+        },
+        {
+          "text": ",",
+          "normalizedText": ",",
+          "type": "Punctuation",
+          "start": 5,
+          "end": 6
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 6,
+          "end": 7
+        },
+        {
+          "text": "world",
+          "normalizedText": "world",
+          "type": "Word",
+          "start": 7,
+          "end": 12
+        },
+        {
+          "text": "!",
+          "normalizedText": "!",
+          "type": "Punctuation",
+          "start": 12,
+          "end": 13
+        }
+      ]
+    },
+    {
+      "name": "Exhaustive ASCII Punctuation",
+      "input": "!\"#%&'(),-./:;?@[\\]_{}",
+      "expected": [
+        {
+          "text": "!",
+          "normalizedText": "!",
+          "type": "Punctuation",
+          "start": 0,
+          "end": 1
+        },
+        {
+          "text": "\"",
+          "normalizedText": "\"",
+          "type": "Punctuation",
+          "start": 1,
+          "end": 2
+        },
+        {
+          "text": "#",
+          "normalizedText": "#",
+          "type": "Punctuation",
+          "start": 2,
+          "end": 3
+        },
+        {
+          "text": "%",
+          "normalizedText": "%",
+          "type": "Punctuation",
+          "start": 3,
+          "end": 4
+        },
+        {
+          "text": "&",
+          "normalizedText": "&",
+          "type": "Punctuation",
+          "start": 4,
+          "end": 5
+        },
+        {
+          "text": "'",
+          "normalizedText": "'",
+          "type": "Punctuation",
+          "start": 5,
+          "end": 6
+        },
+        {
+          "text": "(",
+          "normalizedText": "(",
+          "type": "Punctuation",
+          "start": 6,
+          "end": 7
+        },
+        {
+          "text": ")",
+          "normalizedText": ")",
+          "type": "Punctuation",
+          "start": 7,
+          "end": 8
+        },
+        {
+          "text": ",",
+          "normalizedText": ",",
+          "type": "Punctuation",
+          "start": 8,
+          "end": 9
+        },
+        {
+          "text": "-",
+          "normalizedText": "-",
+          "type": "Punctuation",
+          "start": 9,
+          "end": 10
+        },
+        {
+          "text": ".",
+          "normalizedText": ".",
+          "type": "Punctuation",
+          "start": 10,
+          "end": 11
+        },
+        {
+          "text": "/",
+          "normalizedText": "/",
+          "type": "Punctuation",
+          "start": 11,
+          "end": 12
+        },
+        {
+          "text": ":",
+          "normalizedText": ":",
+          "type": "Punctuation",
+          "start": 12,
+          "end": 13
+        },
+        {
+          "text": ";",
+          "normalizedText": ";",
+          "type": "Punctuation",
+          "start": 13,
+          "end": 14
+        },
+        {
+          "text": "?",
+          "normalizedText": "?",
+          "type": "Punctuation",
+          "start": 14,
+          "end": 15
+        },
+        {
+          "text": "@",
+          "normalizedText": "@",
+          "type": "Punctuation",
+          "start": 15,
+          "end": 16
+        },
+        {
+          "text": "[",
+          "normalizedText": "[",
+          "type": "Punctuation",
+          "start": 16,
+          "end": 17
+        },
+        {
+          "text": "\\",
+          "normalizedText": "\\",
+          "type": "Punctuation",
+          "start": 17,
+          "end": 18
+        },
+        {
+          "text": "]",
+          "normalizedText": "]",
+          "type": "Punctuation",
+          "start": 18,
+          "end": 19
+        },
+        {
+          "text": "_",
+          "normalizedText": "_",
+          "type": "Punctuation",
+          "start": 19,
+          "end": 20
+        },
+        {
+          "text": "{",
+          "normalizedText": "{",
+          "type": "Punctuation",
+          "start": 20,
+          "end": 21
+        },
+        {
+          "text": "}",
+          "normalizedText": "}",
+          "type": "Punctuation",
+          "start": 21,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "name": "Math and Currency Symbols",
+      "input": "$+<=>^|~",
+      "expected": [
+        {
+          "text": "$",
+          "normalizedText": "$",
+          "type": "Symbol",
+          "start": 0,
+          "end": 1
+        },
+        {
+          "text": "+",
+          "normalizedText": "+",
+          "type": "Symbol",
+          "start": 1,
+          "end": 2
+        },
+        {
+          "text": "<",
+          "normalizedText": "<",
+          "type": "Symbol",
+          "start": 2,
+          "end": 3
+        },
+        {
+          "text": "=",
+          "normalizedText": "=",
+          "type": "Symbol",
+          "start": 3,
+          "end": 4
+        },
+        {
+          "text": ">",
+          "normalizedText": ">",
+          "type": "Symbol",
+          "start": 4,
+          "end": 5
+        },
+        {
+          "text": "^",
+          "normalizedText": "^",
+          "type": "Symbol",
+          "start": 5,
+          "end": 6
+        },
+        {
+          "text": "|",
+          "normalizedText": "|",
+          "type": "Symbol",
+          "start": 6,
+          "end": 7
+        },
+        {
+          "text": "~",
+          "normalizedText": "~",
+          "type": "Symbol",
+          "start": 7,
+          "end": 8
+        }
+      ]
+    },
+    {
+      "name": "Number Grouping",
+      "input": "Item 42.",
+      "expected": [
+        {
+          "text": "Item",
+          "normalizedText": "item",
+          "type": "Word",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 4,
+          "end": 5
+        },
+        {
+          "text": "42",
+          "normalizedText": "42",
+          "type": "Number",
+          "start": 5,
+          "end": 7
+        },
+        {
+          "text": ".",
+          "normalizedText": ".",
+          "type": "Punctuation",
+          "start": 7,
+          "end": 8
+        }
+      ]
+    },
+    {
+      "name": "Exact Ellipsis Processing",
+      "input": "Wait...",
+      "expected": [
+        {
+          "text": "Wait",
+          "normalizedText": "wait",
+          "type": "Word",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "text": "...",
+          "normalizedText": "...",
+          "type": "Punctuation",
+          "start": 4,
+          "end": 7
+        }
+      ]
+    },
+    {
+      "name": "Overextended Ellipsis",
+      "input": "Wait....",
+      "expected": [
+        {
+          "text": "Wait",
+          "normalizedText": "wait",
+          "type": "Word",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "text": "...",
+          "normalizedText": "...",
+          "type": "Punctuation",
+          "start": 4,
+          "end": 7
+        },
+        {
+          "text": ".",
+          "normalizedText": ".",
+          "type": "Punctuation",
+          "start": 7,
+          "end": 8
+        }
+      ]
+    },
+    {
+      "name": "Surrogate Pairs (Emojis)",
+      "input": "Go 🚀!",
+      "expected": [
+        {
+          "text": "Go",
+          "normalizedText": "go",
+          "type": "Word",
+          "start": 0,
+          "end": 2
+        },
+        {
+          "text": " ",
+          "normalizedText": " ",
+          "type": "Whitespace",
+          "start": 2,
+          "end": 3
+        },
+        {
+          "text": "🚀",
+          "normalizedText": "🚀",
+          "type": "Symbol",
+          "start": 3,
+          "end": 5
+        },
+        {
+          "text": "!",
+          "normalizedText": "!",
+          "type": "Punctuation",
+          "start": 5,
+          "end": 6
+        }
+      ]
+    }
+  ]
+}

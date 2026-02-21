@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
-using Pero.Abstractions;
 using Pero.Abstractions.Constants;
 using Pero.Abstractions.Transport;
 using Pero.Kernel;
