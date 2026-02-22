@@ -8,12 +8,11 @@ namespace Pero.Languages.Uk_UA.Dictionaries.Builder;
 
 public class DictionaryCompiler
 {
-	public void Compile(IEnumerable<string> rawDictionaryLines, Stream outputStream)
+	public void Compile(IEnumerable<string> rawDictionaryLines, Stream outputStream, IReadOnlyDictionary<string, byte>? frequencies = null)
 	{
 		var tagsetRegistry = new Dictionary<MorphologyTagset, ushort>();
 		var tagsetList = new List<MorphologyTagset>();
 
-		// String Pool Builder
 		var suffixPoolBuilder = new StringBuilder();
 		var suffixRegistry = new Dictionary<string, (uint Offset, byte Length)>();
 
@@ -33,7 +32,6 @@ public class DictionaryCompiler
 			var lemma = parts[1];
 			var tagString = parts[2];
 
-			// 1. Tagset
 			var tagset = UkTagParser.Parse(tagString);
 			if (!tagsetRegistry.TryGetValue(tagset, out var tagId))
 			{
@@ -42,7 +40,6 @@ public class DictionaryCompiler
 				tagsetList.Add(tagset);
 			}
 
-			// 2. Rule & Suffix Pool
 			var tempRule = RuleGenerator.Generate(form, lemma, tagId);
 
 			if (!suffixRegistry.TryGetValue(tempRule.AddSuffix, out var suffixInfo))
@@ -74,8 +71,7 @@ public class DictionaryCompiler
 		{
 			if (entry.Form != currentForm && currentForm != string.Empty)
 			{
-				builder.Insert(currentForm, new FstPayload(1, currentRuleIds.ToArray()));
-				currentRuleIds.Clear();
+				InsertIntoBuilder(builder, currentForm, currentRuleIds, frequencies);
 			}
 			currentForm = entry.Form;
 			currentRuleIds.Add(entry.RuleId);
@@ -83,7 +79,7 @@ public class DictionaryCompiler
 
 		if (currentForm != string.Empty)
 		{
-			builder.Insert(currentForm, new FstPayload(1, currentRuleIds.ToArray()));
+			InsertIntoBuilder(builder, currentForm, currentRuleIds, frequencies);
 		}
 
 		var rootNode = builder.Finish();
@@ -92,12 +88,23 @@ public class DictionaryCompiler
 		WriteFlatBinary(outputStream, tagsetList, ruleList, suffixPool, rootNode);
 	}
 
+	private void InsertIntoBuilder(DawgBuilder builder, string form, List<ushort> ruleIds, IReadOnlyDictionary<string, byte>? frequencies)
+	{
+		byte freq = 0;
+		if (frequencies != null && frequencies.TryGetValue(form, out var foundFreq))
+		{
+			freq = foundFreq;
+		}
+
+		builder.Insert(form, new FstPayload(freq, ruleIds.ToArray()));
+		ruleIds.Clear();
+	}
+
 	private void WriteFlatBinary(Stream outputStream, List<MorphologyTagset> tagsets, List<FlatMorphologyRule> rules, string suffixPool, FstNode root)
 	{
 		using var brotliStream = new BrotliStream(outputStream, CompressionLevel.SmallestSize, true);
 		using var writer = new BinaryWriter(brotliStream, Encoding.UTF8);
 
-		// Two-pass FST layout to calculate exact byte offsets
 		var nodeList = new List<FstNode>();
 		var nodeOffsets = new Dictionary<FstNode, uint>();
 		uint currentOffset = 0;
@@ -106,7 +113,7 @@ public class DictionaryCompiler
 		{
 			if (nodeOffsets.ContainsKey(node)) return;
 
-			nodeOffsets[node] = 0; // Placeholder
+			nodeOffsets[node] = 0;
 			nodeList.Add(node);
 
 			foreach (var child in node.Arcs.Values) CollectNodes(child);
@@ -114,21 +121,19 @@ public class DictionaryCompiler
 
 		CollectNodes(root);
 
-		// Calculate exact byte size for each node
 		foreach (var node in nodeList)
 		{
 			nodeOffsets[node] = currentOffset;
-
-			currentOffset += 2; // Flags (1 byte) + ArcCount (1 byte)
+			currentOffset += 2;
 
 			if (node.IsFinal && node.Payload != null)
 			{
-				currentOffset += 1; // Frequency
-				currentOffset += 2; // RuleCount
-				currentOffset += (uint)(node.Payload.RuleIds.Length * 2); // RuleIds
+				currentOffset += 1;
+				currentOffset += 2;
+				currentOffset += (uint)(node.Payload.RuleIds.Length * 2);
 			}
 
-			currentOffset += (uint)(node.Arcs.Count * 6); // Char (2 bytes) + TargetOffset (4 bytes) per arc
+			currentOffset += (uint)(node.Arcs.Count * 6);
 		}
 
 		var header = new BinaryDictionaryHeader((uint)tagsets.Count, (uint)rules.Count, currentOffset);
@@ -139,7 +144,6 @@ public class DictionaryCompiler
 		writer.Write(header.RulesCount);
 		writer.Write(header.FstSize);
 
-		// Write Tagsets
 		foreach (var t in tagsets)
 		{
 			writer.Write((byte)t.PartOfSpeech);
@@ -153,12 +157,10 @@ public class DictionaryCompiler
 			writer.Write((ushort)t.Features);
 		}
 
-		// Write Suffix Pool
 		var suffixBytes = Encoding.UTF8.GetBytes(suffixPool);
 		writer.Write((uint)suffixBytes.Length);
 		writer.Write(suffixBytes);
 
-		// Write Rules
 		foreach (var r in rules)
 		{
 			writer.Write(r.CutLength);
@@ -167,7 +169,6 @@ public class DictionaryCompiler
 			writer.Write(r.TagId);
 		}
 
-		// Write Flattened FST
 		foreach (var node in nodeList)
 		{
 			byte flags = 0;

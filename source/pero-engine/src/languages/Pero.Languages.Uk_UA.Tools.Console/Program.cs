@@ -13,5 +13,17 @@ else
 	Console.InputEncoding = Encoding.UTF8;
 }
 
-var app = new Application();
-app.Run();
+try
+{
+	var app = new Application();
+	app.Run();
+}
+catch (Exception ex)
+{
+	Console.ForegroundColor = ConsoleColor.Red;
+	Console.WriteLine("\n[CRITICAL ERROR] The application crashed:");
+	Console.WriteLine(ex.ToString());
+	Console.ResetColor();
+	Console.WriteLine("\nPress any key to exit...");
+	Console.ReadKey(intercept: true);
+}

@@ -19,12 +19,19 @@ public class FileLocator
 	public IReadOnlyList<string> FindCompiledDictionaries()
 	{
 		var compiledDir = GetCompiledDirectoryPath();
-		if (!Directory.Exists(compiledDir))
+		if (!Directory.Exists(compiledDir)) return Array.Empty<string>();
+
+		return Directory.GetFiles(compiledDir, AppConstants.DictionaryFileExtension);
+	}
+
+	public IReadOnlyList<string> GetCorpusFiles(string directoryPath)
+	{
+		if (string.IsNullOrWhiteSpace(directoryPath) || !Directory.Exists(directoryPath))
 		{
 			return Array.Empty<string>();
 		}
 
-		return Directory.GetFiles(compiledDir, AppConstants.DictionaryFileExtension);
+		return Directory.GetFiles(directoryPath, AppConstants.TextFileExtension, SearchOption.AllDirectories);
 	}
 
 	public string GetOutputPath(string sourceFileName)

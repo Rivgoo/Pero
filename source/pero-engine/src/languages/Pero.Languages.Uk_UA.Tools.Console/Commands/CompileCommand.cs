@@ -34,23 +34,61 @@ public class CompileCommand
 		var selectedIndex = _ui.SelectOption("Select a source file to compile", fileNames);
 		var selectedFile = textFiles[selectedIndex];
 
+		IReadOnlyDictionary<string, byte>? quantizedFrequencies = null;
+
+		var corpusDir = _ui.PromptInput("Enter path to corpus directory for frequency analysis (leave empty to skip)");
+		var corpusFiles = _fileLocator.GetCorpusFiles(corpusDir ?? string.Empty);
+
+		if (corpusFiles.Count > 0)
+		{
+			_ui.ShowMessage($"\nFound {corpusFiles.Count} text files in corpus. Analyzing frequencies (Parallel)...");
+			var stopwatchFreq = Stopwatch.StartNew();
+
+			var analyzer = new CorpusAnalyzer();
+			var rawFreqs = analyzer.Analyze(corpusFiles, (current, total) =>
+			{
+				System.Console.Write($"\rProcessed {current}/{total} files...");
+			});
+
+			System.Console.WriteLine();
+			_ui.ShowMessage("Quantizing frequencies...");
+
+			var quantizer = new FrequencyQuantizer();
+			quantizedFrequencies = quantizer.Quantize(rawFreqs);
+
+			stopwatchFreq.Stop();
+			_ui.ShowSuccess($"Frequency analysis complete in {stopwatchFreq.Elapsed.TotalSeconds:F1} s. Found {rawFreqs.Count} unique words.");
+
+			// Free massive memory structures before FST building
+			rawFreqs = null;
+			ForceGarbageCollection();
+		}
+		else if (!string.IsNullOrWhiteSpace(corpusDir))
+		{
+			_ui.ShowError("Directory not found or empty. Proceeding without frequency analysis.");
+		}
+
 		var outputPath = _fileLocator.GetOutputPath(selectedFile);
 
 		_ui.ShowMessage($"\nReading source: {selectedFile}");
 		_ui.ShowMessage($"Target output: {outputPath}");
-		_ui.ShowMessage("\nCompiling... This may take a minute.");
+		_ui.ShowMessage("\nCompiling (Phase 1: Parsing)...");
 
-		var stopwatch = Stopwatch.StartNew();
+		var stopwatchCompile = Stopwatch.StartNew();
 
 		try
 		{
 			var lines = File.ReadLines(selectedFile);
 
 			using var fileStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
-			_compiler.Compile(lines, fileStream);
 
-			stopwatch.Stop();
-			_ui.ShowSuccess($"Compilation finished in {stopwatch.ElapsedMilliseconds} ms.");
+			// Added UI callbacks inside compiler if needed, but for now we rely on explicit messages
+			_ui.ShowMessage("Compiling (Phase 2: Sorting and Building FST Graph)... This will take heavy CPU usage.");
+
+			_compiler.Compile(lines, fileStream, quantizedFrequencies);
+
+			stopwatchCompile.Stop();
+			_ui.ShowSuccess($"Compilation finished in {stopwatchCompile.Elapsed.TotalSeconds:F1} s.");
 			_ui.ShowMessage($"Output file size: {new FileInfo(outputPath).Length / 1024.0 / 1024.0:F2} MB");
 		}
 		catch (Exception ex)
@@ -59,5 +97,13 @@ public class CompileCommand
 		}
 
 		_ui.WaitForKey();
+		ForceGarbageCollection();
+	}
+
+	private static void ForceGarbageCollection()
+	{
+		GC.Collect();
+		GC.WaitForPendingFinalizers();
+		GC.Collect();
 	}
 }
