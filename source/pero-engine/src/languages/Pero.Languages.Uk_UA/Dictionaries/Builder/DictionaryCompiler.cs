@@ -102,8 +102,8 @@ public class DictionaryCompiler
 
 	private void WriteFlatBinary(Stream outputStream, List<MorphologyTagset> tagsets, List<FlatMorphologyRule> rules, string suffixPool, FstNode root)
 	{
-		using var brotliStream = new BrotliStream(outputStream, CompressionLevel.SmallestSize, true);
-		using var writer = new BinaryWriter(brotliStream, Encoding.UTF8);
+		using var deflateStream = new DeflateStream(outputStream, CompressionLevel.SmallestSize, true);
+		using var writer = new BinaryWriter(deflateStream, Encoding.UTF8);
 
 		var nodeList = new List<FstNode>();
 		var nodeOffsets = new Dictionary<FstNode, uint>();

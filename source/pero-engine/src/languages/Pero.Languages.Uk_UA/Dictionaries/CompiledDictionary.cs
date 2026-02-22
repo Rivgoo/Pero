@@ -20,12 +20,14 @@ public class CompiledDictionary
 
 	public void Load(Stream inputStream)
 	{
-		using var brotliStream = new BrotliStream(inputStream, CompressionMode.Decompress, true);
-		using var reader = new BinaryReader(brotliStream, Encoding.UTF8);
+		using var deflateStream = new DeflateStream(inputStream, CompressionMode.Decompress, true);
+		using var reader = new BinaryReader(deflateStream, Encoding.UTF8);
 
 		var magic = reader.ReadUInt32();
 		if (magic != BinaryDictionaryHeader.MagicNumber)
+		{
 			throw new InvalidDataException("Invalid dictionary format. Magic number mismatch.");
+		}
 
 		var version = reader.ReadUInt16();
 		var tagsetsCount = reader.ReadUInt32();
@@ -113,7 +115,6 @@ public class CompiledDictionary
 		if (!isFinal || !finalHasPayload) yield break;
 
 		int payloadPtr = (int)currentOffset + 2;
-		// byte frequency = _fstData[payloadPtr];
 		payloadPtr += 1;
 
 		ushort finalRuleCount = BinaryPrimitives.ReadUInt16LittleEndian(_fstData.AsSpan(payloadPtr));

@@ -15,6 +15,14 @@
     "SPELL_RUSSIAN_LETTER": {
       "title": "Російська літера",
       "description": "Знайдено літеру '{char}', якої немає в українській абетці."
+    },
+    "UK_UA_GRAMMAR_ADJ_NOUN_AGREEMENT": {
+      "title": "Граматична помилка",
+      "description": "Прикметник '{adj}' не узгоджується з іменником '{noun}'."
+    },
+    "UK_UA_SPELLING_UNKNOWN_WORD": {
+      "title": "Невідоме слово",
+      "description": "Слово '{word}' не знайдено в словнику."
     }
   }
 }
