@@ -14,20 +14,8 @@ public readonly struct BinaryDictionaryHeader
 
 	public uint Magic { get; }
 	public ushort Version { get; }
-
-	/// <summary>
-	/// Total number of unique Tagsets stored.
-	/// </summary>
 	public uint TagsetsCount { get; }
-
-	/// <summary>
-	/// Total number of unique Morphology Rules stored.
-	/// </summary>
 	public uint RulesCount { get; }
-
-	/// <summary>
-	/// Size in bytes of the serialized FST graph.
-	/// </summary>
 	public uint FstSize { get; }
 
 	public BinaryDictionaryHeader(uint tagsetsCount, uint rulesCount, uint fstSize)

@@ -64,12 +64,12 @@ public class UkrainianLanguageModule : ILanguageModule
 
 	public ISpellChecker CreateSpellChecker()
 	{
-		return new UkrainianSpellChecker(_fuzzyMatcher);
+		return new UkrainianSpellChecker(_fuzzyMatcher, _lexicon);
 	}
 
 	public IEnumerable<IRule> GetRules()
 	{
 		yield return new MixedAlphabetRule();
-		yield return new AdjectiveNounAgreementRule();
+		//yield return new AdjectiveNounAgreementRule();
 	}
 }

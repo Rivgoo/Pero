@@ -4,27 +4,33 @@ using Pero.Kernel.Utils;
 
 namespace Pero.Languages.Uk_UA.Rules.Spelling;
 
+/// <summary>
+/// Detects words that illegally mix Cyrillic and Latin alphabets.
+/// Generates corrections using both Visual Homoglyph mapping and Keyboard Layout mapping.
+/// </summary>
 public class MixedAlphabetRule : BaseGrammarRule
 {
 	public override string Id => "UK_UA_SPELLING_MIXED_ALPHABETS";
 	public override IssueCategory Category => IssueCategory.Spelling;
 	public override IssueSeverity Severity => IssueSeverity.Warning;
 
-	private static readonly Dictionary<char, char> HomoglyphMap = new()
+	private static readonly Dictionary<char, char> Homoglyphs = new()
 	{
-		{ 'A', 'А' }, { 'a', 'а' },
-		{ 'B', 'В' },
-		{ 'C', 'С' }, { 'c', 'с' },
-		{ 'E', 'Е' }, { 'e', 'е' },
-		{ 'H', 'Н' },
-		{ 'I', 'І' }, { 'i', 'і' },
-		{ 'K', 'К' },
-		{ 'M', 'М' },
-		{ 'O', 'О' }, { 'o', 'о' },
-		{ 'P', 'Р' }, { 'p', 'р' },
-		{ 'T', 'Т' },
-		{ 'X', 'Х' }, { 'x', 'х' },
-		{ 'y', 'у' }
+		{'A', 'А'}, {'a', 'а'}, {'B', 'В'}, {'b', 'в'}, {'C', 'С'}, {'c', 'с'},
+		{'E', 'Е'}, {'e', 'е'}, {'H', 'Н'}, {'i', 'і'}, {'I', 'І'}, {'K', 'К'},
+		{'k', 'к'}, {'M', 'М'}, {'O', 'О'}, {'o', 'о'}, {'P', 'Р'}, {'p', 'р'},
+		{'T', 'Т'}, {'X', 'Х'}, {'x', 'х'}, {'y', 'у'}, {'Y', 'У'}
+	};
+
+	// (QWERTY -> ЙЦУКЕН)
+	private static readonly Dictionary<char, char> Layout = new()
+	{
+		{'q', 'й'}, {'w', 'ц'}, {'e', 'у'}, {'r', 'к'}, {'t', 'е'}, {'y', 'н'}, {'u', 'г'}, {'i', 'ш'}, {'o', 'щ'}, {'p', 'з'}, {'[', 'х'}, {']', 'ї'},
+		{'a', 'ф'}, {'s', 'і'}, {'d', 'в'}, {'f', 'а'}, {'g', 'п'}, {'h', 'р'}, {'j', 'о'}, {'k', 'л'}, {'l', 'д'}, {';', 'ж'}, {'\'', 'є'},
+		{'z', 'я'}, {'x', 'ч'}, {'c', 'с'}, {'v', 'м'}, {'b', 'и'}, {'n', 'т'}, {'m', 'ь'}, {',', 'б'}, {'.', 'ю'},
+		{'Q', 'Й'}, {'W', 'Ц'}, {'E', 'У'}, {'R', 'К'}, {'T', 'Е'}, {'Y', 'Н'}, {'U', 'Г'}, {'I', 'Ш'}, {'O', 'Щ'}, {'P', 'З'}, {'{', 'Х'}, {'}', 'Ї'},
+		{'A', 'Ф'}, {'S', 'І'}, {'D', 'В'}, {'F', 'А'}, {'G', 'П'}, {'H', 'Р'}, {'J', 'О'}, {'K', 'Л'}, {'L', 'Д'}, {':', 'Ж'}, {'"', 'Є'},
+		{'Z', 'Я'}, {'X', 'Ч'}, {'C', 'С'}, {'V', 'М'}, {'B', 'И'}, {'N', 'Т'}, {'M', 'Ь'}, {'<', 'Б'}, {'>', 'Ю'}
 	};
 
 	protected override IEnumerable<TextIssue> Analyze(Sentence sentence)
@@ -33,62 +39,88 @@ public class MixedAlphabetRule : BaseGrammarRule
 		{
 			if (IsTechnical(token) || token.Type != TokenType.Word) continue;
 
-			if (HasMixedAlphabets(token.Text, out bool isFixable))
+			var suggestions = GetFixes(token.Text);
+			if (suggestions.Count > 0)
 			{
-				var suggestions = new List<string>();
-
-				if (isFixable)
-				{
-					string fixedWord = ReplaceHomoglyphs(token.Text);
-					suggestions.Add(fixedWord);
-				}
-
 				yield return IssueFactory.CreateFrom(token, Id, Category, suggestions);
 			}
 		}
 	}
 
-	private static bool HasMixedAlphabets(string word, out bool isFixable)
+	private static List<string> GetFixes(string word)
 	{
 		bool hasCyrillic = false;
 		bool hasLatin = false;
-		bool containsOnlyKnownHomoglyphs = true;
 
 		foreach (char c in word)
 		{
-			if (!char.IsLetter(c)) continue;
+			if (IsCyrillic(c)) hasCyrillic = true;
+			else if (IsLatin(c)) hasLatin = true;
+		}
 
-			if ((c >= '\u0400' && c <= '\u04FF') || (c >= '\u0500' && c <= '\u052F'))
+		var suggestions = new List<string>();
+
+		if (hasCyrillic && hasLatin)
+		{
+			bool canFixHomoglyphs = true;
+			char[] homoglyphFix = word.ToCharArray();
+
+			for (int i = 0; i < homoglyphFix.Length; i++)
 			{
-				hasCyrillic = true;
+				if (IsLatin(homoglyphFix[i]))
+				{
+					if (Homoglyphs.TryGetValue(homoglyphFix[i], out char ukrChar))
+					{
+						homoglyphFix[i] = ukrChar;
+					}
+					else
+					{
+						canFixHomoglyphs = false;
+						break;
+					}
+				}
 			}
 
-			else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+			if (canFixHomoglyphs)
 			{
-				hasLatin = true;
-				if (!HomoglyphMap.ContainsKey(c))
+				suggestions.Add(new string(homoglyphFix));
+			}
+
+			char[] layoutFix = word.ToCharArray();
+			bool layoutChanged = false;
+
+			for (int i = 0; i < layoutFix.Length; i++)
+			{
+				if (IsLatin(layoutFix[i]))
 				{
-					containsOnlyKnownHomoglyphs = false;
+					if (Layout.TryGetValue(layoutFix[i], out char ukrChar))
+					{
+						layoutFix[i] = ukrChar;
+						layoutChanged = true;
+					}
+				}
+			}
+
+			if (layoutChanged)
+			{
+				string lFix = new string(layoutFix);
+				if (!suggestions.Contains(lFix))
+				{
+					suggestions.Add(lFix);
 				}
 			}
 		}
 
-		bool isMixed = hasCyrillic && hasLatin;
-		isFixable = isMixed && containsOnlyKnownHomoglyphs;
-
-		return isMixed;
+		return suggestions;
 	}
 
-	private static string ReplaceHomoglyphs(string mixedWord)
+	private static bool IsCyrillic(char c)
 	{
-		var chars = mixedWord.ToCharArray();
-		for (int i = 0; i < chars.Length; i++)
-		{
-			if (HomoglyphMap.TryGetValue(chars[i], out char cyrillicChar))
-			{
-				chars[i] = cyrillicChar;
-			}
-		}
-		return new string(chars);
+		return (c >= '\u0400' && c <= '\u04FF') || (c >= '\u0500' && c <= '\u052F');
+	}
+
+	private static bool IsLatin(char c)
+	{
+		return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
 	}
 }

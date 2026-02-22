@@ -5,7 +5,7 @@ using Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
 
 namespace Pero.Languages.Uk_UA.Components.Spelling.Context;
 
-public  class ContextRanker
+public class ContextRanker
 {
 	private readonly DocumentSessionCache _sessionCache;
 
@@ -14,9 +14,6 @@ public  class ContextRanker
 		_sessionCache = sessionCache;
 	}
 
-	/// <summary>
-	/// Evaluates all candidates and returns a re-sorted list prioritizing contextually valid words.
-	/// </summary>
 	public IReadOnlyList<CorrectionCandidate> Rank(
 		Sentence sentence,
 		Token errorToken,
@@ -32,34 +29,34 @@ public  class ContextRanker
 			float penalty = 0f;
 			float bonus = 0f;
 
+			// Context rules
 			if (IsPreposition(prevToken, out string prepText))
-			{
 				penalty += EvaluatePrepositionGovernment(prepText, candidate.Tagsets);
-			}
 
 			if (IsAdjective(prevToken, out var adjTags))
-			{
 				penalty += EvaluateAgreement(adjTags, candidate.Tagsets, PartOfSpeech.Noun);
-			}
 			else if (IsNoun(nextToken, out var nounTags))
-			{
 				penalty += EvaluateAgreement(nounTags, candidate.Tagsets, PartOfSpeech.Adjective);
-			}
 
+			// Session cache (word seen elsewhere)
 			bonus += _sessionCache.GetSessionBonus(candidate.Word);
 
-			float adjustedDistance = candidate.Distance + penalty - bonus;
+			// Heuristic bonus (if score was explicitly set low by GenerateHeuristics)
+			if (candidate.Score < -1.0f) bonus += 2.0f;
 
-			if (adjustedDistance < 0f) adjustedDistance = 0f;
+			float adjustedScore = candidate.Score + penalty - bonus;
+
+			// Cap min score to avoid sorting artifacts
+			if (adjustedScore < -10.0f) adjustedScore = -10.0f;
 
 			rankedList.Add(new CorrectionCandidate(
 				candidate.Word,
-				adjustedDistance,
+				candidate.Distance,
 				candidate.Frequency,
+				adjustedScore,
 				candidate.Tagsets));
 		}
 
-		// Resort based on the new, context-adjusted distances
 		rankedList.Sort();
 		return rankedList;
 	}
@@ -67,9 +64,7 @@ public  class ContextRanker
 	private static bool IsPreposition(Token? token, out string text)
 	{
 		text = string.Empty;
-		if (token == null) return false;
-
-		if (token.Morph?.Tagset.PartOfSpeech == PartOfSpeech.Preposition)
+		if (token?.Morph?.Tagset.PartOfSpeech == PartOfSpeech.Preposition)
 		{
 			text = token.NormalizedText;
 			return true;
@@ -99,9 +94,6 @@ public  class ContextRanker
 		return false;
 	}
 
-	/// <summary>
-	/// Penalizes candidates that do not possess the GrammarCase required by the preceding preposition.
-	/// </summary>
 	private static float EvaluatePrepositionGovernment(string preposition, MorphologyTagset[] candidateTags)
 	{
 		var allowedCases = preposition switch
@@ -113,31 +105,21 @@ public  class ContextRanker
 			"по" => new[] { GrammarCase.Locative, GrammarCase.Accusative, GrammarCase.Dative },
 			_ => Array.Empty<GrammarCase>()
 		};
-
 		if (allowedCases.Length == 0) return 0f;
-
-		// Check if any of the candidate's homonyms match the allowed cases
 		bool hasValidCase = candidateTags.Any(tag => allowedCases.Contains(tag.Case));
-
-		// If the word doesn't fit the preposition at all, add a massive penalty.
-		return hasValidCase ? 0f : 2.5f;
+		return hasValidCase ? 0f : 1.0f;
 	}
 
-	/// <summary>
-	/// Penalizes candidates if they are the target Part of Speech but fail to agree in Case/Gender/Number.
-	/// </summary>
 	private static float EvaluateAgreement(MorphologyTagset anchorTag, MorphologyTagset[] candidateTags, PartOfSpeech targetPos)
 	{
 		bool isTargetPosPresent = candidateTags.Any(t => t.PartOfSpeech == targetPos);
-		if (!isTargetPosPresent) return 0f; // Candidate is a completely different POS, let frequency decide
+		if (!isTargetPosPresent) return 0f;
 
 		bool hasAgreement = candidateTags.Any(t =>
 			t.PartOfSpeech == targetPos &&
 			t.Case == anchorTag.Case &&
-			(t.Number == GrammarNumber.Plural || t.Gender == anchorTag.Gender) && // Gender is neutral in plural
+			(t.Number == GrammarNumber.Plural || t.Gender == anchorTag.Gender) &&
 			t.Number == anchorTag.Number);
-
-		// Penalize heavily for broken agreement (e.g., "зелена" + "стіл")
-		return hasAgreement ? 0f : 1.5f;
+		return hasAgreement ? 0f : 0.8f;
 	}
 }

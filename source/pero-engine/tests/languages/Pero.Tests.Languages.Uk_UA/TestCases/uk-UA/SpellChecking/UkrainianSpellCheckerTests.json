@@ -1,0 +1,2599 @@
+﻿{
+  "cases": [
+    {
+      "name": "Transposition",
+      "input": "ардість",
+      "expected": "радість"
+    },
+    {
+      "name": "Transposition",
+      "input": "сноце",
+      "expected": "сонце"
+    },
+    {
+      "name": "Transposition",
+      "input": "втіер",
+      "expected": "вітер"
+    },
+    {
+      "name": "Transposition",
+      "input": "змеля",
+      "expected": "земля"
+    },
+    {
+      "name": "Transposition",
+      "input": "лтіо",
+      "expected": "літо"
+    },
+    {
+      "name": "Transposition",
+      "input": "мрое",
+      "expected": "море"
+    },
+    {
+      "name": "Transposition",
+      "input": "патх",
+      "expected": "птах"
+    },
+    {
+      "name": "Transposition",
+      "input": "солво",
+      "expected": "слово"
+    },
+    {
+      "name": "Transposition",
+      "input": "глоос",
+      "expected": "голос"
+    },
+    {
+      "name": "Transposition",
+      "input": "мсіто",
+      "expected": "місто"
+    },
+    {
+      "name": "Transposition",
+      "input": "деврі",
+      "expected": "двері"
+    },
+    {
+      "name": "Transposition",
+      "input": "вкіно",
+      "expected": "вікно"
+    },
+    {
+      "name": "Transposition",
+      "input": "пїозд",
+      "expected": "поїзд"
+    },
+    {
+      "name": "Transposition",
+      "input": "шклао",
+      "expected": "школа"
+    },
+    {
+      "name": "Transposition",
+      "input": "дреево",
+      "expected": "дерево"
+    },
+    {
+      "name": "Transposition",
+      "input": "дроога",
+      "expected": "дорога"
+    },
+    {
+      "name": "Transposition",
+      "input": "сбоака",
+      "expected": "собака"
+    },
+    {
+      "name": "Transposition",
+      "input": "мшаина",
+      "expected": "машина"
+    },
+    {
+      "name": "Transposition",
+      "input": "лдюина",
+      "expected": "людина"
+    },
+    {
+      "name": "Transposition",
+      "input": "рбоота",
+      "expected": "робота"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "гоина",
+      "expected": "година"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "муика",
+      "expected": "музика"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "баько",
+      "expected": "батько"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "коання",
+      "expected": "кохання"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "буинок",
+      "expected": "будинок"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "дічина",
+      "expected": "дівчина"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "хлоець",
+      "expected": "хлопець"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "телфон",
+      "expected": "телефон"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "кіната",
+      "expected": "кімната"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "вуиця",
+      "expected": "вулиця"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "плаета",
+      "expected": "планета"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "пиання",
+      "expected": "питання"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "ріення",
+      "expected": "рішення"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "повіря",
+      "expected": "повітря"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "дежава",
+      "expected": "держава"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "прорама",
+      "expected": "програма"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "пробема",
+      "expected": "проблема"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "мистцтво",
+      "expected": "мистецтво"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "мабутнє",
+      "expected": "майбутнє"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "ісорія",
+      "expected": "історія"
+    },
+    {
+      "name": "Omission End",
+      "input": "літератур",
+      "expected": "література"
+    },
+    {
+      "name": "Omission End",
+      "input": "економік",
+      "expected": "економіка"
+    },
+    {
+      "name": "Omission End",
+      "input": "відповід",
+      "expected": "відповідь"
+    },
+    {
+      "name": "Omission End",
+      "input": "підприємств",
+      "expected": "підприємство"
+    },
+    {
+      "name": "Omission End",
+      "input": "університе",
+      "expected": "університет"
+    },
+    {
+      "name": "Omission End",
+      "input": "незалежніст",
+      "expected": "незалежність"
+    },
+    {
+      "name": "Omission End",
+      "input": "ден",
+      "expected": "день"
+    },
+    {
+      "name": "Omission End",
+      "input": "лі",
+      "expected": "ліс"
+    },
+    {
+      "name": "Omission End",
+      "input": "кі",
+      "expected": "кіт"
+    },
+    {
+      "name": "Omission End",
+      "input": "ма",
+      "expected": "мак"
+    },
+    {
+      "name": "Omission End",
+      "input": "ду",
+      "expected": "дуб"
+    },
+    {
+      "name": "Omission End",
+      "input": "си",
+      "expected": "сир"
+    },
+    {
+      "name": "Omission End",
+      "input": "да",
+      "expected": "дах"
+    },
+    {
+      "name": "Omission End",
+      "input": "ле",
+      "expected": "лев"
+    },
+    {
+      "name": "Omission End",
+      "input": "ме",
+      "expected": "мед"
+    },
+    {
+      "name": "Omission End",
+      "input": "вод",
+      "expected": "вода"
+    },
+    {
+      "name": "Omission End",
+      "input": "неб",
+      "expected": "небо"
+    },
+    {
+      "name": "Omission End",
+      "input": "пол",
+      "expected": "поле"
+    },
+    {
+      "name": "Omission End",
+      "input": "гор",
+      "expected": "гора"
+    },
+    {
+      "name": "Omission End",
+      "input": "рік",
+      "expected": "ріка"
+    },
+    {
+      "name": "Omission Start",
+      "input": "има",
+      "expected": "зима"
+    },
+    {
+      "name": "Omission Start",
+      "input": "иба",
+      "expected": "риба"
+    },
+    {
+      "name": "Omission Start",
+      "input": "омп'ютер",
+      "expected": "комп'ютер"
+    },
+    {
+      "name": "Omission Start",
+      "input": "успільство",
+      "expected": "суспільство"
+    },
+    {
+      "name": "Omission Start",
+      "input": "онтроль",
+      "expected": "контроль"
+    },
+    {
+      "name": "Omission Start",
+      "input": "арактер",
+      "expected": "характер"
+    },
+    {
+      "name": "Omission Start",
+      "input": "артнерство",
+      "expected": "партнерство"
+    },
+    {
+      "name": "Omission Start",
+      "input": "тіл",
+      "expected": "стіл"
+    },
+    {
+      "name": "Omission Start",
+      "input": "ніг",
+      "expected": "сніг"
+    },
+    {
+      "name": "Omission Start",
+      "input": "рат",
+      "expected": "брат"
+    },
+    {
+      "name": "Omission Start",
+      "input": "естра",
+      "expected": "сестра"
+    },
+    {
+      "name": "Omission Start",
+      "input": "ати",
+      "expected": "мати"
+    },
+    {
+      "name": "Omission Start",
+      "input": "ід",
+      "expected": "дід"
+    },
+    {
+      "name": "Omission Start",
+      "input": "аба",
+      "expected": "баба"
+    },
+    {
+      "name": "Omission Start",
+      "input": "ин",
+      "expected": "син"
+    },
+    {
+      "name": "Omission Start",
+      "input": "очка",
+      "expected": "дочка"
+    },
+    {
+      "name": "Omission Start",
+      "input": "руг",
+      "expected": "друг"
+    },
+    {
+      "name": "Omission Start",
+      "input": "орог",
+      "expected": "ворог"
+    },
+    {
+      "name": "Omission Start",
+      "input": "ир",
+      "expected": "мир"
+    },
+    {
+      "name": "Omission Start",
+      "input": "ійна",
+      "expected": "війна"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "щаастя",
+      "expected": "щастя"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "раддість",
+      "expected": "радість"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "горре",
+      "expected": "горе"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "печчаль",
+      "expected": "печаль"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "смііх",
+      "expected": "сміх"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "плаач",
+      "expected": "плач"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "думмка",
+      "expected": "думка"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "іддея",
+      "expected": "ідея"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "фаакт",
+      "expected": "факт"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "мііф",
+      "expected": "міф"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "праввда",
+      "expected": "правда"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "бреххня",
+      "expected": "брехня"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "доббро",
+      "expected": "добро"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "злло",
+      "expected": "зло"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "світтло",
+      "expected": "світло"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "теммрява",
+      "expected": "темрява"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "деень",
+      "expected": "день"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "нііч",
+      "expected": "ніч"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "раннок",
+      "expected": "ранок"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "веччір",
+      "expected": "вечір"
+    },
+    {
+      "name": "Insertion End",
+      "input": "тижденьь",
+      "expected": "тиждень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "місяцьь",
+      "expected": "місяць"
+    },
+    {
+      "name": "Insertion End",
+      "input": "вівторокк",
+      "expected": "вівторок"
+    },
+    {
+      "name": "Insertion End",
+      "input": "середаа",
+      "expected": "середа"
+    },
+    {
+      "name": "Insertion End",
+      "input": "четверр",
+      "expected": "четвер"
+    },
+    {
+      "name": "Insertion End",
+      "input": "п'ятницяя",
+      "expected": "п'ятниця"
+    },
+    {
+      "name": "Insertion End",
+      "input": "суботаа",
+      "expected": "субота"
+    },
+    {
+      "name": "Insertion End",
+      "input": "неділяя",
+      "expected": "неділя"
+    },
+    {
+      "name": "Insertion End",
+      "input": "січеньь",
+      "expected": "січень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "лютийй",
+      "expected": "лютий"
+    },
+    {
+      "name": "Insertion End",
+      "input": "березеньь",
+      "expected": "березень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "квітеньь",
+      "expected": "квітень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "травеньь",
+      "expected": "травень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "червеньь",
+      "expected": "червень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "липеньь",
+      "expected": "липень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "серпеньь",
+      "expected": "серпень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "вересеньь",
+      "expected": "вересень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "жовтеньь",
+      "expected": "жовтень"
+    },
+    {
+      "name": "Insertion End",
+      "input": "листопадд",
+      "expected": "листопад"
+    },
+    {
+      "name": "Insertion End",
+      "input": "груденьь",
+      "expected": "грудень"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ввесна",
+      "expected": "весна"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "оосінь",
+      "expected": "осінь"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ссніданок",
+      "expected": "сніданок"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ообід",
+      "expected": "обід"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ввечеря",
+      "expected": "вечеря"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "їїжа",
+      "expected": "їжа"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ннапій",
+      "expected": "напій"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ччай",
+      "expected": "чай"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ккава",
+      "expected": "кава"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ммолоко",
+      "expected": "молоко"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ссік",
+      "expected": "сік"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ппиво",
+      "expected": "пиво"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ввино",
+      "expected": "вино"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ххліб",
+      "expected": "хліб"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ммасло",
+      "expected": "масло"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ццукор",
+      "expected": "цукор"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ссіль",
+      "expected": "сіль"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "пперець",
+      "expected": "перець"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "мм'ясо",
+      "expected": "м'ясо"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "кковбаса",
+      "expected": "ковбаса"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "книша",
+      "expected": "книга"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "ручла",
+      "expected": "ручка"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "одівець",
+      "expected": "олівець"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "рапір",
+      "expected": "папір"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "хошит",
+      "expected": "зошит"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "лошка",
+      "expected": "дошка"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "крнйда",
+      "expected": "крейда"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "фапба",
+      "expected": "фарба"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "рензлик",
+      "expected": "пензлик"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "кдей",
+      "expected": "клей"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "гожиці",
+      "expected": "ножиці"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "дінійка",
+      "expected": "лінійка"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "шумка",
+      "expected": "гумка"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "поотфель",
+      "expected": "портфель"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "оюкзак",
+      "expected": "рюкзак"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "кдас",
+      "expected": "клас"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "уоок",
+      "expected": "урок"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "пеоерва",
+      "expected": "перерва"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "ачитель",
+      "expected": "вчитель"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "усень",
+      "expected": "учень"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "лфкар",
+      "expected": "лікар"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "мндсестра",
+      "expected": "медсестра"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "аптнка",
+      "expected": "аптека"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "тпблетка",
+      "expected": "таблетка"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "крппля",
+      "expected": "крапля"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "рнцепт",
+      "expected": "рецепт"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "хвпроба",
+      "expected": "хвороба"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "здпров'я",
+      "expected": "здоров'я"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "лфжко",
+      "expected": "ліжко"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "кпвдра",
+      "expected": "ковдра"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "ппдушка",
+      "expected": "подушка"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "прпстирадло",
+      "expected": "простирадло"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "ркшник",
+      "expected": "рушник"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "мтло",
+      "expected": "мило"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "шпмпунь",
+      "expected": "шампунь"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "зкб",
+      "expected": "зуб"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "щфтка",
+      "expected": "щітка"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "ппста",
+      "expected": "паста"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "мпзок",
+      "expected": "мозок"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "шлкнок",
+      "expected": "шлунок"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "компютер",
+      "expected": "комп'ютер"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "мяч",
+      "expected": "м'яч"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "сімя",
+      "expected": "сім'я"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "здоровя",
+      "expected": "здоров'я"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "пять",
+      "expected": "п'ять"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "імя",
+      "expected": "ім'я"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "память",
+      "expected": "пам'ять"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "хлопя",
+      "expected": "хлоп'я"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "любовю",
+      "expected": "любов'ю"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "пташиннє",
+      "expected": "пташине"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "осіній",
+      "expected": "осінній"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "житя",
+      "expected": "життя"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "знаня",
+      "expected": "знання"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "волося",
+      "expected": "волосся"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "гіля",
+      "expected": "гілля"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "судя",
+      "expected": "суддя"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "статя",
+      "expected": "стаття"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "робиця",
+      "expected": "робиться"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "смієця",
+      "expected": "сміється"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "вчиця",
+      "expected": "вчиться"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "дивиця",
+      "expected": "дивиться"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "граєця",
+      "expected": "грається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "миєця",
+      "expected": "миється"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "одягаєця",
+      "expected": "одягається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "ховаєця",
+      "expected": "ховається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "зустрічаєця",
+      "expected": "зустрічається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "прокидаєця",
+      "expected": "прокидається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "готуєця",
+      "expected": "готується"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "хвилюєця",
+      "expected": "хвилюється"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "вітаєця",
+      "expected": "вітається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "повертаєця",
+      "expected": "повертається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "змагаєця",
+      "expected": "змагається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "сподіваєця",
+      "expected": "сподівається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "спускаєця",
+      "expected": "спускається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "піднімаєця",
+      "expected": "піднімається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "купаєця",
+      "expected": "купається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "катаєця",
+      "expected": "катається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "дивитця",
+      "expected": "дивиться"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "смієтця",
+      "expected": "сміється"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "вчитця",
+      "expected": "вчиться"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "робитця",
+      "expected": "робиться"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "граєтця",
+      "expected": "грається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "дивися",
+      "expected": "дивишся"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "смієся",
+      "expected": "смієшся"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "вчися",
+      "expected": "вчишся"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "граєся",
+      "expected": "граєшся"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "миєся",
+      "expected": "миєшся"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "одягаєся",
+      "expected": "одягаєшся"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "зустрічаєся",
+      "expected": "зустрічаєшся"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "прокидаєся",
+      "expected": "прокидаєшся"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "готуєся",
+      "expected": "готуєшся"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "хвилюєся",
+      "expected": "хвилюєшся"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "знаєшь",
+      "expected": "знаєш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "робишь",
+      "expected": "робиш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "бачишь",
+      "expected": "бачиш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "пишешь",
+      "expected": "пишеш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "читаєшь",
+      "expected": "читаєш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "думаєшь",
+      "expected": "думаєш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "ходишь",
+      "expected": "ходиш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "кажешь",
+      "expected": "кажеш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "спишь",
+      "expected": "спиш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "мовчишь",
+      "expected": "мовчиш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "біжишь",
+      "expected": "біжиш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "лежишь",
+      "expected": "лежиш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "плачешь",
+      "expected": "плачеш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "скачешь",
+      "expected": "скачеш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "малюєшь",
+      "expected": "малюєш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "працюєшь",
+      "expected": "працюєш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "співаєшь",
+      "expected": "співаєш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "слухаєшь",
+      "expected": "слухаєш"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "нічь",
+      "expected": "ніч"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "пічь",
+      "expected": "піч"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "річь",
+      "expected": "річ"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "розкішь",
+      "expected": "розкіш"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "подорожь",
+      "expected": "подорож"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "тушь",
+      "expected": "туш"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "фальшь",
+      "expected": "фальш"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "жовчь",
+      "expected": "жовч"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "сілю",
+      "expected": "сіллю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "тіню",
+      "expected": "тінню"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "нічю",
+      "expected": "ніччю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "міцю",
+      "expected": "міццю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "пічю",
+      "expected": "піччю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "річю",
+      "expected": "річчю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "подорожю",
+      "expected": "подорожжю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "розкішю",
+      "expected": "розкішшю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "зеленю",
+      "expected": "зеленню"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Over-doubling",
+      "input": "радісттю",
+      "expected": "радістю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Over-doubling",
+      "input": "гордісттю",
+      "expected": "гордістю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Over-doubling",
+      "input": "молодісттю",
+      "expected": "молодістю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental O-E",
+      "input": "коньом",
+      "expected": "конем"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental O-E",
+      "input": "дньом",
+      "expected": "днем"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental O-E",
+      "input": "серцьом",
+      "expected": "серцем"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental O-E",
+      "input": "сонцьом",
+      "expected": "сонцем"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental O-E",
+      "input": "пальцьом",
+      "expected": "пальцем"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "текста",
+      "expected": "тексту"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "рока",
+      "expected": "року"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "університета",
+      "expected": "університету"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "інститута",
+      "expected": "інституту"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "класа",
+      "expected": "класу"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "спорта",
+      "expected": "спорту"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "вокзала",
+      "expected": "вокзалу"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "театра",
+      "expected": "театру"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "процеса",
+      "expected": "процесу"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "розвитка",
+      "expected": "розвитку"
+    },
+    {
+      "name": "Ending Error: Nouns Plural",
+      "input": "директора",
+      "expected": "директори"
+    },
+    {
+      "name": "Ending Error: Nouns Plural",
+      "input": "професора",
+      "expected": "професори"
+    },
+    {
+      "name": "Ending Error: Nouns Plural",
+      "input": "паспорта",
+      "expected": "паспорти"
+    },
+    {
+      "name": "Ending Error: Nouns Plural",
+      "input": "трактора",
+      "expected": "трактори"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "синьова",
+      "expected": "синього"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "білова",
+      "expected": "білого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "червонова",
+      "expected": "червоного"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "гарнова",
+      "expected": "гарного"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "доброва",
+      "expected": "доброго"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "старова",
+      "expected": "старого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "новова",
+      "expected": "нового"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "сміливова",
+      "expected": "сміливого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "довгова",
+      "expected": "довгого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "короткова",
+      "expected": "короткого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "веселова",
+      "expected": "веселого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "сумнова",
+      "expected": "сумного"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "ріднова",
+      "expected": "рідного"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "незрівняний",
+      "expected": "незрівнянний"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "нездоланий",
+      "expected": "нездоланний"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "зробленний",
+      "expected": "зроблений"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "написанний",
+      "expected": "написаний"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "прочитанний",
+      "expected": "прочитаний"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "сказанний",
+      "expected": "сказаний"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "намальованний",
+      "expected": "намальований"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "побудованний",
+      "expected": "побудований"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "впевненний",
+      "expected": "впевнений"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "вивченний",
+      "expected": "вивчений"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "закінченний",
+      "expected": "закінчений"
+    },
+    {
+      "name": "Ending Error: Verb Conjugation",
+      "input": "бачеш",
+      "expected": "бачиш"
+    },
+    {
+      "name": "Ending Error: Verb Conjugation",
+      "input": "робеш",
+      "expected": "робиш"
+    },
+    {
+      "name": "Ending Error: Verb Conjugation",
+      "input": "носеш",
+      "expected": "носиш"
+    },
+    {
+      "name": "Ending Error: Verb Conjugation",
+      "input": "ходеш",
+      "expected": "ходиш"
+    },
+    {
+      "name": "Transposition",
+      "input": "кітвка",
+      "expected": "квітка"
+    },
+    {
+      "name": "Transposition",
+      "input": "рчіка",
+      "expected": "річка"
+    },
+    {
+      "name": "Transposition",
+      "input": "озрео",
+      "expected": "озеро"
+    },
+    {
+      "name": "Transposition",
+      "input": "зріка",
+      "expected": "зірка"
+    },
+    {
+      "name": "Transposition",
+      "input": "хмаар",
+      "expected": "хмара"
+    },
+    {
+      "name": "Transposition",
+      "input": "дождж",
+      "expected": "дощ"
+    },
+    {
+      "name": "Transposition",
+      "input": "грмрм",
+      "expected": "грім"
+    },
+    {
+      "name": "Transposition",
+      "input": "блкиа",
+      "expected": "блискавка"
+    },
+    {
+      "name": "Transposition",
+      "input": "веснкаа",
+      "expected": "веселка"
+    },
+    {
+      "name": "Transposition",
+      "input": "пташк",
+      "expected": "пташка"
+    },
+    {
+      "name": "Transposition",
+      "input": "листк",
+      "expected": "листок"
+    },
+    {
+      "name": "Transposition",
+      "input": "корнья",
+      "expected": "коріння"
+    },
+    {
+      "name": "Transposition",
+      "input": "квтіи",
+      "expected": "квіти"
+    },
+    {
+      "name": "Transposition",
+      "input": "траав",
+      "expected": "трава"
+    },
+    {
+      "name": "Transposition",
+      "input": "грибб",
+      "expected": "гриби"
+    },
+    {
+      "name": "Transposition",
+      "input": "ягодди",
+      "expected": "ягоди"
+    },
+    {
+      "name": "Transposition",
+      "input": "фруктти",
+      "expected": "фрукти"
+    },
+    {
+      "name": "Transposition",
+      "input": "овоччі",
+      "expected": "овочі"
+    },
+    {
+      "name": "Transposition",
+      "input": "картопял",
+      "expected": "картопля"
+    },
+    {
+      "name": "Transposition",
+      "input": "моркав",
+      "expected": "морква"
+    },
+    {
+      "name": "Transposition",
+      "input": "бурякк",
+      "expected": "буряк"
+    },
+    {
+      "name": "Transposition",
+      "input": "капустаа",
+      "expected": "капуста"
+    },
+    {
+      "name": "Transposition",
+      "input": "помідоор",
+      "expected": "помідор"
+    },
+    {
+      "name": "Transposition",
+      "input": "яблукко",
+      "expected": "яблуко"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "груш",
+      "expected": "груша"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "вишн",
+      "expected": "вишня"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "слив",
+      "expected": "слива"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "банн",
+      "expected": "банан"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "апельсн",
+      "expected": "апельсин"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "лимонн",
+      "expected": "лимон"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "мандарн",
+      "expected": "мандарин"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "ків",
+      "expected": "ківі"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "ананс",
+      "expected": "ананас"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "кавн",
+      "expected": "каву"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "чоколад",
+      "expected": "шоколад"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "тортт",
+      "expected": "торт"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "пирріг",
+      "expected": "пиріг"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "печивво",
+      "expected": "печиво"
+    },
+    {
+      "name": "Omission End",
+      "input": "морози",
+      "expected": "морозиво"
+    },
+    {
+      "name": "Omission End",
+      "input": "йогур",
+      "expected": "йогурт"
+    },
+    {
+      "name": "Omission End",
+      "input": "сметан",
+      "expected": "сметана"
+    },
+    {
+      "name": "Omission End",
+      "input": "йогур",
+      "expected": "йогурт"
+    },
+    {
+      "name": "Omission End",
+      "input": "ри",
+      "expected": "рис"
+    },
+    {
+      "name": "Omission End",
+      "input": "гречк",
+      "expected": "гречка"
+    },
+    {
+      "name": "Omission End",
+      "input": "макарон",
+      "expected": "макарони"
+    },
+    {
+      "name": "Omission Start",
+      "input": "алат",
+      "expected": "салат"
+    },
+    {
+      "name": "Omission Start",
+      "input": "упа",
+      "expected": "гупа"
+    },
+    {
+      "name": "Omission Start",
+      "input": "арнір",
+      "expected": "гарнір"
+    },
+    {
+      "name": "Omission Start",
+      "input": "есо",
+      "expected": "месо"
+    },
+    {
+      "name": "Omission Start",
+      "input": "урка",
+      "expected": "курка"
+    },
+    {
+      "name": "Omission Start",
+      "input": "ачка",
+      "expected": "качка"
+    },
+    {
+      "name": "Omission Start",
+      "input": "ндичка",
+      "expected": "індичка"
+    },
+    {
+      "name": "Omission Start",
+      "input": "аловина",
+      "expected": "яловичина"
+    },
+    {
+      "name": "Omission Start",
+      "input": "ососятина",
+      "expected": "лосятина"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "рибба",
+      "expected": "риба"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "риббка",
+      "expected": "рибка"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "оккеан",
+      "expected": "океан"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "мморя",
+      "expected": "моря"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "осттрів",
+      "expected": "острів"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "пляяж",
+      "expected": "пляж"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "піісок",
+      "expected": "пісок"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "муушля",
+      "expected": "мушля"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "коорал",
+      "expected": "корал"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "аккула",
+      "expected": "акула"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "дельффіін",
+      "expected": "дельфін"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "ккиит",
+      "expected": "кит"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "ммедуза",
+      "expected": "медуза"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "ззмія",
+      "expected": "змія"
+    },
+    {
+      "name": "Insertion Middle",
+      "input": "жжаба",
+      "expected": "жаба"
+    },
+    {
+      "name": "Insertion End",
+      "input": "ящіркаа",
+      "expected": "ящірка"
+    },
+    {
+      "name": "Insertion End",
+      "input": "черепахаа",
+      "expected": "черепаха"
+    },
+    {
+      "name": "Insertion End",
+      "input": "крокодилл",
+      "expected": "крокодил"
+    },
+    {
+      "name": "Insertion End",
+      "input": "аллігаторр",
+      "expected": "алігатор"
+    },
+    {
+      "name": "Insertion End",
+      "input": "левв",
+      "expected": "лев"
+    },
+    {
+      "name": "Insertion End",
+      "input": "тигрр",
+      "expected": "тигр"
+    },
+    {
+      "name": "Insertion End",
+      "input": "пантераа",
+      "expected": "пантера"
+    },
+    {
+      "name": "Insertion End",
+      "input": "леопардд",
+      "expected": "леопард"
+    },
+    {
+      "name": "Insertion End",
+      "input": "вовкк",
+      "expected": "вовк"
+    },
+    {
+      "name": "Insertion End",
+      "input": "лисицяя",
+      "expected": "лисиця"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "введмідь",
+      "expected": "ведмідь"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ззаєць",
+      "expected": "заєць"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ббілка",
+      "expected": "білка"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "єєнот",
+      "expected": "єнот"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "бборсук",
+      "expected": "борсук"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ккуниця",
+      "expected": "куниця"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ттхір",
+      "expected": "тхір"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ввидра",
+      "expected": "видра"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ллосось",
+      "expected": "лосось"
+    },
+    {
+      "name": "Insertion Start",
+      "input": "ффауна",
+      "expected": "фауна"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "флпра",
+      "expected": "флора"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "екосистпма",
+      "expected": "екосистема"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "біорізномніття",
+      "expected": "біорізноманіття"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "прирпда",
+      "expected": "природа"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "навколишнє серндовмще",
+      "expected": "навколишнє середовище"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "забрудненння",
+      "expected": "забруднення"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "екологгія",
+      "expected": "екологія"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "глобальне потеппління",
+      "expected": "глобальне потепління"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "кліматичні зміінм",
+      "expected": "кліматичні зміни"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "відновлювальні дджерела",
+      "expected": "відновлювальні джерела"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "сонячна енерггіія",
+      "expected": "сонячна енергія"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "вітрова енерггіія",
+      "expected": "вітрова енергія"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "гідроенергетикка",
+      "expected": "гідроенергетика"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "атомна енерргія",
+      "expected": "атомна енергія"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "паливво",
+      "expected": "паливо"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "бензиин",
+      "expected": "бензин"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "дизельне палливво",
+      "expected": "дизельне паливо"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "газз",
+      "expected": "газ"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "вугілляа",
+      "expected": "вугілля"
+    },
+    {
+      "name": "Keyboard Substitution",
+      "input": "нафтта",
+      "expected": "нафта"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "обєкт",
+      "expected": "об'єкт"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "субєкт",
+      "expected": "суб'єкт"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "підємник",
+      "expected": "під'ємник"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "вянути",
+      "expected": "в'янути"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "мятний",
+      "expected": "м'ятний"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "пятка",
+      "expected": "п'ятка"
+    },
+    {
+      "name": "Apostrophe Error",
+      "input": "мялкий",
+      "expected": "м'ялкий"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "коріня",
+      "expected": "коріння"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "насіня",
+      "expected": "насіння"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "плоття",
+      "expected": "плоті"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "колісся",
+      "expected": "колосся"
+    },
+    {
+      "name": "Doubling Error",
+      "input": "морквя",
+      "expected": "морква"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "говоритця",
+      "expected": "говориться"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "читаєця",
+      "expected": "читається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "пишеця",
+      "expected": "пишеться"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "малюєця",
+      "expected": "малюється"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "танцюєця",
+      "expected": "танцюється"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "співаєця",
+      "expected": "співається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "бігаєця",
+      "expected": "бігається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "стрибаєця",
+      "expected": "стрибається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "плаваєця",
+      "expected": "плавається"
+    },
+    {
+      "name": "Ending Error: Verbs Phonetical",
+      "input": "летитця",
+      "expected": "летиться"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "їдешь",
+      "expected": "їдеш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "їстьш",
+      "expected": "їси"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "п'єшь",
+      "expected": "п'єш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "живешь",
+      "expected": "живеш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "любишь",
+      "expected": "любиш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "ненавидишь",
+      "expected": "ненавидиш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "говоришь",
+      "expected": "говориш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "слухаешь",
+      "expected": "слухаєш"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "дивишься",
+      "expected": "дивишся"
+    },
+    {
+      "name": "Ending Error: Verbs Soft Sign",
+      "input": "читаєшь",
+      "expected": "читаєш"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "митьь",
+      "expected": "мить"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "митьь",
+      "expected": "мить"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "граньь",
+      "expected": "грань"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "печатьь",
+      "expected": "печать"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "печераь",
+      "expected": "печера"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "тіньь",
+      "expected": "тінь"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "мережаь",
+      "expected": "мережа"
+    },
+    {
+      "name": "Ending Error: Nouns Soft Sign",
+      "input": "кризаь",
+      "expected": "криза"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Doubling",
+      "input": "мітю",
+      "expected": "міттю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Over-doubling",
+      "input": "красоттю",
+      "expected": "красотою"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Over-doubling",
+      "input": "доброттю",
+      "expected": "добротою"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental Over-doubling",
+      "input": "мудрісттю",
+      "expected": "мудрістю"
+    },
+    {
+      "name": "Ending Error: Nouns Instrumental O-E",
+      "input": "каміньом",
+      "expected": "каменем"
+    },
+    {
+      "name": "Ending Error: Nouns Genitive",
+      "input": "селла",
+      "expected": "села"
+    },
+    {
+      "name": "Ending Error: Nouns Plural",
+      "input": "книгга",
+      "expected": "книги"
+    },
+    {
+      "name": "Ending Error: Nouns Plural",
+      "input": "столла",
+      "expected": "столи"
+    },
+    {
+      "name": "Ending Error: Nouns Plural",
+      "input": "вікнна",
+      "expected": "вікна"
+    },
+    {
+      "name": "Ending Error: Nouns Plural",
+      "input": "дверра",
+      "expected": "двері"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "великова",
+      "expected": "великого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "малова",
+      "expected": "малого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "високова",
+      "expected": "високого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "низькова",
+      "expected": "низького"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "широкова",
+      "expected": "широкого"
+    },
+    {
+      "name": "Ending Error: Adjectives Phonetical",
+      "input": "вузькова",
+      "expected": "вузького"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "побаченийй",
+      "expected": "побачений"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "почутийй",
+      "expected": "почутий"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "зробленийй",
+      "expected": "зроблений"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "відкритийй",
+      "expected": "відкритий"
+    },
+    {
+      "name": "Ending Error: Participles Doubling",
+      "input": "закритийй",
+      "expected": "закритий"
+    },
+    {
+      "name": "Ending Error: Verb Conjugation",
+      "input": "їдешш",
+      "expected": "їдеш"
+    },
+    {
+      "name": "Ending Error: Verb Conjugation",
+      "input": "п'єшш",
+      "expected": "п'єш"
+    },
+    {
+      "name": "Ending Error: Verb Conjugation",
+      "input": "живешш",
+      "expected": "живеш"
+    },
+    {
+      "name": "Ending Error: Verb Conjugation",
+      "input": "любишш",
+      "expected": "любиш"
+    },
+    {
+      "name": "Ending Error: Verb Conjugation",
+      "input": "говоришш",
+      "expected": "говориш"
+    },
+    {
+      "name": "Transposition",
+      "input": "мріія",
+      "expected": "мрія"
+    },
+    {
+      "name": "Transposition",
+      "input": "снніданок",
+      "expected": "сніданок"
+    },
+    {
+      "name": "Transposition",
+      "input": "оббід",
+      "expected": "обід"
+    },
+    {
+      "name": "Transposition",
+      "input": "ввечеря",
+      "expected": "вечеря"
+    },
+    {
+      "name": "Transposition",
+      "input": "їжжа",
+      "expected": "їжа"
+    },
+    {
+      "name": "Transposition",
+      "input": "ннапій",
+      "expected": "напій"
+    },
+    {
+      "name": "Transposition",
+      "input": "ччай",
+      "expected": "чай"
+    },
+    {
+      "name": "Transposition",
+      "input": "ккава",
+      "expected": "кава"
+    },
+    {
+      "name": "Transposition",
+      "input": "ммолоко",
+      "expected": "молоко"
+    },
+    {
+      "name": "Transposition",
+      "input": "ссік",
+      "expected": "сік"
+    },
+    {
+      "name": "Transposition",
+      "input": "ппіво",
+      "expected": "пиво"
+    },
+    {
+      "name": "Transposition",
+      "input": "ввино",
+      "expected": "вино"
+    },
+    {
+      "name": "Transposition",
+      "input": "ххліб",
+      "expected": "хліб"
+    },
+    {
+      "name": "Transposition",
+      "input": "ммасло",
+      "expected": "масло"
+    },
+    {
+      "name": "Transposition",
+      "input": "ццукор",
+      "expected": "цукор"
+    },
+    {
+      "name": "Transposition",
+      "input": "ссіль",
+      "expected": "сіль"
+    },
+    {
+      "name": "Transposition",
+      "input": "пперець",
+      "expected": "перець"
+    },
+    {
+      "name": "Transposition",
+      "input": "мм'ясо",
+      "expected": "м'ясо"
+    },
+    {
+      "name": "Transposition",
+      "input": "кковбаса",
+      "expected": "ковбаса"
+    },
+    {
+      "name": "Transposition",
+      "input": "ссир",
+      "expected": "сир"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "яйц",
+      "expected": "яйце"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "медд",
+      "expected": "мед"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "фруктт",
+      "expected": "фрукт"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "овооч",
+      "expected": "овоч"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "горіхх",
+      "expected": "горіх"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "фундукк",
+      "expected": "фундук"
+    },
+    {
+      "name": "Omission Middle",
+      "input": "нассіння",
+      "expected": "насіння"
+    }
+  ]
+}

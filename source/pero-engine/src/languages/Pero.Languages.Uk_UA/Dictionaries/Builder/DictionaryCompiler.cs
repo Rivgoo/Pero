@@ -83,8 +83,9 @@ public class DictionaryCompiler
 		}
 
 		var rootNode = builder.Finish();
-		string suffixPool = suffixPoolBuilder.ToString();
+		CalculateGraphMetadata(rootNode, new HashSet<FstNode>());
 
+		string suffixPool = suffixPoolBuilder.ToString();
 		WriteFlatBinary(outputStream, tagsetList, ruleList, suffixPool, rootNode);
 	}
 
@@ -95,9 +96,37 @@ public class DictionaryCompiler
 		{
 			freq = foundFreq;
 		}
-
 		builder.Insert(form, new FstPayload(freq, ruleIds.ToArray()));
 		ruleIds.Clear();
+	}
+
+	private void CalculateGraphMetadata(FstNode node, HashSet<FstNode> visited)
+	{
+		if (visited.Contains(node)) return;
+		visited.Add(node);
+
+		byte maxFreq = node.Payload?.Frequency ?? 0;
+		byte minD = node.IsFinal ? (byte)0 : (byte)255;
+		byte maxD = node.IsFinal ? (byte)0 : (byte)0;
+
+		foreach (var child in node.Arcs.Values)
+		{
+			CalculateGraphMetadata(child, visited);
+
+			if (child.MaxFrequencyInSubtree > maxFreq) maxFreq = child.MaxFrequencyInSubtree;
+
+			byte childMin = (byte)(child.MinDistToFinal + 1);
+			byte childMax = (byte)(child.MaxDistToFinal + 1);
+
+			if (child.MinDistToFinal == 255) childMin = 255;
+
+			if (childMin < minD) minD = childMin;
+			if (childMax > maxD) maxD = childMax;
+		}
+
+		node.MaxFrequencyInSubtree = maxFreq;
+		node.MinDistToFinal = minD;
+		node.MaxDistToFinal = maxD;
 	}
 
 	private void WriteFlatBinary(Stream outputStream, List<MorphologyTagset> tagsets, List<FlatMorphologyRule> rules, string suffixPool, FstNode root)
@@ -116,7 +145,12 @@ public class DictionaryCompiler
 			nodeOffsets[node] = 0;
 			nodeList.Add(node);
 
-			foreach (var child in node.Arcs.Values) CollectNodes(child);
+			var sortedArcs = node.Arcs
+				.OrderByDescending(kvp => kvp.Value.MaxFrequencyInSubtree)
+				.ThenBy(kvp => kvp.Key)
+				.ToList();
+
+			foreach (var arc in sortedArcs) CollectNodes(arc.Value);
 		}
 
 		CollectNodes(root);
@@ -124,12 +158,12 @@ public class DictionaryCompiler
 		foreach (var node in nodeList)
 		{
 			nodeOffsets[node] = currentOffset;
-			currentOffset += 2;
+			currentOffset += 2; // Flags + ArcCount
+			currentOffset += 2; // MinDist + MaxDist
 
 			if (node.IsFinal && node.Payload != null)
 			{
-				currentOffset += 1;
-				currentOffset += 2;
+				currentOffset += 3; // Freq + Count(2)
 				currentOffset += (uint)(node.Payload.RuleIds.Length * 2);
 			}
 
@@ -137,7 +171,6 @@ public class DictionaryCompiler
 		}
 
 		var header = new BinaryDictionaryHeader((uint)tagsets.Count, (uint)rules.Count, currentOffset);
-
 		writer.Write(header.Magic);
 		writer.Write(header.Version);
 		writer.Write(header.TagsetsCount);
@@ -177,6 +210,8 @@ public class DictionaryCompiler
 
 			writer.Write(flags);
 			writer.Write((byte)node.Arcs.Count);
+			writer.Write(node.MinDistToFinal);
+			writer.Write(node.MaxDistToFinal);
 
 			if (node.IsFinal && node.Payload != null)
 			{
@@ -185,7 +220,11 @@ public class DictionaryCompiler
 				foreach (var id in node.Payload.RuleIds) writer.Write(id);
 			}
 
-			foreach (var arc in node.Arcs)
+			var sortedArcs = node.Arcs
+				.OrderByDescending(kvp => kvp.Value.MaxFrequencyInSubtree)
+				.ThenBy(kvp => kvp.Key);
+
+			foreach (var arc in sortedArcs)
 			{
 				writer.Write((ushort)arc.Key);
 				writer.Write(nodeOffsets[arc.Value]);

@@ -11,7 +11,6 @@ public class CompiledDictionary
 {
 	public byte[] FstData => _fstData;
 	public FlatMorphologyRule[] Rules => _rules;
-	public char[] SuffixPool => _suffixPool;
 	public MorphologyTagset[] Tagsets => _tagsets;
 
 	private MorphologyTagset[] _tagsets = Array.Empty<MorphologyTagset>();
@@ -26,9 +25,7 @@ public class CompiledDictionary
 
 		var magic = reader.ReadUInt32();
 		if (magic != BinaryDictionaryHeader.MagicNumber)
-		{
-			throw new InvalidDataException("Invalid dictionary format. Magic number mismatch.");
-		}
+			throw new InvalidDataException("Invalid dictionary format.");
 
 		var version = reader.ReadUInt16();
 		var tagsetsCount = reader.ReadUInt32();
@@ -80,14 +77,12 @@ public class CompiledDictionary
 			byte flags = _fstData[(int)currentOffset];
 			byte arcCount = _fstData[(int)currentOffset + 1];
 
+			int ptr = (int)currentOffset + 4;
+
 			bool hasPayload = (flags & 0x02) != 0;
-
-			int ptr = (int)currentOffset + 2;
-
 			if (hasPayload)
 			{
-				ptr += 1;
-
+				ptr += 1; // Freq
 				ushort ruleCount = BinaryPrimitives.ReadUInt16LittleEndian(_fstData.AsSpan(ptr));
 				ptr += 2 + (ruleCount * 2);
 			}
@@ -96,7 +91,6 @@ public class CompiledDictionary
 			for (int i = 0; i < arcCount; i++)
 			{
 				char transitionChar = (char)BinaryPrimitives.ReadUInt16LittleEndian(_fstData.AsSpan(ptr));
-
 				if (transitionChar == c)
 				{
 					currentOffset = BinaryPrimitives.ReadUInt32LittleEndian(_fstData.AsSpan(ptr + 2));
@@ -105,7 +99,6 @@ public class CompiledDictionary
 				}
 				ptr += 6;
 			}
-
 			if (!found) yield break;
 		}
 
@@ -115,8 +108,8 @@ public class CompiledDictionary
 
 		if (!isFinal || !finalHasPayload) yield break;
 
-		int payloadPtr = (int)currentOffset + 2;
-		payloadPtr += 1;
+		int payloadPtr = (int)currentOffset + 4;
+		payloadPtr += 1; // Freq
 
 		ushort finalRuleCount = BinaryPrimitives.ReadUInt16LittleEndian(_fstData.AsSpan(payloadPtr));
 		payloadPtr += 2;
@@ -128,7 +121,6 @@ public class CompiledDictionary
 
 			var rule = _rules[ruleId];
 			var tagset = _tagsets[rule.TagId];
-
 			var lemma = ApplyRule(word, rule);
 			yield return new MorphologicalInfo(lemma, tagset);
 		}
@@ -137,16 +129,13 @@ public class CompiledDictionary
 	private string ApplyRule(string form, FlatMorphologyRule rule)
 	{
 		if (rule.CutLength > form.Length) return form;
-
 		int prefixLen = form.Length - rule.CutLength;
 		int totalLen = prefixLen + rule.SuffixLength;
-
 		var state = (Form: form, Rule: rule, Pool: _suffixPool, PrefixLen: prefixLen);
 
 		return string.Create(totalLen, state, static (span, st) =>
 		{
 			st.Form.AsSpan(0, st.PrefixLen).CopyTo(span);
-
 			var suffixSpan = new ReadOnlySpan<char>(st.Pool, (int)st.Rule.SuffixOffset, st.Rule.SuffixLength);
 			suffixSpan.CopyTo(span.Slice(st.PrefixLen));
 		});

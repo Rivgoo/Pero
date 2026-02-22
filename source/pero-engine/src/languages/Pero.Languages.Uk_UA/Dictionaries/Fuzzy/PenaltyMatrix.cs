@@ -1,47 +1,59 @@
-﻿namespace Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
+﻿using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+namespace Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
 
 public static class PenaltyMatrix
 {
-	private const float _maxKeyboardDistance = 10.5f;
-	private static readonly float[,] _subCosts = new float[40, 40];
-
+	private const float MaxKeyboardDistance = 10.5f;
+	private static readonly float[] SubCosts = new float[1600]; 
 	static PenaltyMatrix()
 	{
 		for (int i = 0; i < 40; i++)
 		{
 			for (int j = 0; j < 40; j++)
 			{
-				_subCosts[i, j] = CalculateSubstitutionCost(IndexToChar(i), IndexToChar(j));
+				SubCosts[i * 40 + j] = CalculateSubstitutionCost(IndexToChar(i), IndexToChar(j));
 			}
 		}
 	}
 
-	public static float GetSubstitutionCost(char expected, char actual)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static float GetSubstitutionCostUnsafe(char expected, char actual)
 	{
 		if (expected == actual) return 0f;
-
 		int i1 = CharToIndex(expected);
 		int i2 = CharToIndex(actual);
-
 		if (i1 < 0 || i2 < 0) return 1.0f;
-
-		return _subCosts[i1, i2];
+		return Unsafe.Add(ref MemoryMarshal.GetArrayDataReference(SubCosts), i1 * 40 + i2);
 	}
 
-	public static float GetInsertionCost(char c) => IsVowel(c) ? 0.8f : 1.0f;
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static float GetInsertionCost(char c)
+	{
+		if (IsApostrophe(c)) return 0.1f;
 
-	public static float GetDeletionCost(char c) => IsVowel(c) ? 0.8f : 1.0f;
+		return IsVowel(c) ? 0.7f : 0.95f;
+	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static float GetDeletionCost(char c)
+	{
+		if (IsApostrophe(c)) return 0.1f;
+		return 0.95f;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static float GetPositionalMultiplier(int currentIndex, int wordLength)
 	{
-		if (currentIndex == 0) return 1.5f;
-		if (currentIndex >= wordLength - 2) return 0.7f;
+		if (currentIndex == 0) return 1.0f;
+		if (currentIndex >= wordLength - 2) return 0.8f;
 		return 1.0f;
 	}
 
 	private static float CalculateSubstitutionCost(char expected, char actual)
 	{
-		if (IsPhoneticPair(expected, actual)) return 0.15f;
+		if (IsPhoneticPair(expected, actual)) return 0.2f;
 
 		var (x1, y1) = GetCoordinates(expected);
 		var (x2, y2) = GetCoordinates(actual);
@@ -49,50 +61,44 @@ public static class PenaltyMatrix
 		if (y1 < 0 || y2 < 0) return 1.0f;
 
 		float distance = (float)Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
-		return 0.2f + (0.8f * (distance / _maxKeyboardDistance));
+
+		return 0.15f + (0.85f * (distance / MaxKeyboardDistance));
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static int CharToIndex(char c)
 	{
 		if (c >= 'а' && c <= 'я') return c - 'а';
-		return c switch
-		{
-			'і' => 32,
-			'ї' => 33,
-			'є' => 34,
-			'ґ' => 35,
-			'\'' or '’' or 'ʼ' => 36,
-			_ => -1
-		};
+		return c switch { 'і' => 32, 'ї' => 33, 'є' => 34, 'ґ' => 35, '\'' or '’' or 'ʼ' => 36, _ => -1 };
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static char IndexToChar(int index)
 	{
 		if (index >= 0 && index <= 31) return (char)('а' + index);
-		return index switch
-		{
-			32 => 'і',
-			33 => 'ї',
-			34 => 'є',
-			35 => 'ґ',
-			36 => '\'',
-			_ => '\0'
-		};
+		return index switch { 32 => 'і', 33 => 'ї', 34 => 'є', 35 => 'ґ', 36 => '\'', _ => '\0' };
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static bool IsPhoneticPair(char a, char b)
 	{
 		return (a == 'е' && b == 'и') || (a == 'и' && b == 'е') ||
 			   (a == 'г' && b == 'ґ') || (a == 'ґ' && b == 'г') ||
 			   (a == 'і' && b == 'ї') || (a == 'ї' && b == 'і') ||
-			   (a == 'о' && b == 'а') || (a == 'а' && b == 'о');
+			   (a == 'о' && b == 'а') || (a == 'а' && b == 'о') ||
+			   (a == 'ш' && b == 'ж') || (a == 'ж' && b == 'ш') ||
+			   (a == 'з' && b == 'с') || (a == 'с' && b == 'з') ||
+			   (a == 'т' && b == 'д') || (a == 'д' && b == 'т') ||
+			   (a == 'п' && b == 'б') || (a == 'б' && b == 'п') ||
+			   (a == 'ц' && b == 'т') || (a == 'т' && b == 'ц') ||
+			   (a == 'ш' && b == 'ч') || (a == 'ч' && b == 'ш');
 	}
 
-	private static bool IsVowel(char c) => c switch
-	{
-		'а' or 'е' or 'є' or 'и' or 'і' or 'ї' or 'о' or 'у' or 'ю' or 'я' => true,
-		_ => false
-	};
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static bool IsVowel(char c) => c is 'а' or 'е' or 'є' or 'и' or 'і' or 'ї' or 'о' or 'у' or 'ю' or 'я';
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static bool IsApostrophe(char c) => c is '\'' or '’' or 'ʼ';
 
 	private static (float X, float Y) GetCoordinates(char c) => c switch
 	{
@@ -119,7 +125,6 @@ public static class PenaltyMatrix
 		'д' => (8.5f, 1f),
 		'ж' => (9.5f, 1f),
 		'є' => (10.5f, 1f),
-		'ґ' => (11.5f, 1f),
 		'я' => (1f, 2f),
 		'ч' => (2f, 2f),
 		'с' => (3f, 2f),
@@ -129,7 +134,8 @@ public static class PenaltyMatrix
 		'ь' => (7f, 2f),
 		'б' => (8f, 2f),
 		'ю' => (9f, 2f),
-		'\'' or '’' or 'ʼ' => (0f, -1f),
+		'ґ' => (11.5f, 1f),
+		'\'' or '’' or 'ʼ' => (0f, 1f),
 		_ => (-1f, -1f)
 	};
 }

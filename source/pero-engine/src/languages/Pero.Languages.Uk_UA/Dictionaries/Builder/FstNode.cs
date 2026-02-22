@@ -12,6 +12,10 @@ public class FstNode : IEquatable<FstNode>
 	public bool IsFinal { get; set; }
 	public FstPayload? Payload { get; set; }
 
+	public byte MaxFrequencyInSubtree { get; set; } = 0;
+	public byte MinDistToFinal { get; set; } = 255;
+	public byte MaxDistToFinal { get; set; } = 0;
+
 	/// <summary>
 	/// Compares the structural equivalence of two nodes to perform suffix merging.
 	/// </summary>
@@ -21,20 +25,17 @@ public class FstNode : IEquatable<FstNode>
 		if (ReferenceEquals(this, other)) return true;
 
 		if (IsFinal != other.IsFinal) return false;
-
-		if (!EqualityComparer<FstPayload?>.Default.Equals(Payload, other.Payload))
-			return false;
-
+		if (!EqualityComparer<FstPayload?>.Default.Equals(Payload, other.Payload)) return false;
 		if (Arcs.Count != other.Arcs.Count) return false;
 
 		foreach (var kvp in Arcs)
 		{
 			if (!other.Arcs.TryGetValue(kvp.Key, out var otherTarget)) return false;
-			if (!ReferenceEquals(kvp.Value, otherTarget)) return false; // Reference equality for children is required for DAG validation
+			if (!ReferenceEquals(kvp.Value, otherTarget)) return false;
 		}
-
 		return true;
 	}
+
 
 	public override bool Equals(object? obj) => Equals(obj as FstNode);
 
@@ -43,7 +44,6 @@ public class FstNode : IEquatable<FstNode>
 		var hash = new HashCode();
 		hash.Add(IsFinal);
 		hash.Add(Payload);
-
 		foreach (var kvp in Arcs)
 		{
 			hash.Add(kvp.Key);
