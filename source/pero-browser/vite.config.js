@@ -8,7 +8,8 @@ export default defineConfig({
       input: {
         background: resolve(__dirname, 'src/background/index.ts'),
         content: resolve(__dirname, 'src/content/index.ts'),
-        offscreen: resolve(__dirname, 'src/offscreen/index.html')
+        offscreen: resolve(__dirname, 'src/offscreen/index.html'),
+        popup: resolve(__dirname, 'src/popup/index.html')
       },
       output: {
         entryFileNames: '[name].js',

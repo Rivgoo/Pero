@@ -1,5 +1,6 @@
 import { AnalysisResponse, AnalysisRequest } from '../../shared/contracts';
 import { AnalyzeRequestMessage, MessageResponse } from '../../shared/messages';
+import { STORAGE_KEYS } from '../../shared/constants';
 
 export class Bridge {
   static async checkText(text: string): Promise<AnalysisResponse> {
@@ -8,10 +9,14 @@ export class Bridge {
         throw new Error('Extension context invalidated');
       }
 
+      const storage = await chrome.storage.local.get(STORAGE_KEYS.DEBUG_MODE);
+      const isDebug = (storage[STORAGE_KEYS.DEBUG_MODE] as boolean) ?? false;
+
       const payload: AnalysisRequest = {
         requestId: crypto.randomUUID(),
         text: text,
-        languageCode: 'uk-UA'
+        languageCode: 'uk-UA',
+        debug: isDebug
       };
 
       const message: AnalyzeRequestMessage = {

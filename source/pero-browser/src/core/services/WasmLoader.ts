@@ -1,4 +1,5 @@
 import { AnalysisRequest, AnalysisResponse } from '../../shared/contracts';
+import { DebugLogger } from './DebugLogger';
 
 // Internal type definition for the .NET exports
 type DotnetExports = {
@@ -15,8 +16,11 @@ export class WasmLoader {
   private static instance: WasmLoader;
   private dotnetExports: DotnetExports | null = null;
   private initPromise: Promise<void> | null = null;
+  private logger: DebugLogger;
 
-  private constructor() {}
+  private constructor() {
+    this.logger = DebugLogger.getInstance();
+  }
 
   static getInstance(): WasmLoader {
     if (!WasmLoader.instance) {
@@ -25,14 +29,9 @@ export class WasmLoader {
     return WasmLoader.instance;
   }
 
-  /**
-   * Initializes the .NET runtime. Safe to call multiple times.
-   * Returns a promise that resolves when the runtime is ready.
-   */
   async initialize(): Promise<void> {
     if (this.dotnetExports) return;
     
-    // Prevent double-initialization race conditions
     if (!this.initPromise) {
       this.initPromise = this.loadRuntime();
     }
@@ -56,7 +55,7 @@ export class WasmLoader {
       console.log('Pero: WASM Runtime Loaded');
     } catch (error) {
       console.error('Pero: WASM Load Failed', error);
-      this.initPromise = null; // Allow retrying if it failed
+      this.initPromise = null;
       throw error;
     }
   }
@@ -66,9 +65,21 @@ export class WasmLoader {
       throw new Error('Runtime not initialized');
     }
 
+    const start = performance.now();
+
     try {
       const jsonIn = JSON.stringify(request);
+    
+      const shouldLog = request.debug === true;
+
+      this.logger.logRequest(jsonIn, shouldLog);
+
       const jsonOut = this.dotnetExports.Pero.WasmHost.Engine.Process(jsonIn);
+      
+      const end = performance.now();
+
+      this.logger.logResponse(jsonOut, end - start, shouldLog);
+
       return JSON.parse(jsonOut);
     } catch (e) {
       console.error('Pero: Analysis Execution Failed', e);

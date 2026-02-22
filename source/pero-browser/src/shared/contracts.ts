@@ -6,6 +6,7 @@ export interface AnalysisRequest {
   text: string;
   languageCode: string; // e.g., "uk-UA"
   disabledRules?: string[];
+  debug?: boolean;
 }
 
 /**

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+  <title>Pero Settings</title>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <span class="brand">Pero 🪶</span>
+      <span class="version" id="version">v0.0.0</span>
+    </div>
+    
+    <div class="settings-group">
+      <div class="setting-item">
+        <div class="setting-info">
+          <label for="debugToggle" class="setting-label">Debug Mode</label>
+          <div class="setting-desc">Log .NET traffic to Offscreen Console</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="debugToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./index.ts"></script>
+</body>
+</html>
