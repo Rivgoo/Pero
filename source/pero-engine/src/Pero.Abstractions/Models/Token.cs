@@ -34,10 +34,16 @@ public class Token
 	public int End { get; }
 
 	/// <summary>
-	/// Linguistic annotations applied by the morphology analyzer.
-	/// This property is null until the enrichment stage of the pipeline.
+	/// The final resolved linguistic annotations applied by the morphology analyzer.
+	/// Null if not a word, not found, or not yet disambiguated.
 	/// </summary>
 	public MorphologicalInfo? Morph { get; set; }
+
+	/// <summary>
+	/// All possible morphological variants for this word found in the dictionary.
+	/// Used later by the disambiguation engine.
+	/// </summary>
+	public IReadOnlyList<MorphologicalInfo>? MorphologicalCandidates { get; set; }
 
 	public Token(string text, string normalizedText, TokenType type, int start, int end)
 	{

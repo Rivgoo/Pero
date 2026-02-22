@@ -1,10 +1,11 @@
-using System.Diagnostics;
-using System.Runtime.InteropServices.JavaScript;
-using System.Text.Json;
 using Pero.Abstractions.Constants;
 using Pero.Abstractions.Transport;
 using Pero.Kernel;
 using Pero.Kernel.Registry;
+using Pero.Languages.Uk_UA;
+using System.Diagnostics;
+using System.Runtime.InteropServices.JavaScript;
+using System.Text.Json;
 
 namespace Pero.WasmHost;
 
@@ -16,23 +17,29 @@ public partial class Engine
 	private static void Initialize()
 	{
 		var registry = new LanguageRegistry();
-		_analyzer = new Analyzer(registry);
 
+		registry.Register(new UkrainianLanguageModule());
+
+		_analyzer = new Analyzer(registry);
 		_isInitialized = true;
 	}
 
 	[JSExport]
 	public static string Process(string jsonRequest)
 	{
-		if(_isInitialized == false)
+		if (_isInitialized == false)
+		{
 			Initialize();
+		}
 
 		var stopwatch = Stopwatch.StartNew();
 
 		try
 		{
 			if (string.IsNullOrWhiteSpace(jsonRequest))
+			{
 				return CreateErrorResponse("Empty request");
+			}
 
 			var request = JsonSerializer.Deserialize(
 				jsonRequest,
@@ -40,9 +47,11 @@ public partial class Engine
 			);
 
 			if (request == null)
+			{
 				return CreateErrorResponse("Invalid JSON");
+			}
 
-			var issues = _analyzer.Analyze(request.Text, LanguageCodes.Ukrainian);
+			var issues = _analyzer.Analyze(request.Text, request.LanguageCode);
 
 			var response = new AnalysisResponse
 			{
@@ -67,7 +76,8 @@ public partial class Engine
 		var error = new AnalysisResponse
 		{
 			RequestId = "error",
-			IsSuccess = false
+			IsSuccess = false,
+			ErrorMessage = message
 		};
 		return JsonSerializer.Serialize(error, PeroJsonContext.Default.AnalysisResponse);
 	}

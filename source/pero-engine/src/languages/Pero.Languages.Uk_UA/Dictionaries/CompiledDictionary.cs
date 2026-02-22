@@ -9,6 +9,10 @@ namespace Pero.Languages.Uk_UA.Dictionaries;
 
 public class CompiledDictionary
 {
+	public byte[] FstData => _fstData;
+	public FlatMorphologyRule[] Rules => _rules;
+	public char[] SuffixPool => _suffixPool;
+
 	private MorphologyTagset[] _tagsets = Array.Empty<MorphologyTagset>();
 	private FlatMorphologyRule[] _rules = Array.Empty<FlatMorphologyRule>();
 	private char[] _suffixPool = Array.Empty<char>();
