@@ -1,4 +1,6 @@
-﻿namespace Pero.Abstractions.Models;
+﻿using Pero.Abstractions.Models.Morphology;
+
+namespace Pero.Abstractions.Models;
 
 /// <summary>
 /// An atomic unit of text, such as a word, punctuation mark, or a technical entity.

@@ -1,5 +1,6 @@
 ﻿using Pero.Abstractions.Contracts;
 using Pero.Abstractions.Models;
+using Pero.Abstractions.Models.Morphology;
 
 namespace Pero.Kernel.Components;
 

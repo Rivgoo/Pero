@@ -5,6 +5,7 @@
     <Project Path="src/Pero.WasmHost/Pero.WasmHost.csproj" />
   </Folder>
   <Folder Name="/src/languages/">
+    <Project Path="src/languages/Pero.Languages.Uk_UA.Tools.Console/Pero.Languages.Uk_UA.Tools.Console.csproj" Id="d39f7ba4-5097-4e11-8bed-2d36f68828ae" />
     <Project Path="src/languages/Pero.Languages.Uk_UA/Pero.Languages.Uk_UA.csproj" Id="83269255-c91d-4e98-a51d-98a0fee33518" />
   </Folder>
   <Folder Name="/tests/">
