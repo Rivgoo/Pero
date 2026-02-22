@@ -1,5 +1,5 @@
 import { OffscreenManager } from './OffscreenManager';
-import { isAnalyzeRequest } from '../shared/messages';
+import { isAnalyzeRequest, OffscreenAnalyzeMessage } from '../shared/messages';
 
 const offscreenManager = new OffscreenManager();
 
@@ -8,7 +8,11 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (isAnalyzeRequest(message)) {
     offscreenManager.ensureCreated()
       .then(() => {
-        return chrome.runtime.sendMessage(message);
+        const offscreenMsg: OffscreenAnalyzeMessage = {
+          type: 'OFFSCREEN_ANALYZE',
+          payload: message.payload
+        };
+        return chrome.runtime.sendMessage(offscreenMsg);
       })
       .then(response => {
         sendResponse(response);
@@ -18,7 +22,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         sendResponse({ success: false, error: 'Background orchestration failed' });
       });
 
-    return true; // Keep channel open for async response
+    return true; 
   }
 
   return false;

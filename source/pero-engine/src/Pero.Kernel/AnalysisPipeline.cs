@@ -26,6 +26,7 @@ public class AnalysisPipeline
 		var tokenizer = _module.CreateTokenizer();
 		var segmenter = _module.CreateSentenceSegmenter();
 		var morphAnalyzer = _module.CreateMorphologyAnalyzer();
+		var spellChecker = _module.CreateSpellChecker();
 		var rules = _module.GetRules().ToList();
 
 		var cleanedText = cleaner.Clean(rawText);
@@ -33,12 +34,17 @@ public class AnalysisPipeline
 		var allTokens = ProcessFragments(fragments, tokenizer);
 		var sentences = segmenter.Segment(allTokens).ToList();
 
+		var document = new AnalyzedDocument(rawText, sentences);
+
 		foreach (var sentence in sentences)
 		{
 			morphAnalyzer.Enrich(sentence);
 		}
 
 		var allIssues = new List<TextIssue>();
+
+		allIssues.AddRange(spellChecker.Check(document));
+
 		foreach (var sentence in sentences)
 		{
 			foreach (var rule in rules)
@@ -47,7 +53,6 @@ public class AnalysisPipeline
 			}
 		}
 
-		var document = new AnalyzedDocument(rawText, sentences);
 		return new AnalysisResult(document, allIssues);
 	}
 

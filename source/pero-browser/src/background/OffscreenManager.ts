@@ -35,29 +35,11 @@ export class OffscreenManager {
         justification: 'Hosting .NET WASM runtime for text analysis',
       });
       console.log('Pero: Offscreen Document Created');
-
-      await this.waitForOffscreenReady();
-
     } catch (e: any) {
       if (!e.message.includes('Only one offscreen')) {
         throw e;
       }
     }
-  }
-
-  private async waitForOffscreenReady(): Promise<void> {
-    const start = Date.now();
-    const timeout = 5000;
-
-    while (Date.now() - start < timeout) {
-      try {
-        await chrome.runtime.sendMessage({ type: 'PING' });
-        return; 
-      } catch (e) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-    }
-    throw new Error('Offscreen document failed to initialize in time');
   }
 
   private resetInactivityTimer() {

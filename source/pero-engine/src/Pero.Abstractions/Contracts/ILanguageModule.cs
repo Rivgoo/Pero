@@ -40,4 +40,9 @@ public interface ILanguageModule
 	/// Gets the collection of analysis rules for the language.
 	/// </summary>
 	IEnumerable<IRule> GetRules();
+
+	/// <summary>
+	/// Creates the document-level spellchecking subsystem.
+	/// </summary>
+	ISpellChecker CreateSpellChecker();
 }

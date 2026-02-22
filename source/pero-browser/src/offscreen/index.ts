@@ -1,21 +1,18 @@
 import { WasmLoader } from '../core/services/WasmLoader';
-import { isAnalyzeRequest, MessageResponse } from '../shared/messages';
+import { isOffscreenAnalyzeRequest, MessageResponse } from '../shared/messages';
 import { AnalysisResponse } from '../shared/contracts';
 
 const loader = WasmLoader.getInstance();
 
-// Pre-load runtime to reduce latency for the first request
 loader.initialize().catch(console.error);
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  // 1. Health Check (PING)
   if (message.type === 'PING') {
     sendResponse({ success: true } as MessageResponse<void>);
-    return false; // Synchronous response
+    return false;
   }
 
-  // 2. Analysis Request
-  if (isAnalyzeRequest(message)) {
+  if (isOffscreenAnalyzeRequest(message)) {
     loader.initialize()
       .then(() => {
         const result = loader.analyze(message.payload);
@@ -33,7 +30,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         sendResponse(response);
       });
     
-    return true; // Keep channel open for async response
+    return true; 
   }
 
   return false;

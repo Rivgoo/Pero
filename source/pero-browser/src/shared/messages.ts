@@ -1,6 +1,6 @@
 import { AnalysisRequest } from './contracts';
 
-export type MessageType = 'PING' | 'ANALYZE_REQUEST';
+export type MessageType = 'PING' | 'ANALYZE_REQUEST' | 'OFFSCREEN_ANALYZE';
 
 export interface BaseMessage {
   type: MessageType;
@@ -16,20 +16,23 @@ export interface AnalyzeRequestMessage extends BaseMessage {
   payload: AnalysisRequest;
 }
 
-export type ExtensionMessage = PingMessage | AnalyzeRequestMessage;
+export interface OffscreenAnalyzeMessage extends BaseMessage {
+  type: 'OFFSCREEN_ANALYZE';
+  payload: AnalysisRequest;
+}
 
-/**
- * Standard wrapper for all asynchronous responses.
- */
+export type ExtensionMessage = PingMessage | AnalyzeRequestMessage | OffscreenAnalyzeMessage;
+
 export interface MessageResponse<T> {
   success: boolean;
   data?: T;
   error?: string;
 }
 
-/**
- * Type Guard to validate message structure at runtime.
- */
 export function isAnalyzeRequest(msg: any): msg is AnalyzeRequestMessage {
   return msg && msg.type === 'ANALYZE_REQUEST' && msg.payload;
+}
+
+export function isOffscreenAnalyzeRequest(msg: any): msg is OffscreenAnalyzeMessage {
+  return msg && msg.type === 'OFFSCREEN_ANALYZE' && msg.payload;
 }

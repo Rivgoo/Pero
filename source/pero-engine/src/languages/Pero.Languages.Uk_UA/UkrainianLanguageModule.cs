@@ -62,9 +62,14 @@ public class UkrainianLanguageModule : ILanguageModule
 		return new UkrainianMorphologyAnalyzer(_lexicon, disambiguationRules);
 	}
 
+	public ISpellChecker CreateSpellChecker()
+	{
+		return new UkrainianSpellChecker(_fuzzyMatcher);
+	}
+
 	public IEnumerable<IRule> GetRules()
 	{
-		yield return new UnknownWordRule(_fuzzyMatcher);
+		yield return new MixedAlphabetRule();
 		yield return new AdjectiveNounAgreementRule();
 	}
 }
