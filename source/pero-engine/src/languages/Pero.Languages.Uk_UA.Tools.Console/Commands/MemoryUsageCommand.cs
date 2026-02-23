@@ -1,7 +1,6 @@
 ﻿using Pero.Languages.Uk_UA.Dictionaries;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
-using System.Diagnostics;
 
 namespace Pero.Languages.Uk_UA.Tools.Console.Commands;
 
@@ -28,9 +27,7 @@ public class MemoryUsageCommand
 			return;
 		}
 
-		var fileNames = dictFiles.Select(Path.GetFileName).ToList()!;
-		var selectedIndex = _ui.SelectOption("Select a dictionary to load for measurement", fileNames);
-		var selectedFile = dictFiles[selectedIndex];
+		var selectedFile = dictFiles[_ui.SelectOption("Select dictionary", dictFiles.Select(Path.GetFileName).ToList()!)];
 
 		GC.Collect();
 		GC.WaitForPendingFinalizers();
@@ -38,27 +35,16 @@ public class MemoryUsageCommand
 
 		long memoryBefore = GC.GetTotalMemory(true);
 
-		_ui.ShowMessage($"\nLoading dictionary: {selectedFile} ...");
 		var dictionary = new CompiledDictionary();
-
-		var stopwatch = Stopwatch.StartNew();
 		using var fileStream = new FileStream(selectedFile, FileMode.Open, FileAccess.Read);
 		dictionary.Load(fileStream);
-		stopwatch.Stop();
-
-		_ui.ShowMessage($"Dictionary loaded in {stopwatch.ElapsedMilliseconds} ms.");
 
 		long memoryAfter = GC.GetTotalMemory(true);
-
 		long memoryUsed = memoryAfter - memoryBefore;
 
-		_ui.ShowSuccess($"\nApproximate memory footprint of the dictionary:");
+		_ui.ShowSuccess($"\nApproximate heap footprint of loaded arrays:");
 		_ui.ShowMessage($"{memoryUsed:N0} bytes");
-		_ui.ShowMessage($"{(memoryUsed / 1024.0):N2} KB");
 		_ui.ShowMessage($"{(memoryUsed / 1024.0 / 1024.0):N2} MB");
-
-		_ui.ShowMessage("\nNote: This is an estimation of the managed heap increase.");
-		_ui.ShowMessage("For precise results, use a memory profiler.");
 
 		_ui.WaitForKey();
 		GC.KeepAlive(dictionary);

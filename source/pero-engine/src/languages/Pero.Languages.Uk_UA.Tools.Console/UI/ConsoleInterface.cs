@@ -38,6 +38,21 @@ public class ConsoleInterface
 		return System.Console.ReadLine();
 	}
 
+	public int PromptForInteger(string prompt, int min, int max)
+	{
+		while (true)
+		{
+			System.Console.Write($"{prompt} ({min:N0}-{max:N0}): ");
+			var input = System.Console.ReadLine();
+
+			if (int.TryParse(input, out int value) && value >= min && value <= max)
+			{
+				return value;
+			}
+			ShowError($"Invalid input. Please enter a number between {min:N0} and {max:N0}.");
+		}
+	}
+
 	public int SelectOption(string prompt, IReadOnlyList<string> options)
 	{
 		if (options.Count == 0)

@@ -10,6 +10,7 @@ public class Application
 	private readonly CompileCommand _compileCommand;
 	private readonly AnalyzeCommand _analyzeCommand;
 	private readonly MemoryUsageCommand _memoryUsageCommand;
+	private readonly StressTestCommand _stressTestCommand;
 
 	public Application()
 	{
@@ -21,6 +22,7 @@ public class Application
 		_compileCommand = new CompileCommand(_ui, fileLocator);
 		_analyzeCommand = new AnalyzeCommand(_ui, fileLocator);
 		_memoryUsageCommand = new MemoryUsageCommand(_ui, fileLocator);
+		_stressTestCommand = new StressTestCommand(_ui, fileLocator);
 	}
 
 	public void Run()
@@ -30,6 +32,7 @@ public class Application
 			"Compile raw text dictionary to binary format",
 			"Load binary dictionary and analyze words",
 			"Measure dictionary memory usage",
+			"Run dictionary performance stress test",
 			"Exit"
 		};
 
@@ -51,6 +54,9 @@ public class Application
 					_memoryUsageCommand.Execute();
 					break;
 				case 3:
+					_stressTestCommand.Execute();
+					break;
+				case 4:
 					_ui.ShowMessage("Exiting...");
 					return;
 			}

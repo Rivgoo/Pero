@@ -18,9 +18,10 @@ public class AnalyzeCommand
 
 	public void Execute()
 	{
-		_ui.ShowHeader("Analyze Word Forms");
+		_ui.ShowHeader("Analyze Word");
 
 		var dictFiles = _fileLocator.FindCompiledDictionaries();
+
 		if (dictFiles.Count == 0)
 		{
 			_ui.ShowMessage("No compiled dictionaries found. Please compile a text file first.");
@@ -28,9 +29,7 @@ public class AnalyzeCommand
 			return;
 		}
 
-		var fileNames = dictFiles.Select(Path.GetFileName).ToList()!;
-		var selectedIndex = _ui.SelectOption("Select a dictionary to load", fileNames);
-		var selectedFile = dictFiles[selectedIndex];
+		var selectedFile = dictFiles[_ui.SelectOption("Select a dictionary", dictFiles.Select(Path.GetFileName).ToList()!)];
 
 		_ui.ShowMessage($"\nLoading dictionary: {selectedFile} ...");
 
@@ -47,16 +46,11 @@ public class AnalyzeCommand
 		}
 		catch (Exception ex)
 		{
-			_ui.ShowError($"Failed to load dictionary: {ex.Message}");
+			_ui.ShowError($"Failed to load: {ex.Message}");
 			_ui.WaitForKey();
 			return;
 		}
 
-		RunInteractiveLoop(dictionary);
-	}
-
-	private void RunInteractiveLoop(CompiledDictionary dictionary)
-	{
 		while (true)
 		{
 			_ui.ShowMessage("\n" + new string('-', 30));
@@ -67,17 +61,17 @@ public class AnalyzeCommand
 
 			word = word.Trim().ToLowerInvariant();
 
-			var stopwatch = Stopwatch.StartNew();
+			stopwatch.Restart();
 			var results = dictionary.Analyze(word).ToList();
 			stopwatch.Stop();
 
 			if (results.Count == 0)
 			{
-				_ui.ShowError($"Word '{word}' not found in the dictionary.");
+				_ui.ShowError($"Word '{word}' not found in {stopwatch.Elapsed.TotalMilliseconds:F4} ms.");
 			}
 			else
 			{
-				_ui.ShowSuccess($"Found {results.Count} variants in {stopwatch.Elapsed.TotalMilliseconds:F4} ms:");
+				_ui.ShowSuccess($"Found {results.Count} variant(s) in {stopwatch.Elapsed.TotalMilliseconds:F4} ms:");
 				foreach (var info in results)
 				{
 					_ui.ShowMessage($"- Lemma: {info.Lemma}");

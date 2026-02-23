@@ -13,8 +13,6 @@ public class FstNode : IEquatable<FstNode>
 	public FstPayload? Payload { get; set; }
 
 	public byte MaxFrequencyInSubtree { get; set; } = 0;
-	public byte MinDistToFinal { get; set; } = 255;
-	public byte MaxDistToFinal { get; set; } = 0;
 
 	/// <summary>
 	/// Compares the structural equivalence of two nodes to perform suffix merging.

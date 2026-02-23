@@ -77,7 +77,7 @@ public class CompiledDictionary
 			byte flags = _fstData[(int)currentOffset];
 			byte arcCount = _fstData[(int)currentOffset + 1];
 
-			int ptr = (int)currentOffset + 4;
+			int ptr = (int)currentOffset + 2;
 
 			bool hasPayload = (flags & 0x02) != 0;
 			if (hasPayload)
@@ -108,7 +108,8 @@ public class CompiledDictionary
 
 		if (!isFinal || !finalHasPayload) yield break;
 
-		int payloadPtr = (int)currentOffset + 4;
+		int payloadPtr = (int)currentOffset + 2;
+
 		payloadPtr += 1; // Freq
 
 		ushort finalRuleCount = BinaryPrimitives.ReadUInt16LittleEndian(_fstData.AsSpan(payloadPtr));

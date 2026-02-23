@@ -83,10 +83,10 @@ public class DictionaryCompiler
 		}
 
 		var rootNode = builder.Finish();
-		CalculateGraphMetadata(rootNode, new HashSet<FstNode>());
 
-		string suffixPool = suffixPoolBuilder.ToString();
-		WriteFlatBinary(outputStream, tagsetList, ruleList, suffixPool, rootNode);
+		CalculateMaxSubtreeFrequencies(rootNode, new HashSet<FstNode>());
+
+		WriteFlatBinary(outputStream, tagsetList, ruleList, suffixPoolBuilder.ToString(), rootNode);
 	}
 
 	private void InsertIntoBuilder(DawgBuilder builder, string form, List<ushort> ruleIds, IReadOnlyDictionary<string, byte>? frequencies)
@@ -96,37 +96,27 @@ public class DictionaryCompiler
 		{
 			freq = foundFreq;
 		}
-		builder.Insert(form, new FstPayload(freq, ruleIds.ToArray()));
+		builder.Insert(form, new FstPayload(freq, ruleIds.Distinct().ToArray()));
 		ruleIds.Clear();
 	}
 
-	private void CalculateGraphMetadata(FstNode node, HashSet<FstNode> visited)
+	private void CalculateMaxSubtreeFrequencies(FstNode node, HashSet<FstNode> visited)
 	{
 		if (visited.Contains(node)) return;
 		visited.Add(node);
 
 		byte maxFreq = node.Payload?.Frequency ?? 0;
-		byte minD = node.IsFinal ? (byte)0 : (byte)255;
-		byte maxD = node.IsFinal ? (byte)0 : (byte)0;
 
 		foreach (var child in node.Arcs.Values)
 		{
-			CalculateGraphMetadata(child, visited);
+			CalculateMaxSubtreeFrequencies(child, visited);
 
-			if (child.MaxFrequencyInSubtree > maxFreq) maxFreq = child.MaxFrequencyInSubtree;
-
-			byte childMin = (byte)(child.MinDistToFinal + 1);
-			byte childMax = (byte)(child.MaxDistToFinal + 1);
-
-			if (child.MinDistToFinal == 255) childMin = 255;
-
-			if (childMin < minD) minD = childMin;
-			if (childMax > maxD) maxD = childMax;
+			if (child.MaxFrequencyInSubtree > maxFreq)
+			{
+				maxFreq = child.MaxFrequencyInSubtree;
+			}
 		}
-
 		node.MaxFrequencyInSubtree = maxFreq;
-		node.MinDistToFinal = minD;
-		node.MaxDistToFinal = maxD;
 	}
 
 	private void WriteFlatBinary(Stream outputStream, List<MorphologyTagset> tagsets, List<FlatMorphologyRule> rules, string suffixPool, FstNode root)
@@ -141,7 +131,6 @@ public class DictionaryCompiler
 		void CollectNodes(FstNode node)
 		{
 			if (nodeOffsets.ContainsKey(node)) return;
-
 			nodeOffsets[node] = 0;
 			nodeList.Add(node);
 
@@ -158,15 +147,14 @@ public class DictionaryCompiler
 		foreach (var node in nodeList)
 		{
 			nodeOffsets[node] = currentOffset;
-			currentOffset += 2; // Flags + ArcCount
-			currentOffset += 2; // MinDist + MaxDist
+
+			currentOffset += 2;
 
 			if (node.IsFinal && node.Payload != null)
 			{
 				currentOffset += 3; // Freq + Count(2)
 				currentOffset += (uint)(node.Payload.RuleIds.Length * 2);
 			}
-
 			currentOffset += (uint)(node.Arcs.Count * 6);
 		}
 
@@ -210,8 +198,6 @@ public class DictionaryCompiler
 
 			writer.Write(flags);
 			writer.Write((byte)node.Arcs.Count);
-			writer.Write(node.MinDistToFinal);
-			writer.Write(node.MaxDistToFinal);
 
 			if (node.IsFinal && node.Payload != null)
 			{
