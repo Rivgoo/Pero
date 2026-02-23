@@ -11,19 +11,15 @@ public partial class UkrainianSpellChecker : ISpellChecker
 {
 	private const string IssueId = "UK_UA_SPELLING_ERROR";
 	private const char CanonicalApostrophe = '\'';
+
 	private readonly FuzzyMatcher _fuzzyMatcher;
+	private readonly VirtualSymSpell _virtualSymSpell;
 	private readonly LexiconCache _lexicon;
 
-	private static readonly Dictionary<char, char> EnToUkLayout = new()
-	{
-		{'q', 'й'}, {'w', 'ц'}, {'e', 'у'}, {'r', 'к'}, {'t', 'е'}, {'y', 'н'}, {'u', 'г'}, {'i', 'ш'}, {'o', 'щ'}, {'p', 'з'}, {'[', 'х'}, {']', 'ї'},
-		{'a', 'ф'}, {'s', 'і'}, {'d', 'в'}, {'f', 'а'}, {'g', 'п'}, {'h', 'р'}, {'j', 'о'}, {'k', 'л'}, {'l', 'д'}, {';', 'ж'}, {'\'', 'є'},
-		{'z', 'я'}, {'x', 'ч'}, {'c', 'с'}, {'v', 'м'}, {'b', 'и'}, {'n', 'т'}, {'m', 'ь'}, {',', 'б'}, {'.', 'ю'}
-	};
-
-	public UkrainianSpellChecker(FuzzyMatcher fuzzyMatcher, LexiconCache lexicon)
+	public UkrainianSpellChecker(FuzzyMatcher fuzzyMatcher, VirtualSymSpell virtualSymSpell, LexiconCache lexicon)
 	{
 		_fuzzyMatcher = fuzzyMatcher;
+		_virtualSymSpell = virtualSymSpell;
 		_lexicon = lexicon;
 	}
 
@@ -40,39 +36,50 @@ public partial class UkrainianSpellChecker : ISpellChecker
 
 				if (token.IsUnknown())
 				{
-					if (ShouldSkipSpellcheck(token.Text, out bool isPureLatin)) continue;
+					if (ContainsNonUkrainianChars(token.Text)) continue;
 
 					string searchTarget = NormalizeApostrophes(token.NormalizedText);
 					char userApostropheStyle = DetectUserApostrophe(token.Text);
 
-					if (isPureLatin) searchTarget = TranslateLayout(searchTarget);
-
-					// Hybrid Search: Heuristics + Fuzzy
 					var combinedCandidates = new List<CorrectionCandidate>();
 
-					// 1. O(1) Pre-flight Heuristics (Distance 0.0 or low cost)
+					// Level 1: Pre-flight Heuristics
 					foreach (var heuristicWord in GenerateHeuristics(searchTarget))
 					{
 						var dictTags = _lexicon.GetCandidates(heuristicWord);
 						if (dictTags.Count > 0)
 						{
-							// Give massive bonus score to rule-based matches
+							// Massive bonus for heuristic hits
 							combinedCandidates.Add(new CorrectionCandidate(
-								heuristicWord, 0f, 31, -5.0f, dictTags.Select(t => t.Tagset).ToArray()));
+								heuristicWord, 0f, 31, -15.0f, dictTags.Select(t => t.Tagset).ToArray()));
 						}
 					}
 
-					// 2. FST Fuzzy Search
-					var fuzzyResults = _fuzzyMatcher.Suggest(searchTarget);
-					foreach (var fuzzy in fuzzyResults)
+					// Level 2: Virtual SymSpell (Edit Distance 1)
+					if (combinedCandidates.Count < 3)
 					{
-						if (!combinedCandidates.Any(c => c.Word == fuzzy.Word))
-							combinedCandidates.Add(fuzzy);
+						var ed1Results = _virtualSymSpell.GetCandidates(searchTarget);
+						foreach (var ed1 in ed1Results)
+						{
+							if (!combinedCandidates.Any(c => c.Word == ed1.Word))
+								combinedCandidates.Add(ed1);
+						}
+					}
+
+					// Level 3: FST Fuzzy Search (Edit Distance 2+, Fallback)
+					if (combinedCandidates.Count == 0 || !combinedCandidates.Any(c => c.Score < -1.0f))
+					{
+						var fuzzyResults = _fuzzyMatcher.Suggest(searchTarget);
+						foreach (var fuzzy in fuzzyResults)
+						{
+							if (!combinedCandidates.Any(c => c.Word == fuzzy.Word))
+								combinedCandidates.Add(fuzzy);
+						}
 					}
 
 					if (combinedCandidates.Count == 0) continue;
 
-					// 3. Context Ranking
+					// Context Ranking
 					var rankedCandidates = contextRanker.Rank(sentence, token, combinedCandidates);
 
 					var suggestions = rankedCandidates
@@ -94,9 +101,6 @@ public partial class UkrainianSpellChecker : ISpellChecker
 		}
 	}
 
-	/// <summary>
-	/// Generates candidates based on common Ukrainian grammatical and phonetic error patterns.
-	/// </summary>
 	private static IEnumerable<string> GenerateHeuristics(string word)
 	{
 		if (word.Length < 3) yield break;
@@ -104,10 +108,10 @@ public partial class UkrainianSpellChecker : ISpellChecker
 		// Verb endings
 		if (word.EndsWith("ця")) yield return word[..^2] + "ться";
 		if (word.EndsWith("тця")) yield return word[..^3] + "ться";
-		if (word.EndsWith("ся")) yield return word[..^2] + "шся"; // дивися -> дивишся
+		if (word.EndsWith("ся")) yield return word[..^2] + "шся";
 
 		// Instrumental case doublings
-		if (word.EndsWith("ттю")) yield return word[..^3] + "тю"; // радісттю -> радістю
+		if (word.EndsWith("ттю")) yield return word[..^3] + "тю";
 		if (word.EndsWith("лю") && !word.EndsWith("ллю")) yield return word[..^2] + "ллю";
 		if (word.EndsWith("ню") && !word.EndsWith("нню")) yield return word[..^2] + "нню";
 		if (word.EndsWith("чю") && !word.EndsWith("ччю")) yield return word[..^2] + "ччю";
@@ -124,9 +128,6 @@ public partial class UkrainianSpellChecker : ISpellChecker
 		if (word.EndsWith("ова")) yield return word[..^3] + "ого";
 		if (word.EndsWith("ева")) yield return word[..^3] + "его";
 
-		// Double consonants inside word (missing)
-		if (word.Contains("н") && !word.Contains("нн")) yield return word.Replace("н", "нн"); // not precise, but fast check
-
 		// Common Doubling Fixes (targeted)
 		if (word.EndsWith("ня")) yield return word[..^2] + "ння";
 		if (word.EndsWith("тя")) yield return word[..^2] + "ття";
@@ -136,43 +137,58 @@ public partial class UkrainianSpellChecker : ISpellChecker
 		if (word.EndsWith("ьом")) yield return word[..^3] + "ем";
 		if (word.EndsWith("цьом")) yield return word[..^4] + "цем";
 
-		// Apostrophe injection
+		// Missing "т" in "тько" (батько, дядько)
+		if (word.Contains("ько") && !word.Contains("тько") && !word.Contains("дько"))
+			yield return word.Replace("ько", "тько");
+
+		// Apostrophe injection (Expanded robust prefixes/labials)
 		for (int i = 0; i < word.Length - 1; i++)
 		{
-			if (IsLabialOrR(word[i]) && IsIotated(word[i + 1]))
+			if (IsLabialOrPrefix(word, i) && IsIotated(word[i + 1]))
 				yield return word.Substring(0, i + 1) + "'" + word.Substring(i + 1);
 		}
 	}
 
-	private static bool IsLabialOrR(char c) => c is 'б' or 'п' or 'в' or 'м' or 'ф' or 'р';
+	private static bool IsLabialOrPrefix(string word, int index)
+	{
+		char c = word[index];
+		if (c is 'б' or 'п' or 'в' or 'м' or 'ф' or 'р' or 'д') return true;
+
+		// Common prefixes before apostrophe: з, с, об, від, під, над
+		if (c == 'з' || c == 'с') return true;
+		return false; // Handled sufficiently by VirtualSymSpell for prefixes
+	}
+
 	private static bool IsIotated(char c) => c is 'я' or 'ю' or 'є' or 'ї';
 
-	private static bool ShouldSkipSpellcheck(string word, out bool isPureLatin)
+	private static bool ContainsNonUkrainianChars(string word)
 	{
-		isPureLatin = true;
-		if (string.IsNullOrWhiteSpace(word)) return true;
-		bool hasCyrillic = false;
 		foreach (char c in word)
 		{
-			if (char.IsDigit(c)) return true;
-			if ((c >= '\u0400' && c <= '\u04FF') || (c >= '\u0500' && c <= '\u052F'))
-			{
-				hasCyrillic = true;
-				isPureLatin = false;
-			}
+			if (!IsUkrainianChar(c)) return true;
 		}
-		if (hasCyrillic && isPureLatin == false && word.Any(c => c >= 'a' && c <= 'z')) return true;
 		return false;
 	}
 
-	private static string TranslateLayout(string latinWord)
+	private static bool IsUkrainianChar(char c)
 	{
-		var chars = latinWord.ToCharArray();
-		for (int i = 0; i < chars.Length; i++)
-		{
-			if (EnToUkLayout.TryGetValue(chars[i], out char ukChar)) chars[i] = ukChar;
-		}
-		return new string(chars);
+		if (c >= 'а' && c <= 'щ') return true;
+		if (c >= 'ю' && c <= 'я') return true;
+		if (c == 'ь') return true;
+
+		if (c >= 'А' && c <= 'Щ') return true;
+		if (c >= 'Ю' && c <= 'Я') return true;
+		if (c == 'Ь') return true;
+
+		if (c == 'і' || c == 'І') return true;
+		if (c == 'ї' || c == 'Ї') return true;
+		if (c == 'є' || c == 'Є') return true;
+		if (c == 'ґ' || c == 'Ґ') return true;
+
+		if (c == '\'' || c == '’' || c == 'ʼ') return true;
+		if (c == '-') return true;
+
+		return false;
 	}
 
 	private static string NormalizeApostrophes(string word)

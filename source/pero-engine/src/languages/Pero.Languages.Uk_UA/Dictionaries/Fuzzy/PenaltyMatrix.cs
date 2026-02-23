@@ -6,7 +6,15 @@ namespace Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
 public static class PenaltyMatrix
 {
 	private const float MaxKeyboardDistance = 10.5f;
-	private static readonly float[] SubCosts = new float[1600]; 
+	private static readonly float[] SubCosts = new float[1600];
+
+	public static readonly char[] UkrainianAlphabet =
+	{
+		'а', 'б', 'в', 'г', 'ґ', 'д', 'е', 'є', 'ж', 'з', 'и', 'і', 'ї', 'й', 'к',
+		'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
+		'ь', 'ю', 'я', '\''
+	};
+
 	static PenaltyMatrix()
 	{
 		for (int i = 0; i < 40; i++)
@@ -32,7 +40,7 @@ public static class PenaltyMatrix
 	public static float GetInsertionCost(char c)
 	{
 		if (IsApostrophe(c)) return 0.1f;
-
+		if (c == 'ь' || c == 'й') return 0.4f;
 		return IsVowel(c) ? 0.7f : 0.95f;
 	}
 
@@ -40,13 +48,14 @@ public static class PenaltyMatrix
 	public static float GetDeletionCost(char c)
 	{
 		if (IsApostrophe(c)) return 0.1f;
+		if (c == 'ь' || c == 'й') return 0.4f;
 		return 0.95f;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static float GetPositionalMultiplier(int currentIndex, int wordLength)
 	{
-		if (currentIndex == 0) return 1.0f;
+		if (currentIndex == 0) return 1.2f;
 		if (currentIndex >= wordLength - 2) return 0.8f;
 		return 1.0f;
 	}
@@ -91,7 +100,8 @@ public static class PenaltyMatrix
 			   (a == 'т' && b == 'д') || (a == 'д' && b == 'т') ||
 			   (a == 'п' && b == 'б') || (a == 'б' && b == 'п') ||
 			   (a == 'ц' && b == 'т') || (a == 'т' && b == 'ц') ||
-			   (a == 'ш' && b == 'ч') || (a == 'ч' && b == 'ш');
+			   (a == 'ш' && b == 'ч') || (a == 'ч' && b == 'ш') ||
+			   (a == 'н' && b == 'м') || (a == 'м' && b == 'н');
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

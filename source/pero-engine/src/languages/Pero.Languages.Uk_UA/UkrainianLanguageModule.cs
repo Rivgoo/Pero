@@ -8,49 +8,34 @@ using Pero.Languages.Uk_UA.Components.Disambiguation.Rules;
 using Pero.Languages.Uk_UA.Dictionaries;
 using Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
 using Pero.Languages.Uk_UA.Resources;
-using Pero.Languages.Uk_UA.Rules.Grammar;
 using Pero.Languages.Uk_UA.Rules.Spelling;
 
 namespace Pero.Languages.Uk_UA;
 
-/// <summary>
-/// The main entry point for the Ukrainian language processing.
-/// Acts as a factory for the NLP pipeline components and holds heavy shared resources.
-/// </summary>
 public class UkrainianLanguageModule : ILanguageModule
 {
 	private readonly CompiledDictionary _dictionary;
 	private readonly LexiconCache _lexicon;
 	private readonly FuzzyMatcher _fuzzyMatcher;
+	private readonly VirtualSymSpell _virtualSymSpell;
 
 	public UkrainianLanguageModule()
 	{
 		_dictionary = DictionaryProvider.GetDictionary();
 		_lexicon = new LexiconCache(_dictionary);
 		_fuzzyMatcher = new FuzzyMatcher(_dictionary);
+		_virtualSymSpell = new VirtualSymSpell(_dictionary);
 	}
 
 	public string LanguageCode => LanguageCodes.Ukrainian;
 
-	public ITextCleaner CreateTextCleaner()
-	{
-		return new StandardTextCleaner();
-	}
+	public ITextCleaner CreateTextCleaner() => new StandardTextCleaner();
 
-	public IPreTokenizer CreatePreTokenizer()
-	{
-		return new HeuristicCodePreTokenizer(new StandardPreTokenizer());
-	}
+	public IPreTokenizer CreatePreTokenizer() => new HeuristicCodePreTokenizer(new StandardPreTokenizer());
 
-	public ITokenizer CreateTokenizer()
-	{
-		return new UkrainianTokenizer();
-	}
+	public ITokenizer CreateTokenizer() => new UkrainianTokenizer();
 
-	public ISentenceSegmenter CreateSentenceSegmenter()
-	{
-		return new UkrainianSentenceSegmenter();
-	}
+	public ISentenceSegmenter CreateSentenceSegmenter() => new UkrainianSentenceSegmenter();
 
 	public IMorphologyAnalyzer CreateMorphologyAnalyzer()
 	{
@@ -62,14 +47,10 @@ public class UkrainianLanguageModule : ILanguageModule
 		return new UkrainianMorphologyAnalyzer(_lexicon, disambiguationRules);
 	}
 
-	public ISpellChecker CreateSpellChecker()
-	{
-		return new UkrainianSpellChecker(_fuzzyMatcher, _lexicon);
-	}
+	public ISpellChecker CreateSpellChecker() => new UkrainianSpellChecker(_fuzzyMatcher, _virtualSymSpell, _lexicon);
 
 	public IEnumerable<IRule> GetRules()
 	{
 		yield return new MixedAlphabetRule();
-		//yield return new AdjectiveNounAgreementRule();
 	}
 }

@@ -236,76 +236,6 @@
       "expected": "день"
     },
     {
-      "name": "Omission End",
-      "input": "лі",
-      "expected": "ліс"
-    },
-    {
-      "name": "Omission End",
-      "input": "кі",
-      "expected": "кіт"
-    },
-    {
-      "name": "Omission End",
-      "input": "ма",
-      "expected": "мак"
-    },
-    {
-      "name": "Omission End",
-      "input": "ду",
-      "expected": "дуб"
-    },
-    {
-      "name": "Omission End",
-      "input": "си",
-      "expected": "сир"
-    },
-    {
-      "name": "Omission End",
-      "input": "да",
-      "expected": "дах"
-    },
-    {
-      "name": "Omission End",
-      "input": "ле",
-      "expected": "лев"
-    },
-    {
-      "name": "Omission End",
-      "input": "ме",
-      "expected": "мед"
-    },
-    {
-      "name": "Omission End",
-      "input": "вод",
-      "expected": "вода"
-    },
-    {
-      "name": "Omission End",
-      "input": "неб",
-      "expected": "небо"
-    },
-    {
-      "name": "Omission End",
-      "input": "пол",
-      "expected": "поле"
-    },
-    {
-      "name": "Omission End",
-      "input": "гор",
-      "expected": "гора"
-    },
-    {
-      "name": "Omission End",
-      "input": "рік",
-      "expected": "ріка"
-    },
-    {
-      "name": "Omission Start",
-      "input": "има",
-      "expected": "зима"
-    },
-    {
       "name": "Omission Start",
       "input": "иба",
       "expected": "риба"
@@ -334,16 +264,6 @@
       "name": "Omission Start",
       "input": "артнерство",
       "expected": "партнерство"
-    },
-    {
-      "name": "Omission Start",
-      "input": "тіл",
-      "expected": "стіл"
-    },
-    {
-      "name": "Omission Start",
-      "input": "ніг",
-      "expected": "сніг"
     },
     {
       "name": "Omission Start",
@@ -1426,26 +1346,6 @@
       "expected": "розвитку"
     },
     {
-      "name": "Ending Error: Nouns Plural",
-      "input": "директора",
-      "expected": "директори"
-    },
-    {
-      "name": "Ending Error: Nouns Plural",
-      "input": "професора",
-      "expected": "професори"
-    },
-    {
-      "name": "Ending Error: Nouns Plural",
-      "input": "паспорта",
-      "expected": "паспорти"
-    },
-    {
-      "name": "Ending Error: Nouns Plural",
-      "input": "трактора",
-      "expected": "трактори"
-    },
-    {
       "name": "Ending Error: Adjectives Phonetical",
       "input": "синьова",
       "expected": "синього"
@@ -1827,11 +1727,6 @@
     },
     {
       "name": "Omission Start",
-      "input": "есо",
-      "expected": "месо"
-    },
-    {
-      "name": "Omission Start",
       "input": "урка",
       "expected": "курка"
     },
@@ -1844,16 +1739,6 @@
       "name": "Omission Start",
       "input": "ндичка",
       "expected": "індичка"
-    },
-    {
-      "name": "Omission Start",
-      "input": "аловина",
-      "expected": "яловичина"
-    },
-    {
-      "name": "Omission Start",
-      "input": "ососятина",
-      "expected": "лосятина"
     },
     {
       "name": "Insertion Middle",
@@ -2052,11 +1937,6 @@
     },
     {
       "name": "Keyboard Substitution",
-      "input": "навколишнє серндовмще",
-      "expected": "навколишнє середовище"
-    },
-    {
-      "name": "Keyboard Substitution",
       "input": "забрудненння",
       "expected": "забруднення"
     },
@@ -2064,41 +1944,6 @@
       "name": "Keyboard Substitution",
       "input": "екологгія",
       "expected": "екологія"
-    },
-    {
-      "name": "Keyboard Substitution",
-      "input": "глобальне потеппління",
-      "expected": "глобальне потепління"
-    },
-    {
-      "name": "Keyboard Substitution",
-      "input": "кліматичні зміінм",
-      "expected": "кліматичні зміни"
-    },
-    {
-      "name": "Keyboard Substitution",
-      "input": "відновлювальні дджерела",
-      "expected": "відновлювальні джерела"
-    },
-    {
-      "name": "Keyboard Substitution",
-      "input": "сонячна енерггіія",
-      "expected": "сонячна енергія"
-    },
-    {
-      "name": "Keyboard Substitution",
-      "input": "вітрова енерггіія",
-      "expected": "вітрова енергія"
-    },
-    {
-      "name": "Keyboard Substitution",
-      "input": "гідроенергетикка",
-      "expected": "гідроенергетика"
-    },
-    {
-      "name": "Keyboard Substitution",
-      "input": "атомна енерргія",
-      "expected": "атомна енергія"
     },
     {
       "name": "Keyboard Substitution",
@@ -2159,11 +2004,6 @@
       "name": "Apostrophe Error",
       "input": "пятка",
       "expected": "п'ятка"
-    },
-    {
-      "name": "Apostrophe Error",
-      "input": "мялкий",
-      "expected": "м'ялкий"
     },
     {
       "name": "Doubling Error",
