@@ -1,24 +1,20 @@
-﻿using Pero.Languages.Uk_UA.Dictionaries.Models;
+﻿namespace Pero.Languages.Uk_UA.Dictionaries.Builder;
 
-namespace Pero.Languages.Uk_UA.Dictionaries.Builder;
-
-/// <summary>
-/// Constructs a minimal FST by merging identical suffixes incrementally.
-/// Input words MUST be inserted in strictly alphabetical order.
-/// </summary>
-public class DawgBuilder
+public class DawgBuilder<TPayload> where TPayload : IEquatable<TPayload>
 {
-	private readonly FstNode _root = new();
-	private readonly List<FstNode> _uncheckedNodes = new();
-	private readonly Dictionary<FstNode, FstNode> _minimizedNodes = new();
+	private readonly FstNode<TPayload> _root = new();
+	private readonly List<FstNode<TPayload>> _uncheckedNodes = new();
+	private readonly Dictionary<FstNode<TPayload>, FstNode<TPayload>> _minimizedNodes = new();
+	private readonly Func<TPayload, TPayload, TPayload> _mergeFunc;
 	private string _previousWord = string.Empty;
 
-	public DawgBuilder()
+	public DawgBuilder(Func<TPayload, TPayload, TPayload> mergeFunc)
 	{
 		_uncheckedNodes.Add(_root);
+		_mergeFunc = mergeFunc;
 	}
 
-	public void Insert(string word, FstPayload payload)
+	public void Insert(string word, TPayload payload)
 	{
 		if (string.CompareOrdinal(word, _previousWord) < 0)
 			throw new InvalidOperationException("Words must be inserted in alphabetical order.");
@@ -35,7 +31,7 @@ public class DawgBuilder
 
 		for (int i = commonPrefix; i < word.Length; i++)
 		{
-			var newNode = new FstNode();
+			var newNode = new FstNode<TPayload>();
 			var parent = _uncheckedNodes.Last();
 			parent.Arcs[word[i]] = newNode;
 			_uncheckedNodes.Add(newNode);
@@ -45,9 +41,7 @@ public class DawgBuilder
 
 		if (lastNode.IsFinal && lastNode.Payload != null)
 		{
-			// Word already exists (homonym). Merge payloads (Rule IDs).
-			var mergedRules = lastNode.Payload.RuleIds.Concat(payload.RuleIds).Distinct().ToArray();
-			lastNode.Payload = new FstPayload(Math.Max(lastNode.Payload.Frequency, payload.Frequency), mergedRules);
+			lastNode.Payload = _mergeFunc(lastNode.Payload, payload);
 		}
 		else
 		{
@@ -58,7 +52,7 @@ public class DawgBuilder
 		_previousWord = word;
 	}
 
-	public FstNode Finish()
+	public FstNode<TPayload> Finish()
 	{
 		Minimize(0);
 		return _root;

@@ -1,29 +1,19 @@
-﻿using Pero.Languages.Uk_UA.Dictionaries.Models;
+﻿namespace Pero.Languages.Uk_UA.Dictionaries.Builder;
 
-namespace Pero.Languages.Uk_UA.Dictionaries.Builder;
-
-/// <summary>
-/// Represents a state/node in the FST during the construction phase.
-/// Will be compiled down to a flat byte array for production use.
-/// </summary>
-public class FstNode : IEquatable<FstNode>
+public class FstNode<TPayload> : IEquatable<FstNode<TPayload>> where TPayload : IEquatable<TPayload>
 {
-	public Dictionary<char, FstNode> Arcs { get; } = new();
+	public Dictionary<char, FstNode<TPayload>> Arcs { get; } = new();
 	public bool IsFinal { get; set; }
-	public FstPayload? Payload { get; set; }
-
+	public TPayload? Payload { get; set; }
 	public byte MaxFrequencyInSubtree { get; set; } = 0;
 
-	/// <summary>
-	/// Compares the structural equivalence of two nodes to perform suffix merging.
-	/// </summary>
-	public bool Equals(FstNode? other)
+	public bool Equals(FstNode<TPayload>? other)
 	{
 		if (other is null) return false;
 		if (ReferenceEquals(this, other)) return true;
 
 		if (IsFinal != other.IsFinal) return false;
-		if (!EqualityComparer<FstPayload?>.Default.Equals(Payload, other.Payload)) return false;
+		if (!EqualityComparer<TPayload?>.Default.Equals(Payload, other.Payload)) return false;
 		if (Arcs.Count != other.Arcs.Count) return false;
 
 		foreach (var kvp in Arcs)
@@ -34,8 +24,7 @@ public class FstNode : IEquatable<FstNode>
 		return true;
 	}
 
-
-	public override bool Equals(object? obj) => Equals(obj as FstNode);
+	public override bool Equals(object? obj) => Equals(obj as FstNode<TPayload>);
 
 	public override int GetHashCode()
 	{

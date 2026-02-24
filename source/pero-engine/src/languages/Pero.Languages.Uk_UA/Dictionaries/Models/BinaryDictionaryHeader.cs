@@ -2,10 +2,6 @@
 
 namespace Pero.Languages.Uk_UA.Dictionaries.Models;
 
-/// <summary>
-/// The fixed-size header for the binary dictionary format.
-/// Allows rapid verification and offset calculation for zero-copy reads.
-/// </summary>
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public readonly struct BinaryDictionaryHeader
 {
@@ -16,14 +12,26 @@ public readonly struct BinaryDictionaryHeader
 	public ushort Version { get; }
 	public uint TagsetsCount { get; }
 	public uint RulesCount { get; }
+	public uint ReverseRulesCount { get; }
+	public uint ParadigmsCount { get; }
 	public uint FstSize { get; }
+	public uint LemmaFstSize { get; }
 
-	public BinaryDictionaryHeader(uint tagsetsCount, uint rulesCount, uint fstSize)
+	public BinaryDictionaryHeader(
+		uint tagsetsCount,
+		uint rulesCount,
+		uint reverseRulesCount,
+		uint paradigmsCount,
+		uint fstSize,
+		uint lemmaFstSize)
 	{
 		Magic = MagicNumber;
 		Version = CurrentVersion;
 		TagsetsCount = tagsetsCount;
 		RulesCount = rulesCount;
+		ReverseRulesCount = reverseRulesCount;
+		ParadigmsCount = paradigmsCount;
 		FstSize = fstSize;
+		LemmaFstSize = lemmaFstSize;
 	}
 }
