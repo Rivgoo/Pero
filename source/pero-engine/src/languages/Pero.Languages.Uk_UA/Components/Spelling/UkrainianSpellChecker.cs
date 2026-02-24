@@ -1,4 +1,6 @@
-﻿using Pero.Abstractions.Contracts;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
+using Pero.Abstractions.Contracts;
 using Pero.Abstractions.Models;
 using Pero.Kernel.Utils;
 using Pero.Languages.Uk_UA.Components.Caching;
@@ -8,16 +10,25 @@ using Pero.Languages.Uk_UA.Dictionaries.Ngrams;
 
 namespace Pero.Languages.Uk_UA.Components;
 
-public partial class UkrainianSpellChecker : ISpellChecker
+public class UkrainianSpellChecker : ISpellChecker
 {
 	private const string IssueId = "UK_UA_SPELLING_ERROR";
 	private const char CanonicalApostrophe = '\'';
+
+	private const int MinCandidatesForEarlyExit = 3;
+	private const float HighConfidenceScoreThreshold = -1.0f;
 
 	private readonly FuzzyMatcher _fuzzyMatcher;
 	private readonly VirtualSymSpell _virtualSymSpell;
 	private readonly LexiconCache _lexicon;
 	private readonly NgramLanguageModel _ngramLanguageModel;
 	private readonly MorphologicalFilter _morphologicalFilter;
+
+	public bool EnableTelemetry { get; set; }
+	public SpellCheckTelemetry? LastTelemetry { get; private set; }
+
+	private static readonly Regex SurzhykIrovatyRegex = new("іроват(и|ь)$", RegexOptions.Compiled);
+	private static readonly Regex SurzhykShtykRegex = new("щик(а|у|ом|ів)?$", RegexOptions.Compiled);
 
 	public UkrainianSpellChecker(
 		FuzzyMatcher fuzzyMatcher,
@@ -35,207 +46,224 @@ public partial class UkrainianSpellChecker : ISpellChecker
 
 	public IEnumerable<TextIssue> Check(AnalyzedDocument document)
 	{
+		var telemetry = EnableTelemetry ? new SpellCheckTelemetry() : null;
+		LastTelemetry = telemetry;
+
+		long start = 0;
+
+		if (EnableTelemetry) start = Stopwatch.GetTimestamp();
 		var sessionCache = new DocumentSessionCache(document);
+		if (EnableTelemetry) telemetry!.SessionCacheInitMs += GetElapsedMs(start);
+
 		var contextRanker = new ContextRanker(sessionCache, _ngramLanguageModel);
 
 		foreach (var sentence in document.Sentences)
 		{
 			foreach (var token in sentence.Tokens)
 			{
-				if (IsTechnical(token)) continue;
+				if (token.Type != TokenType.Word || !token.IsUnknown()) continue;
 
-				if (token.IsUnknown())
+				if (EnableTelemetry) start = Stopwatch.GetTimestamp();
+				string normalizedText = NormalizeApostrophes(token.NormalizedText);
+				bool hasHomoglyphs = HasLatinHomoglyphs(token.Text);
+				if (EnableTelemetry) telemetry!.StringNormalizationMs += GetElapsedMs(start);
+
+				// If word contains completely foreign chars (not homoglyphs), skip it
+				if (!hasHomoglyphs && ContainsNonUkrainianChars(normalizedText)) continue;
+
+				var combinedCandidates = new List<CorrectionCandidate>();
+				string searchTarget = hasHomoglyphs ? CleanHomoglyphs(normalizedText) : normalizedText;
+				char userApostropheStyle = DetectUserApostrophe(token.Text);
+
+				if (EnableTelemetry) start = Stopwatch.GetTimestamp();
+
+				// 1. Homoglyph Direct Match
+				if (hasHomoglyphs)
 				{
-					if (ContainsNonUkrainianChars(token.Text)) continue;
+					TryAddDictCandidates(searchTarget, combinedCandidates, 0f, 2.0f);
+				}
 
-					string searchTarget = CleanStrayPunctuation(NormalizeApostrophes(token.NormalizedText));
-					char userApostropheStyle = DetectUserApostrophe(token.Text);
+				// 2. Linguistic Heuristics (Anti-Surzhyk & Phonetics)
+				foreach (var heuristicWord in GenerateLinguisticHeuristics(searchTarget))
+				{
+					TryAddDictCandidates(heuristicWord, combinedCandidates, distance: 0.5f, bonus: 5.0f);
+				}
+				if (EnableTelemetry) telemetry!.HeuristicsGenerationMs += GetElapsedMs(start);
 
-					var combinedCandidates = new List<CorrectionCandidate>();
+				// 3. Virtual SymSpell (Omissions, Insertions, Transpositions)
+				if (combinedCandidates.Count < MinCandidatesForEarlyExit)
+				{
+					if (EnableTelemetry) start = Stopwatch.GetTimestamp();
 
-					foreach (var heuristicWord in GenerateHeuristics(searchTarget))
+					foreach (var ed1 in _virtualSymSpell.GetCandidates(searchTarget))
 					{
-						var dictTags = _lexicon.GetCandidates(heuristicWord);
-						if (dictTags.Count > 0)
-						{
-							combinedCandidates.Add(new CorrectionCandidate(
-								heuristicWord, 0f, 31, -15.0f, dictTags.Select(t => t.Tagset).ToArray()));
-						}
+						if (!combinedCandidates.Any(c => c.Word == ed1.Word))
+							combinedCandidates.Add(ed1);
 					}
 
-					if (combinedCandidates.Count < 3)
-					{
-						var ed1Results = _virtualSymSpell.GetCandidates(searchTarget);
-						foreach (var ed1 in ed1Results)
-						{
-							if (!combinedCandidates.Any(c => c.Word == ed1.Word))
-								combinedCandidates.Add(ed1);
-						}
-					}
+					if (EnableTelemetry) telemetry!.SymSpellMs += GetElapsedMs(start);
+				}
 
-					if (combinedCandidates.Count == 0 || !combinedCandidates.Any(c => c.Score < -1.0f))
-					{
-						var fuzzyResults = _fuzzyMatcher.Suggest(searchTarget);
-						foreach (var fuzzy in fuzzyResults)
-						{
-							if (!combinedCandidates.Any(c => c.Word == fuzzy.Word))
-								combinedCandidates.Add(fuzzy);
-						}
-					}
+				//// 4. Fuzzy Matcher (Deep Keyboard & Acoustic Search)
+				//// Execute only if we lack high confidence candidates
+				//if (combinedCandidates.Count == 0 || !combinedCandidates.Any(c => c.Score < HighConfidenceScoreThreshold))
+				//{
+				//	if (EnableTelemetry) start = Stopwatch.GetTimestamp();
 
-					if (combinedCandidates.Count == 0) continue;
+				//	foreach (var fuzzy in _fuzzyMatcher.Suggest(searchTarget))
+				//	{
+				//		if (!combinedCandidates.Any(c => c.Word == fuzzy.Word))
+				//			combinedCandidates.Add(fuzzy);
+				//	}
 
-					//var profile = _morphologicalFilter.BuildProfile(sentence, token);
-					//var morphologicallyFiltered = _morphologicalFilter.ExpandAndFilter(combinedCandidates, profile);
+				//	if (EnableTelemetry) telemetry!.FuzzyMatcherMs += GetElapsedMs(start);
+				//}
 
-					var rankedCandidates = contextRanker.Rank(sentence, token, combinedCandidates);
+				if (combinedCandidates.Count == 0) continue;
 
-					var suggestions = rankedCandidates
-						.Take(5)
-						.Select(c =>
-						{
-							string styled = RestoreApostropheStyle(c.Word, userApostropheStyle);
-							return MatchCapitalization(styled, token.Text);
-						})
-						.Distinct()
-						.ToList();
+				// 5. Context Ranking
+				if (EnableTelemetry) start = Stopwatch.GetTimestamp();
+				var rankedCandidates = contextRanker.Rank(sentence, token, combinedCandidates);
+				if (EnableTelemetry) telemetry!.ContextRankingMs += GetElapsedMs(start);
 
-					if (suggestions.Count > 0)
-					{
-						yield return IssueFactory.CreateFrom(token, IssueId, IssueCategory.Spelling, suggestions);
-					}
+				// 6. Formatting & Yielding
+				if (EnableTelemetry) start = Stopwatch.GetTimestamp();
+				var suggestions = rankedCandidates
+					.Take(5)
+					.Select(c => MatchCapitalization(RestoreApostropheStyle(c.Word, userApostropheStyle), token.Text))
+					.Distinct()
+					.ToList();
+
+				if (EnableTelemetry) telemetry!.SuggestionFormattingMs += GetElapsedMs(start);
+
+				if (suggestions.Count > 0)
+				{
+					yield return IssueFactory.CreateFrom(token, IssueId, IssueCategory.Spelling, suggestions);
 				}
 			}
 		}
 	}
 
-	private static IEnumerable<string> GenerateHeuristics(string word)
+	private void TryAddDictCandidates(string word, List<CorrectionCandidate> pool, float distance, float bonus)
 	{
-		yield return word;
+		var dictTags = _lexicon.GetCandidates(word);
+		if (dictTags.Count > 0)
+		{
+			// Artificially low score ensures heuristics beat blind fuzzy matches
+			float score = distance - bonus - 10.0f;
+			pool.Add(new CorrectionCandidate(word, distance, 31, score, dictTags.Select(tg => tg.Tagset).ToArray()));
+		}
+	}
 
+	/// <summary>
+	/// Yields probable corrections based on common phonetic, morphologic, and Surzhyk errors.
+	/// </summary>
+	private static IEnumerable<string> GenerateLinguisticHeuristics(string word)
+	{
 		if (word.Length < 3) yield break;
 
+		// 1. Assimilation & Consonant groups
+		if (word.Contains("стн")) yield return word.Replace("стн", "сн");
+		if (word.Contains("сн")) yield return word.Replace("сн", "стн");
+		if (word.Contains("ждн")) yield return word.Replace("ждн", "жн");
+		if (word.Contains("здн")) yield return word.Replace("здн", "зн");
+		if (word.Contains("тч")) yield return word.Replace("тч", "чч");
+		if (word.Contains("шся")) yield return word.Replace("шся", "шся").Replace("шся", "сся"); // phonetic spelling
+
+		// 2. Surzhyk Suffixes
+		if (SurzhykIrovatyRegex.IsMatch(word))
+			yield return SurzhykIrovatyRegex.Replace(word, "юват$1");
+
+		if (SurzhykShtykRegex.IsMatch(word))
+			yield return SurzhykShtykRegex.Replace(word, "ник$1");
+
+		// 3. Rule of Nine (Foreign words i/y confusion)
+		if (word.Contains('і'))
+		{
+			yield return word.Replace("ді", "ди").Replace("ті", "ти").Replace("зі", "зи")
+							 .Replace("сі", "си").Replace("ці", "ци").Replace("чі", "чи")
+							 .Replace("ші", "ши").Replace("жі", "жи").Replace("рі", "ри");
+		}
+		if (word.Contains('и'))
+		{
+			yield return word.Replace("ди", "ді").Replace("ти", "ті").Replace("зи", "зі")
+							 .Replace("си", "сі").Replace("ци", "ці").Replace("чи", "чі")
+							 .Replace("ши", "ші").Replace("жи", "жі").Replace("ри", "рі");
+		}
+
+		// 4. Prefixes (З/С Rule)
+		if (word.StartsWith("с") && !Regex.IsMatch(word, "^с[кптфх]")) yield return "з" + word[1..];
+		if (word.StartsWith("з") && Regex.IsMatch(word, "^з[кптфх]")) yield return "с" + word[1..];
+		if (word.StartsWith("рос")) yield return "роз" + word[3..];
+		if (word.StartsWith("бес")) yield return "без" + word[3..];
+
+		// 5. Verbs and Endings
 		if (word.EndsWith("ця")) yield return word[..^2] + "ться";
 		if (word.EndsWith("тця")) yield return word[..^3] + "ться";
 		if (word.EndsWith("ся")) yield return word[..^2] + "шся";
-
 		if (word.EndsWith("т") || word.EndsWith("ть")) yield return word + "ь";
-		if (word.EndsWith("ш")) yield return word + "ь";
 
-		if (word.EndsWith("ттю")) yield return word[..^3] + "тю";
-		if (word.EndsWith("лю") && !word.EndsWith("ллю")) yield return word[..^2] + "ллю";
-		if (word.EndsWith("ню") && !word.EndsWith("нню")) yield return word[..^2] + "нню";
-		if (word.EndsWith("чю") && !word.EndsWith("ччю")) yield return word[..^2] + "ччю";
-		if (word.EndsWith("шю") && !word.EndsWith("шшю")) yield return word[..^2] + "шшю";
-		if (word.EndsWith("цю") && !word.EndsWith("ццю")) yield return word[..^2] + "ццю";
-		if (word.EndsWith("жю") && !word.EndsWith("жжю")) yield return word[..^2] + "жжю";
-		if (word.EndsWith("міцю")) yield return word[..^4] + "міццю";
-
-		if (word.EndsWith("шь") || word.EndsWith("чь") || word.EndsWith("щь") || word.EndsWith("жь")) yield return word[..^1];
-
+		// 6. Noun Endings (Surzhyk / Russian influence)
 		if (word.EndsWith("ова")) yield return word[..^3] + "ого";
 		if (word.EndsWith("ева")) yield return word[..^3] + "его";
+		if (word.EndsWith("ьом")) yield return word[..^3] + "ем";
+		if (word.EndsWith("цьом")) yield return word[..^4] + "цем";
 
+		// 7. Missing Gemination
 		if (word.EndsWith("ня")) yield return word[..^2] + "ння";
 		if (word.EndsWith("тя")) yield return word[..^2] + "ття";
 		if (word.EndsWith("ля")) yield return word[..^2] + "лля";
 
-		if (word.EndsWith("ьом")) yield return word[..^3] + "ем";
-		if (word.EndsWith("цьом")) yield return word[..^4] + "цем";
-
-		if (word.Contains("ько") && !word.Contains("тько") && !word.Contains("дько"))
-			yield return word.Replace("ько", "тько");
-
+		// 8. Apostrophe anomalies
 		for (int i = 0; i < word.Length - 1; i++)
 		{
-			if (IsLabialOrPrefix(word, i) && IsIotated(word[i + 1]))
-				yield return word.Substring(0, i + 1) + "'" + word.Substring(i + 1);
+			if (IsLabialOrPrefix(word[i]) && IsIotated(word[i + 1]))
+				yield return word[..(i + 1)] + "'" + word[(i + 1)..];
 		}
 	}
 
-	private static bool IsLabialOrPrefix(string word, int index)
-	{
-		char c = word[index];
-		if (c is 'б' or 'п' or 'в' or 'м' or 'ф' or 'р' or 'д') return true;
-		if (c == 'з' || c == 'с') return true;
-		return false;
-	}
-
+	private static bool IsLabialOrPrefix(char c) => c is 'б' or 'п' or 'в' or 'м' or 'ф' or 'р' or 'д' or 'з' or 'с';
 	private static bool IsIotated(char c) => c is 'я' or 'ю' or 'є' or 'ї';
+
+	private static bool HasLatinHomoglyphs(string word) => word.Any(c => c is 'a' or 'o' or 'e' or 'i' or 'p' or 'c' or 'x' or 'y');
+
+	private static string CleanHomoglyphs(string word)
+	{
+		return word.Replace('a', 'а').Replace('o', 'о').Replace('e', 'е').Replace('i', 'і')
+				   .Replace('p', 'р').Replace('c', 'с').Replace('x', 'х').Replace('y', 'у');
+	}
 
 	private static bool ContainsNonUkrainianChars(string word)
 	{
 		foreach (char c in word)
 		{
-			if (!IsUkrainianChar(c)) return true;
+			if (c >= 'а' && c <= 'щ') continue;
+			if (c >= 'ю' && c <= 'я') continue;
+			if (c is 'ь' or 'і' or 'ї' or 'є' or 'ґ' or '\'' or '’' or 'ʼ' or '-') continue;
+			return true;
 		}
 		return false;
 	}
 
-	private static bool IsUkrainianChar(char c)
-	{
-		if (c >= 'а' && c <= 'щ') return true;
-		if (c >= 'ю' && c <= 'я') return true;
-		if (c == 'ь') return true;
-
-		if (c >= 'А' && c <= 'Щ') return true;
-		if (c >= 'Ю' && c <= 'Я') return true;
-		if (c == 'Ь') return true;
-
-		if (c == 'і' || c == 'І') return true;
-		if (c == 'ї' || c == 'Ї') return true;
-		if (c == 'є' || c == 'Є') return true;
-		if (c == 'ґ' || c == 'Ґ') return true;
-
-		if (c == '\'' || c == '’' || c == 'ʼ') return true;
-		if (c == '-') return true;
-
-		return false;
-	}
-
-	private static string NormalizeApostrophes(string word)
-	{
-		if (!word.Contains('’') && !word.Contains('ʼ')) return word;
-		return word.Replace('’', CanonicalApostrophe).Replace('ʼ', CanonicalApostrophe);
-	}
-
-	private static char DetectUserApostrophe(string originalWord)
-	{
-		if (originalWord.Contains('’')) return '’';
-		if (originalWord.Contains('ʼ')) return 'ʼ';
-		return CanonicalApostrophe;
-	}
+	private static string NormalizeApostrophes(string word) => word.Replace('’', CanonicalApostrophe).Replace('ʼ', CanonicalApostrophe);
+	private static char DetectUserApostrophe(string word) => word.Contains('’') ? '’' : (word.Contains('ʼ') ? 'ʼ' : CanonicalApostrophe);
 
 	private static string RestoreApostropheStyle(string suggestion, char userApostrophe)
 	{
-		if (userApostrophe == CanonicalApostrophe || !suggestion.Contains(CanonicalApostrophe)) return suggestion;
-		return suggestion.Replace(CanonicalApostrophe, userApostrophe);
+		return userApostrophe == CanonicalApostrophe ? suggestion : suggestion.Replace(CanonicalApostrophe, userApostrophe);
 	}
-
-	private static string CleanStrayPunctuation(string word)
-	{
-		if (word.Contains(',') || word.Contains('.'))
-		{
-			return word.Replace(",", "").Replace(".", "");
-		}
-
-		if (word.Contains("''"))
-		{
-			return word.Replace("''", "'");
-		}
-
-		return word;
-	}
-
-	private static bool IsTechnical(Token token) => token.Type != TokenType.Word;
 
 	private static string MatchCapitalization(string suggestion, string original)
 	{
 		if (string.IsNullOrEmpty(original) || string.IsNullOrEmpty(suggestion)) return suggestion;
+
 		bool isAllUpper = original.All(c => !char.IsLetter(c) || char.IsUpper(c));
 		if (isAllUpper) return suggestion.ToUpperInvariant();
-		bool isFirstUpper = char.IsUpper(original[0]);
-		if (isFirstUpper) return char.ToUpperInvariant(suggestion[0]) + suggestion.Substring(1);
+
+		if (char.IsUpper(original[0])) return char.ToUpperInvariant(suggestion[0]) + suggestion[1..];
+
 		return suggestion;
 	}
+
+	private static double GetElapsedMs(long startTimestamp) => (Stopwatch.GetTimestamp() - startTimestamp) * 1000.0 / Stopwatch.Frequency;
 }

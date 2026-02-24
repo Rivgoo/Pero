@@ -7,9 +7,9 @@ namespace Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
 
 public class FuzzyMatcher
 {
-	private const int TargetResults = 30;
-	private const int MaxWordLength = 32;
-	private const float FrequencyBonusWeight = 0.01f;
+	private const int TargetResults = 4;
+	private const int MaxWordLength = 16;
+	private const float FrequencyBonusWeight = 0.000f;
 	private const float MaxFrequencyBonus = 31 * FrequencyBonusWeight;
 
 	private byte[] _fstData => _dictionary.FstData;

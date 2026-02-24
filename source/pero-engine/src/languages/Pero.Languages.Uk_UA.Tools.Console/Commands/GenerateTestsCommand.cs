@@ -3,6 +3,7 @@ using System.Text.Json;
 using Pero.Languages.Uk_UA.Dictionaries;
 using Pero.Languages.Uk_UA.Tools.Console.Models;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
+using Pero.Languages.Uk_UA.Tools.Console.Services.Typo;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
 
 namespace Pero.Languages.Uk_UA.Tools.Console.Commands;

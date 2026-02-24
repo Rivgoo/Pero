@@ -17,9 +17,15 @@ public class AnalysisResult
 	/// </summary>
 	public IReadOnlyList<TextIssue> Issues { get; }
 
-	public AnalysisResult(AnalyzedDocument document, IReadOnlyList<TextIssue> issues)
+	/// <summary>
+	/// Technical execution metrics. Null if telemetry was disabled during the run.
+	/// </summary>
+	public AnalysisTelemetry? Telemetry { get; }
+
+	public AnalysisResult(AnalyzedDocument document, IReadOnlyList<TextIssue> issues, AnalysisTelemetry? telemetry = null)
 	{
 		Document = document;
 		Issues = issues;
+		Telemetry = telemetry;
 	}
 }
