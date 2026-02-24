@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\uk_UA.perodic" />
+		<EmbeddedResource Include="Resources\uk_UA.perongram" />
 	</ItemGroup>
 
 </Project>

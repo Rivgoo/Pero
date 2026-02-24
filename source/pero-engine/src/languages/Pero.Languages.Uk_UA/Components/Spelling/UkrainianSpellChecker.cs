@@ -4,6 +4,7 @@ using Pero.Kernel.Utils;
 using Pero.Languages.Uk_UA.Components.Caching;
 using Pero.Languages.Uk_UA.Components.Spelling.Context;
 using Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
+using Pero.Languages.Uk_UA.Dictionaries.Ngrams;
 
 namespace Pero.Languages.Uk_UA.Components;
 
@@ -15,18 +16,20 @@ public partial class UkrainianSpellChecker : ISpellChecker
 	private readonly FuzzyMatcher _fuzzyMatcher;
 	private readonly VirtualSymSpell _virtualSymSpell;
 	private readonly LexiconCache _lexicon;
+	private readonly NgramLanguageModel _ngramLanguageModel;
 
-	public UkrainianSpellChecker(FuzzyMatcher fuzzyMatcher, VirtualSymSpell virtualSymSpell, LexiconCache lexicon)
+	public UkrainianSpellChecker(FuzzyMatcher fuzzyMatcher, VirtualSymSpell virtualSymSpell, LexiconCache lexicon, NgramLanguageModel ngramLanguageModel)
 	{
 		_fuzzyMatcher = fuzzyMatcher;
 		_virtualSymSpell = virtualSymSpell;
 		_lexicon = lexicon;
+		_ngramLanguageModel = ngramLanguageModel;
 	}
 
 	public IEnumerable<TextIssue> Check(AnalyzedDocument document)
 	{
 		var sessionCache = new DocumentSessionCache(document);
-		var contextRanker = new ContextRanker(sessionCache);
+		var contextRanker = new ContextRanker(sessionCache, _ngramLanguageModel);
 
 		foreach (var sentence in document.Sentences)
 		{

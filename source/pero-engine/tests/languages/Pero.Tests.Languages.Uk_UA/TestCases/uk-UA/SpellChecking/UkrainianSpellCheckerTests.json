@@ -1,2439 +1,2504 @@
-﻿{
-  "cases": [
+{
+  "Cases": [
     {
-      "name": "Transposition",
-      "input": "ардість",
-      "expected": "радість"
+      "Name": "Doubling | висловом",
+      "Input": "За виисловом Л",
+      "Expected": "висловом"
     },
     {
-      "name": "Transposition",
-      "input": "сноце",
-      "expected": "сонце"
+      "Name": "Omission | життя",
+      "Input": "отримувала за все своє жття",
+      "Expected": "життя"
     },
     {
-      "name": "Transposition",
-      "input": "втіер",
-      "expected": "вітер"
+      "Name": "Transposition | констатує",
+      "Input": "Як контсатує В",
+      "Expected": "констатує"
     },
     {
-      "name": "Transposition",
-      "input": "змеля",
-      "expected": "земля"
+      "Name": "Keyboard | сервісів",
+      "Input": "Зростання інтернет-аудиторії, зі свого боку, спричиняє появу нових інформаційних сервісвв, ресурсів, великих інформаційних масивів",
+      "Expected": "сервісів"
     },
     {
-      "name": "Transposition",
-      "input": "лтіо",
-      "expected": "літо"
+      "Name": "Transposition | розвитку",
+      "Input": "Питання розивтку інформаційного простору, процеси глобалізації та соціально-економічні трансформації суспільства розглядаються в роботах В",
+      "Expected": "розвитку"
     },
     {
-      "name": "Transposition",
-      "input": "мрое",
-      "expected": "море"
+      "Name": "Omission | працях",
+      "Input": "У працх Т",
+      "Expected": "працях"
     },
     {
-      "name": "Transposition",
-      "input": "патх",
-      "expected": "птах"
+      "Name": "Omission | підкреслив",
+      "Input": "Як підкеслив О",
+      "Expected": "підкреслив"
     },
     {
-      "name": "Transposition",
-      "input": "солво",
-      "expected": "слово"
+      "Name": "Doubling | яких",
+      "Input": "як (за якиих обставин)",
+      "Expected": "яких"
     },
     {
-      "name": "Transposition",
-      "input": "глоос",
-      "expected": "голос"
+      "Name": "Omission | тому",
+      "Input": "Може, тоу їй страшно",
+      "Expected": "тому"
     },
     {
-      "name": "Transposition",
-      "input": "мсіто",
-      "expected": "місто"
+      "Name": "Doubling | небі",
+      "Input": "Добре, якби у неебі могли собі жити й живі, не лиш мертві",
+      "Expected": "небі"
     },
     {
-      "name": "Transposition",
-      "input": "деврі",
-      "expected": "двері"
+      "Name": "Transposition | вниз",
+      "Input": "І дивилася би собі винз, на ці нічні гори, і на людей би дивилася",
+      "Expected": "вниз"
     },
     {
-      "name": "Transposition",
-      "input": "вкіно",
-      "expected": "вікно"
+      "Name": "Keyboard | переходила",
+      "Input": "І небом перtходила би з раю в пекло і назад",
+      "Expected": "переходила"
     },
     {
-      "name": "Transposition",
-      "input": "пїозд",
-      "expected": "поїзд"
+      "Name": "Keyboard | нема",
+      "Input": "І нgма кого розпитати",
+      "Expected": "нема"
     },
     {
-      "name": "Transposition",
-      "input": "шклао",
-      "expected": "школа"
+      "Name": "Omission | сьогодні",
+      "Input": "А якщо це пекло опустилося сьоодні з неба на землю",
+      "Expected": "сьогодні"
     },
     {
-      "name": "Transposition",
-      "input": "дреево",
-      "expected": "дерево"
+      "Name": "Doubling | бабця",
+      "Input": "Баабця казала, диявол уміє перекидатися у що ти хочеш",
+      "Expected": "Бабця"
     },
     {
-      "name": "Transposition",
-      "input": "дроога",
-      "expected": "дорога"
+      "Name": "Doubling | розпізнати",
+      "Input": "Але не кожен може то розпіізнати",
+      "Expected": "розпізнати"
     },
     {
-      "name": "Transposition",
-      "input": "сбоака",
-      "expected": "собака"
+      "Name": "Doubling | обходить",
+      "Input": "сатана оббходить церкву",
+      "Expected": "обходить"
     },
     {
-      "name": "Transposition",
-      "input": "мшаина",
-      "expected": "машина"
+      "Name": "Omission | ангели",
+      "Input": "У церкві під хрестом живуть самі ангеи",
+      "Expected": "ангели"
     },
     {
-      "name": "Transposition",
-      "input": "лдюина",
-      "expected": "людина"
+      "Name": "Transposition | боїться",
+      "Input": "Щезник хреста боїтсья й обминає його трьома дорогами",
+      "Expected": "боїться"
     },
     {
-      "name": "Transposition",
-      "input": "рбоота",
-      "expected": "робота"
+      "Name": "Doubling | кожного",
+      "Input": "Слава Богу, в їхніх садах урожай на яблука майже кожноого року великий",
+      "Expected": "кожного"
     },
     {
-      "name": "Omission Middle",
-      "input": "гоина",
-      "expected": "година"
+      "Name": "Omission | остаточно",
+      "Input": "остатоно сформувалася думка про необхідність розрізняти ці категорії",
+      "Expected": "остаточно"
     },
     {
-      "name": "Omission Middle",
-      "input": "муика",
-      "expected": "музика"
+      "Name": "Omission | ними",
+      "Input": "І це, відповідно, вимагає дотримання особливого порядку їх обліку, зберігання та користування нии",
+      "Expected": "ними"
     },
     {
-      "name": "Omission Middle",
-      "input": "баько",
-      "expected": "батько"
+      "Name": "Doubling | зміст",
+      "Input": "Критеріями віднесення документів Національного архівного фонду до унікальних є походження, змміст та зовнішні ознаки документа",
+      "Expected": "зміст"
     },
     {
-      "name": "Omission Middle",
-      "input": "коання",
-      "expected": "кохання"
+      "Name": "Doubling | характеристик",
+      "Input": ", визначається переважно за сукупністю критеріїв, характерисстик",
+      "Expected": "характеристик"
     },
     {
-      "name": "Omission Middle",
-      "input": "буинок",
-      "expected": "будинок"
+      "Name": "Keyboard | оригіналами",
+      "Input": "Ці документи мають бути тільки оригяналами",
+      "Expected": "оригіналами"
     },
     {
-      "name": "Omission Middle",
-      "input": "дічина",
-      "expected": "дівчина"
+      "Name": "Doubling | реєстру",
+      "Input": "Сучасний стан з формування Державного реєєстру характеризується наступним",
+      "Expected": "реєстру"
     },
     {
-      "name": "Omission Middle",
-      "input": "хлоець",
-      "expected": "хлопець"
+      "Name": "Omission | наукову",
+      "Input": "Але щоб внести в нього дані, потрібно провести серйозну накову роботу, зробити детальний опис документа",
+      "Expected": "наукову"
     },
     {
-      "name": "Omission Middle",
-      "input": "телфон",
-      "expected": "телефон"
+      "Name": "Omission | складанні",
+      "Input": "Можна виділити основні недоліки у склданні анотованих переліків",
+      "Expected": "складанні"
     },
     {
-      "name": "Omission Middle",
-      "input": "кіната",
-      "expected": "кімната"
+      "Name": "Doubling | добра",
+      "Input": "Дорога добрра і любові",
+      "Expected": "добра"
     },
     {
-      "name": "Omission Middle",
-      "input": "вуиця",
-      "expected": "вулиця"
+      "Name": "Doubling | великодня",
+      "Input": "Які гастрономічні поради ви могли б дати щодо святкування Вееликодня",
+      "Expected": "Великодня"
     },
     {
-      "name": "Omission Middle",
-      "input": "плаета",
-      "expected": "планета"
+      "Name": "Transposition | може",
+      "Input": "Великодній стіл мжое стати серйозною харчовою загрозою",
+      "Expected": "може"
     },
     {
-      "name": "Omission Middle",
-      "input": "пиання",
-      "expected": "питання"
+      "Name": "Phonetic | тваринного",
+      "Input": "За період посту організм продукує менше ферментів, що переробляють білки тваренного походження",
+      "Expected": "тваринного"
     },
     {
-      "name": "Omission Middle",
-      "input": "ріення",
-      "expected": "рішення"
+      "Name": "Transposition | протипоказана",
+      "Input": "Жирна їжа протипкоазана людям із захворюваннями жовчного міхура та підшлункової залози",
+      "Expected": "протипоказана"
     },
     {
-      "name": "Omission Middle",
-      "input": "повіря",
-      "expected": "повітря"
+      "Name": "Transposition | сказати",
+      "Input": "Варто сакзати і про алкоголь",
+      "Expected": "сказати"
     },
     {
-      "name": "Omission Middle",
-      "input": "дежава",
-      "expected": "держава"
+      "Name": "Omission | яйце",
+      "Input": "Спробуйте яце, паску, трошки ковбаски та овочеві страви",
+      "Expected": "яйце"
     },
     {
-      "name": "Omission Middle",
-      "input": "прорама",
-      "expected": "програма"
+      "Name": "Transposition | простим",
+      "Input": "Зробіть стіл прсотим, але вишуканим",
+      "Expected": "простим"
     },
     {
-      "name": "Omission Middle",
-      "input": "пробема",
-      "expected": "проблема"
+      "Name": "Doubling | приємними",
+      "Input": "Спілкуйтеся з прииємними людьми, отримуйте позитивні емоції, не сваріться, бо негативні емоції погіршують травлення",
+      "Expected": "приємними"
     },
     {
-      "name": "Omission Middle",
-      "input": "мистцтво",
-      "expected": "мистецтво"
+      "Name": "Omission | людина",
+      "Input": "Людиа потребує змішаної та різноманітної їжі",
+      "Expected": "Людина"
     },
     {
-      "name": "Omission Middle",
-      "input": "мабутнє",
-      "expected": "майбутнє"
+      "Name": "Doubling | ставлюся",
+      "Input": "Неоднозначно я ставлююся до нетрадиційних способів харчування",
+      "Expected": "ставлюся"
     },
     {
-      "name": "Omission Middle",
-      "input": "ісорія",
-      "expected": "історія"
+      "Name": "Phonetic | триває",
+      "Input": "Якщо голодування тривоє довше, ніж один день, воно викликає негативні зміни в печінці",
+      "Expected": "триває"
     },
     {
-      "name": "Omission End",
-      "input": "літератур",
-      "expected": "література"
+      "Name": "Transposition | білок",
+      "Input": "Для нормальної роботи організму, синтезу ферментів і гормонів, оновлення клітин потрібен біолк",
+      "Expected": "білок"
     },
     {
-      "name": "Omission End",
-      "input": "економік",
-      "expected": "економіка"
+      "Name": "Transposition | печінка",
+      "Input": "Коли його бракує, печікна використовує білок власних клітин, її функція очищення організму різко знижується",
+      "Expected": "печінка"
     },
     {
-      "name": "Omission End",
-      "input": "відповід",
-      "expected": "відповідь"
+      "Name": "Phonetic | відбувається",
+      "Input": "Їжа стимулює жовчовиділення, за її відсутності вїдбувається застій жовчі в жовчному міхурі",
+      "Expected": "відбувається"
     },
     {
-      "name": "Omission End",
-      "input": "підприємств",
-      "expected": "підприємство"
+      "Name": "Transposition | люди",
+      "Input": "Часто лдюи вирішують голодувати, щоб схуднути",
+      "Expected": "люди"
     },
     {
-      "name": "Omission End",
-      "input": "університе",
-      "expected": "університет"
+      "Name": "Omission | людей",
+      "Input": "Небезпечне для життя голодування для лдей з цукровим діабетом, захворюваннями підшлункової залози, серцевою недостатністю",
+      "Expected": "людей"
     },
     {
-      "name": "Omission End",
-      "input": "незалежніст",
-      "expected": "незалежність"
+      "Name": "Omission | столова",
+      "Input": "Чому лише стоова ложка",
+      "Expected": "столова"
     },
     {
-      "name": "Omission End",
-      "input": "ден",
-      "expected": "день"
+      "Name": "Omission | обід",
+      "Input": "На оід готую овочевий суп",
+      "Expected": "обід"
     },
     {
-      "name": "Omission Start",
-      "input": "иба",
-      "expected": "риба"
+      "Name": "Doubling | моркву",
+      "Input": "Трохи проварюю броколі, капусту, гарбуз, селеру, морркву, збиваю блендером, додаю трохи вершків",
+      "Expected": "моркву"
     },
     {
-      "name": "Omission Start",
-      "input": "омп'ютер",
-      "expected": "комп'ютер"
+      "Name": "Omission | гриби",
+      "Input": "Двічі-тричі на тиждень готую суп з бобових, часто їм карпатські грби",
+      "Expected": "гриби"
     },
     {
-      "name": "Omission Start",
-      "input": "успільство",
-      "expected": "суспільство"
+      "Name": "Phonetic | лікувальні",
+      "Input": "Японці дослідили, що гриби мають унікальні лїкувальні властивості",
+      "Expected": "лікувальні"
     },
     {
-      "name": "Omission Start",
-      "input": "онтроль",
-      "expected": "контроль"
+      "Name": "Doubling | зростає",
+      "Input": "Чи зростаає з роками попит на цю тему в Україні",
+      "Expected": "зростає"
     },
     {
-      "name": "Omission Start",
-      "input": "арактер",
-      "expected": "характер"
+      "Name": "Phonetic | зміну",
+      "Input": "Чи бачите змїну харчових звичок",
+      "Expected": "зміну"
     },
     {
-      "name": "Omission Start",
-      "input": "артнерство",
-      "expected": "партнерство"
+      "Name": "Doubling | люди",
+      "Input": "Людди змушені рахувати, що купують, проводити більше часу за плитою",
+      "Expected": "Люди"
     },
     {
-      "name": "Omission Start",
-      "input": "рат",
-      "expected": "брат"
+      "Name": "Transposition | популярності",
+      "Input": "Зараз набувають попуялрності курси дієтологів-консультантів, що тривають кілька місяців чи навіть кілька десятків годин",
+      "Expected": "популярності"
     },
     {
-      "name": "Omission Start",
-      "input": "естра",
-      "expected": "сестра"
+      "Name": "Transposition | шарлатанство",
+      "Input": "Вони мають право на існування чи це шралатанство",
+      "Expected": "шарлатанство"
     },
     {
-      "name": "Omission Start",
-      "input": "ати",
-      "expected": "мати"
+      "Name": "Omission | викладають",
+      "Input": "Я це дуже підтримую за умови, що там виладають фахівці",
+      "Expected": "викладають"
     },
     {
-      "name": "Omission Start",
-      "input": "ід",
-      "expected": "дід"
+      "Name": "Doubling | більше",
+      "Input": "Чим білльше людей отримуватимуть і поширюватимуть знання про правильне харчування, тим краще",
+      "Expected": "більше"
     },
     {
-      "name": "Omission Start",
-      "input": "аба",
-      "expected": "баба"
+      "Name": "Doubling | термінами",
+      "Input": "Але треба розібратися з теермінами",
+      "Expected": "термінами"
     },
     {
-      "name": "Omission Start",
-      "input": "ин",
-      "expected": "син"
+      "Name": "Phonetic | лише",
+      "Input": "Лікувати може леше лікар з багажем знань з фізіології, патофізіології, біохімії, молекулярної біології",
+      "Expected": "лише"
     },
     {
-      "name": "Omission Start",
-      "input": "очка",
-      "expected": "дочка"
+      "Name": "Doubling | лікар",
+      "Input": "Лікуванням і підбором раціону, особливо для людей із захворюваннями, має займатися ліккар",
+      "Expected": "лікар"
     },
     {
-      "name": "Omission Start",
-      "input": "руг",
-      "expected": "друг"
+      "Name": "Transposition | здоровому",
+      "Input": "Треба знаходити смак у простій їжі, у здороовму способі життя",
+      "Expected": "здоровому"
     },
     {
-      "name": "Omission Start",
-      "input": "орог",
-      "expected": "ворог"
+      "Name": "Doubling | хвилює",
+      "Input": "Покращення якості продукції - питання, яке хвилюює всіх",
+      "Expected": "хвилює"
     },
     {
-      "name": "Omission Start",
-      "input": "ир",
-      "expected": "мир"
+      "Name": "Transposition | влади",
+      "Input": "Воно вимагає спільних дій влдаи, бізнесу, громадськості",
+      "Expected": "влади"
     },
     {
-      "name": "Omission Start",
-      "input": "ійна",
-      "expected": "війна"
+      "Name": "Keyboard | фахівців",
+      "Input": "Кожен виробник отримав рекомендації від провідних фахіввів у сфері якості",
+      "Expected": "фахівців"
     },
     {
-      "name": "Insertion Middle",
-      "input": "щаастя",
-      "expected": "щастя"
+      "Name": "Transposition | годиннику",
+      "Input": "На гоидннику лише пів на п'яту",
+      "Expected": "годиннику"
     },
     {
-      "name": "Insertion Middle",
-      "input": "раддість",
-      "expected": "радість"
+      "Name": "Omission | останніх",
+      "Input": "Еге ж, скільки всього за осанніх півтори години",
+      "Expected": "останніх"
     },
     {
-      "name": "Insertion Middle",
-      "input": "горре",
-      "expected": "горе"
+      "Name": "Doubling | покуняти",
+      "Input": "Може, лягти покуняяти",
+      "Expected": "покуняти"
     },
     {
-      "name": "Insertion Middle",
-      "input": "печчаль",
-      "expected": "печаль"
+      "Name": "Omission | заплачено",
+      "Input": "Навіть якщо немає хатньої роботи, навіть якщо сміття винесене, полицю прибито, за квартиру заплачео",
+      "Expected": "заплачено"
     },
     {
-      "name": "Insertion Middle",
-      "input": "смііх",
-      "expected": "сміх"
+      "Name": "Omission | лягти",
+      "Input": "Він, звісно, дозволяв собі лгти, але рідше, ніж хотілося, й щораз із відчуттям провини",
+      "Expected": "лягти"
     },
     {
-      "name": "Insertion Middle",
-      "input": "плаач",
-      "expected": "плач"
+      "Name": "Omission | відпустку",
+      "Input": "Ніби як батьки поїхали у відустку й залишили на нього квартиру",
+      "Expected": "відпустку"
     },
     {
-      "name": "Insertion Middle",
-      "input": "думмка",
-      "expected": "думка"
+      "Name": "Doubling | дивно",
+      "Input": "Дивнно, адже він Віру любив",
+      "Expected": "Дивно"
     },
     {
-      "name": "Insertion Middle",
-      "input": "іддея",
-      "expected": "ідея"
+      "Name": "Doubling | бігав",
+      "Input": "Бігаав, звісно, наліво, але любив",
+      "Expected": "Бігав"
     },
     {
-      "name": "Insertion Middle",
-      "input": "фаакт",
-      "expected": "факт"
+      "Name": "Doubling | коли",
+      "Input": "Божеволів, колли вона захворіла, тужив, колли померла",
+      "Expected": "коли"
     },
     {
-      "name": "Insertion Middle",
-      "input": "мііф",
-      "expected": "міф"
+      "Name": "Omission | усвідомив",
+      "Input": "Але разом з тим, коли все відплинуло, раптом усвідоив, що на самоті відпочиває",
+      "Expected": "усвідомив"
     },
     {
-      "name": "Insertion Middle",
-      "input": "праввда",
-      "expected": "правда"
+      "Name": "Doubling | горизонт",
+      "Input": "Невже це все вік, коли горризонт починає потроху звужуватися",
+      "Expected": "горизонт"
     },
     {
-      "name": "Insertion Middle",
-      "input": "бреххня",
-      "expected": "брехня"
+      "Name": "Omission | надто",
+      "Input": "Думка була ндто некомфортна, додумувати її не хотілося",
+      "Expected": "надто"
     },
     {
-      "name": "Insertion Middle",
-      "input": "доббро",
-      "expected": "добро"
+      "Name": "Omission | спробував",
+      "Input": "Він ліг на диван у кабінеті, накрився пледом і спробуав задрімати",
+      "Expected": "спробував"
     },
     {
-      "name": "Insertion Middle",
-      "input": "злло",
-      "expected": "зло"
+      "Name": "Keyboard | кожну",
+      "Input": "Це що ж означає: відтепер він має контролювати кожuу свою думку",
+      "Expected": "кожну"
     },
     {
-      "name": "Insertion Middle",
-      "input": "світтло",
-      "expected": "світло"
+      "Name": "Omission | саме",
+      "Input": "Сме так: тягар, ноша",
+      "Expected": "Саме"
     },
     {
-      "name": "Insertion Middle",
-      "input": "теммрява",
-      "expected": "темрява"
+      "Name": "Doubling | нього",
+      "Input": "Звідки це в ньього",
+      "Expected": "нього"
     },
     {
-      "name": "Insertion Middle",
-      "input": "деень",
-      "expected": "день"
+      "Name": "Phonetic | нахапався",
+      "Input": "Де він нохапався",
+      "Expected": "нахапався"
     },
     {
-      "name": "Insertion Middle",
-      "input": "нііч",
-      "expected": "ніч"
+      "Name": "Doubling | ніби",
+      "Input": "Нііби ж міська дитина",
+      "Expected": "Ніби"
     },
     {
-      "name": "Insertion Middle",
-      "input": "раннок",
-      "expected": "ранок"
+      "Name": "Omission | солі",
+      "Input": "Мабуть, від баби Соі",
+      "Expected": "Солі"
     },
     {
-      "name": "Insertion Middle",
-      "input": "веччір",
-      "expected": "вечір"
+      "Name": "Transposition | солі",
+      "Input": "Хата баби Слоі була на відлупі, за греблею, поруч із сосновим лісом",
+      "Expected": "Солі"
     },
     {
-      "name": "Insertion End",
-      "input": "тижденьь",
-      "expected": "тиждень"
+      "Name": "Phonetic | землі",
+      "Input": "Вважайте, що вам пощастило, — на святій зимлі смерть приймете, під стінами давнього монастиря",
+      "Expected": "землі"
     },
     {
-      "name": "Insertion End",
-      "input": "місяцьь",
-      "expected": "місяць"
+      "Name": "Phonetic | помолитися",
+      "Input": "Може, й помолетися перед смертю встигнете",
+      "Expected": "помолитися"
     },
     {
-      "name": "Insertion End",
-      "input": "вівторокк",
-      "expected": "вівторок"
+      "Name": "Transposition | затулившись",
+      "Input": "Оленка не підводилася й сиділа, затулвишись руками",
+      "Expected": "затулившись"
     },
     {
-      "name": "Insertion End",
-      "input": "середаа",
-      "expected": "середа"
+      "Name": "Omission | підняв",
+      "Input": "Бандит підійшов і піняв їй підборіддя носком чобота",
+      "Expected": "підняв"
     },
     {
-      "name": "Insertion End",
-      "input": "четверр",
-      "expected": "четвер"
+      "Name": "Phonetic | відсахнулася",
+      "Input": "Вона вїдсахнулася, побачивши перед обличчям брудну підошву, але не підвелася",
+      "Expected": "відсахнулася"
     },
     {
-      "name": "Insertion End",
-      "input": "п'ятницяя",
-      "expected": "п'ятниця"
+      "Name": "Doubling | болю",
+      "Input": "Той аж присів від боолю й схопився за ногу",
+      "Expected": "болю"
     },
     {
-      "name": "Insertion End",
-      "input": "суботаа",
-      "expected": "субота"
+      "Name": "Doubling | вони",
+      "Input": "Та не зробили воони й кількох кроків, як шлях їм заступила",
+      "Expected": "вони"
     },
     {
-      "name": "Insertion End",
-      "input": "неділяя",
-      "expected": "неділя"
+      "Name": "Keyboard | вівчарка",
+      "Input": "величезна німецька вувчарка",
+      "Expected": "вівчарка"
     },
     {
-      "name": "Insertion End",
-      "input": "січеньь",
-      "expected": "січень"
+      "Name": "Transposition | треба",
+      "Input": "Сонний чолов'яга довго не міг утямити, що цьому захеканому хлопчакові терба",
+      "Expected": "треба"
     },
     {
-      "name": "Insertion End",
-      "input": "лютийй",
-      "expected": "лютий"
+      "Name": "Omission | прибігли",
+      "Input": "На галас у фойє прибіги прибиральниця й адміністратор",
+      "Expected": "прибігли"
     },
     {
-      "name": "Insertion End",
-      "input": "березеньь",
-      "expected": "березень"
+      "Name": "Keyboard | центрального",
+      "Input": "Охоронець, який врешті усвідомив серйозність ситуації, по рації викликав допомогу з центральоого поста охорони санаторію",
+      "Expected": "центрального"
     },
     {
-      "name": "Insertion End",
-      "input": "квітеньь",
-      "expected": "квітень"
+      "Name": "Doubling | кабінеті",
+      "Input": "За п'ятнадцять хвилин у кабіінеті адміністратора зібралася оперативна нарада",
+      "Expected": "кабінеті"
     },
     {
-      "name": "Insertion End",
-      "input": "травеньь",
-      "expected": "травень"
+      "Name": "Phonetic | дізнався",
+      "Input": "Адміністратор уже дізновся, що вчора увечері зникло четверо дітей",
+      "Expected": "дізнався"
     },
     {
-      "name": "Insertion End",
-      "input": "червеньь",
-      "expected": "червень"
+      "Name": "Doubling | грота",
+      "Input": "Опівночі охоронці знайшли на березі біля Пушкінського гроота їхній одяг",
+      "Expected": "грота"
     },
     {
-      "name": "Insertion End",
-      "input": "липеньь",
-      "expected": "липень"
+      "Name": "Transposition | морі",
+      "Input": "Очевидно, діти вирішили розважитися й поплавати у мроі",
+      "Expected": "морі"
     },
     {
-      "name": "Insertion End",
-      "input": "серпеньь",
-      "expected": "серпень"
+      "Name": "Transposition | могли",
+      "Input": "Але в нічній темряві мголи втратити орієнтацію й потонути",
+      "Expected": "могли"
     },
     {
-      "name": "Insertion End",
-      "input": "вересеньь",
-      "expected": "вересень"
+      "Name": "Phonetic | рятувального",
+      "Input": "За допомогою рятувальноґо човна й вертольота до ранку вели пошуки вздовж узбережжя, але марно",
+      "Expected": "рятувального"
     },
     {
-      "name": "Insertion End",
-      "input": "жовтеньь",
-      "expected": "жовтень"
+      "Name": "Doubling | водолази",
+      "Input": "Зранку роботу розпочали водолаззи",
+      "Expected": "водолази"
     },
     {
-      "name": "Insertion End",
-      "input": "листопадд",
-      "expected": "листопад"
+      "Name": "Transposition | сполохати",
+      "Input": "Але робити це треба було обережно, щоб не соплохати контрабандистів",
+      "Expected": "сполохати"
     },
     {
-      "name": "Insertion End",
-      "input": "груденьь",
-      "expected": "грудень"
+      "Name": "Keyboard | собакою",
+      "Input": "У санаторій привезли кінолога зі собаtою",
+      "Expected": "собакою"
     },
     {
-      "name": "Insertion Start",
-      "input": "ввесна",
-      "expected": "весна"
+      "Name": "Keyboard | помчали",
+      "Input": "Бійці прмчали за нею",
+      "Expected": "помчали"
     },
     {
-      "name": "Insertion Start",
-      "input": "оосінь",
-      "expected": "осінь"
+      "Name": "Transposition | згідно",
+      "Input": "Зігдно з покажчиком біля стежки вони бігли до давнього монастиря у бухті Панаїр",
+      "Expected": "Згідно"
     },
     {
-      "name": "Insertion Start",
-      "input": "ссніданок",
-      "expected": "сніданок"
+      "Name": "Doubling | здалеку",
+      "Input": "Раптом здаллеку пролунало грізне гарчання",
+      "Expected": "здалеку"
     },
     {
-      "name": "Insertion Start",
-      "input": "ообід",
-      "expected": "обід"
+      "Name": "Phonetic | залягли",
+      "Input": "Хлопець побачив спецпризначенців, що заляґли за пагорбом з автоматами напоготові",
+      "Expected": "залягли"
     },
     {
-      "name": "Insertion Start",
-      "input": "ввечеря",
-      "expected": "вечеря"
+      "Name": "Transposition | часом",
+      "Input": "Тим чсаом другий охоронець, перекинувшись кількома словами з бійцями, уже викликав когось по рації",
+      "Expected": "часом"
     },
     {
-      "name": "Insertion Start",
-      "input": "їїжа",
-      "expected": "їжа"
+      "Name": "Omission | вівчарку",
+      "Input": "Зупинившись на пагорбі позаду бійців, він побачив унизу вівчаку, що стояла лапами на грудях сивого",
+      "Expected": "вівчарку"
     },
     {
-      "name": "Insertion Start",
-      "input": "ннапій",
-      "expected": "напій"
+      "Name": "Keyboard | руки",
+      "Input": "Той лежав на землі, розкинувши руfи, й стогнав",
+      "Expected": "руки"
     },
     {
-      "name": "Insertion Start",
-      "input": "ччай",
-      "expected": "чай"
+      "Name": "Transposition | злочинців",
+      "Input": "— Злчоинців було двоє",
+      "Expected": "Злочинців"
     },
     {
-      "name": "Insertion Start",
-      "input": "ккава",
-      "expected": "кава"
+      "Name": "Transposition | кивнув",
+      "Input": "Хлопець ствердно квинув",
+      "Expected": "кивнув"
     },
     {
-      "name": "Insertion Start",
-      "input": "ммолоко",
-      "expected": "молоко"
+      "Name": "Doubling | пригнувся",
+      "Input": "Боєць приггнувся і помчав до дітей",
+      "Expected": "пригнувся"
     },
     {
-      "name": "Insertion Start",
-      "input": "ссік",
-      "expected": "сік"
+      "Name": "Transposition | собою",
+      "Input": "Підбігши, звалив їх на землю і прикрив сбоою",
+      "Expected": "собою"
     },
     {
-      "name": "Insertion Start",
-      "input": "ппиво",
-      "expected": "пиво"
+      "Name": "Omission | свій",
+      "Input": "— Не бійтеся, я свй",
+      "Expected": "свій"
     },
     {
-      "name": "Insertion Start",
-      "input": "ввино",
-      "expected": "вино"
+      "Name": "Transposition | десь",
+      "Input": "— Дсеь там, хана йому, розбився",
+      "Expected": "Десь"
     },
     {
-      "name": "Insertion Start",
-      "input": "ххліб",
-      "expected": "хліб"
+      "Name": "Doubling | залишився",
+      "Input": "Тільки цей заллишився",
+      "Expected": "залишився"
     },
     {
-      "name": "Insertion Start",
-      "input": "ммасло",
-      "expected": "масло"
+      "Name": "Doubling | сивого",
+      "Input": "Спецпризначенець подав знак своїм, ті збігли на галявину й закували сивоого в кайданки",
+      "Expected": "сивого"
     },
     {
-      "name": "Insertion Start",
-      "input": "ццукор",
-      "expected": "цукор"
+      "Name": "Transposition | щось",
+      "Input": "Сивий ледь плентався, мов п'яний, і щсоь бурмотів собі під ніс",
+      "Expected": "щось"
     },
     {
-      "name": "Insertion Start",
-      "input": "ссіль",
-      "expected": "сіль"
+      "Name": "Transposition | рвучко",
+      "Input": "Чоловік рвчуко обернувся",
+      "Expected": "рвучко"
     },
     {
-      "name": "Insertion Start",
-      "input": "пперець",
-      "expected": "перець"
+      "Name": "Phonetic | розпливлося",
+      "Input": "Напружене обличчя розплевлося в посмішці, він розкинув руки й радо обійняв четвірку горе-скарбошукачів",
+      "Expected": "розпливлося"
     },
     {
-      "name": "Insertion Start",
-      "input": "мм'ясо",
-      "expected": "м'ясо"
+      "Name": "Keyboard | вони",
+      "Input": "До табору воhи потрапили не одразу",
+      "Expected": "вони"
     },
     {
-      "name": "Insertion Start",
-      "input": "кковбаса",
-      "expected": "ковбаса"
+      "Name": "Omission | контрабандистів",
+      "Input": "Потім на міліцейському катері відвезли до бухти, де був пришвартований баркас контрабандстів",
+      "Expected": "контрабандистів"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "книша",
-      "expected": "книга"
+      "Name": "Keyboard | експертів",
+      "Input": "Група криміналістів-експертяв спустилася в печеру й почала дослідження",
+      "Expected": "експертів"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "ручла",
-      "expected": "ручка"
+      "Name": "Keyboard | гарний",
+      "Input": "Який гаjний кленовий бивень",
+      "Expected": "гарний"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "одівець",
-      "expected": "олівець"
+      "Name": "Omission | трохи",
+      "Input": "Кора попелясто-чорна, шорстка, тохи розтріскана",
+      "Expected": "трохи"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "рапір",
-      "expected": "папір"
+      "Name": "Keyboard | мереживо",
+      "Input": "Кілька плямок лишайника, кругле мережичо, як сніжинка",
+      "Expected": "мереживо"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "хошит",
-      "expected": "зошит"
+      "Name": "Keyboard | звідти",
+      "Input": "Я знайшов його на землі, трохи вище звфдти, де колись стояла церква Святого Духа",
+      "Expected": "звідти"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "лошка",
-      "expected": "дошка"
+      "Name": "Doubling | побачив",
+      "Input": "Я поббачив, як він світиться з вікна трамваю",
+      "Expected": "побачив"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "крнйда",
-      "expected": "крейда"
+      "Name": "Phonetic | заберу",
+      "Input": "Нічого, колись забиру, але він там на мене чекає",
+      "Expected": "заберу"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "фапба",
-      "expected": "фарба"
+      "Name": "Keyboard | третій",
+      "Input": "Третвй день нічого не можу робити",
+      "Expected": "Третій"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "рензлик",
-      "expected": "пензлик"
+      "Name": "Keyboard | чорного",
+      "Input": "Усе не дають три фігурки з того чоррого кленового бивня",
+      "Expected": "чорного"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "кдей",
-      "expected": "клей"
+      "Name": "Omission | білий",
+      "Input": "Але який він сліпучо-блий усередині",
+      "Expected": "білий"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "гожиці",
-      "expected": "ножиці"
+      "Name": "Omission | шкірою",
+      "Input": "Під самою шкіою прозорі холодні прожилки",
+      "Expected": "шкірою"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "дінійка",
-      "expected": "лінійка"
+      "Name": "Omission | фігурка",
+      "Input": "Фігрка невелика — на півтори долоні",
+      "Expected": "Фігурка"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "шумка",
-      "expected": "гумка"
+      "Name": "Doubling | хвильками",
+      "Input": "Коли починаєш, то кленові волокна біжать хвилььками і сокира має прислухатись до них",
+      "Expected": "хвильками"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "поотфель",
-      "expected": "портфель"
+      "Name": "Keyboard | їхній",
+      "Input": "Але переважно кидаєшся стрімголов у їхнxй прохолодний вир",
+      "Expected": "їхній"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "оюкзак",
-      "expected": "рюкзак"
+      "Name": "Doubling | вигулькує",
+      "Input": "Аж раптом посеред тіла вигуллькує острівець сучка",
+      "Expected": "вигулькує"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "кдас",
-      "expected": "клас"
+      "Name": "Doubling | білизні",
+      "Input": "Отак і чорніє у білиизні живота",
+      "Expected": "білизні"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "уоок",
-      "expected": "урок"
+      "Name": "Omission | заходить",
+      "Input": "Заходть у себе",
+      "Expected": "Заходить"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "пеоерва",
-      "expected": "перерва"
+      "Name": "Omission | гасне",
+      "Input": "То воно світиться, а то гане",
+      "Expected": "гасне"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "ачитель",
-      "expected": "вчитель"
+      "Name": "Doubling | фігурки",
+      "Input": "Три фігуурки забирають увесь мій час",
+      "Expected": "фігурки"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "усень",
-      "expected": "учень"
+      "Name": "Transposition | підходжу",
+      "Input": "Я все пдіходжу і хочу потримати котрусь на долоні",
+      "Expected": "підходжу"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "лфкар",
-      "expected": "лікар"
+      "Name": "Transposition | любуватись",
+      "Input": "Хоч любуавтись важко: їхня форма ще міниться в моїх очах",
+      "Expected": "любуватись"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "мндсестра",
-      "expected": "медсестра"
+      "Name": "Doubling | криклива",
+      "Input": "І темна плямка надто крриклива на животі",
+      "Expected": "криклива"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "аптнка",
-      "expected": "аптека"
+      "Name": "Doubling | незасмагле",
+      "Input": "І зовсім незасмаглле тіло",
+      "Expected": "незасмагле"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "тпблетка",
-      "expected": "таблетка"
+      "Name": "Transposition | малий",
+      "Input": "Млаий животик непомітно переходить у лоно між вузьких стегон",
+      "Expected": "Малий"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "крппля",
-      "expected": "крапля"
+      "Name": "Transposition | чашечки",
+      "Input": "І зовсім втоплені чашчеки колін",
+      "Expected": "чашечки"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "рнцепт",
-      "expected": "рецепт"
+      "Name": "Omission | цільна",
+      "Input": "Як лише починаєш — вона повна, цльна",
+      "Expected": "цільна"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "хвпроба",
-      "expected": "хвороба"
+      "Name": "Phonetic | постава",
+      "Input": "Сама пастава має усю повноту якогось вкрай важливого: первинного жесту",
+      "Expected": "постава"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "здпров'я",
-      "expected": "здоров'я"
+      "Name": "Phonetic | прохання",
+      "Input": "Чи прохоння, чи подиву",
+      "Expected": "прохання"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "лфжко",
-      "expected": "ліжко"
+      "Name": "Doubling | знає",
+      "Input": "Але сокира не хоче зупинятись на півдорозі: вона зннає свій час",
+      "Expected": "знає"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "кпвдра",
-      "expected": "ковдра"
+      "Name": "Omission | просто",
+      "Input": "Це ж не прсто анонімна фігурка з Танагри",
+      "Expected": "просто"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "ппдушка",
-      "expected": "подушка"
+      "Name": "Keyboard | задумала",
+      "Input": "вона не просто йде чи присіла біля джерела: вона щось задумкла",
+      "Expected": "задумала"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "прпстирадло",
-      "expected": "простирадло"
+      "Name": "Omission | щось",
+      "Input": "Щсь кричить персами",
+      "Expected": "Щось"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "ркшник",
-      "expected": "рушник"
+      "Name": "Doubling | нотний",
+      "Input": "Колись здавалося, що тільки в музиці ноттний знак виражає точний відтинок часу",
+      "Expected": "нотний"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "мтло",
-      "expected": "мило"
+      "Name": "Doubling | простору",
+      "Input": "А скульптура — лише довільний згусток просттору",
+      "Expected": "простору"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "шпмпунь",
-      "expected": "шампунь"
+      "Name": "Omission | коли",
+      "Input": "Але тепер, кли ніяк не можу зупинити сокиру в руці",
+      "Expected": "коли"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "зкб",
-      "expected": "зуб"
+      "Name": "Doubling | живого",
+      "Input": "І все тіло, і весь її шлях — лише пульсуюча оболонка жиивого часу",
+      "Expected": "живого"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "щфтка",
-      "expected": "щітка"
+      "Name": "Transposition | далеко",
+      "Input": "А сам простір вже далкео від нас",
+      "Expected": "далеко"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "ппста",
-      "expected": "паста"
+      "Name": "Omission | гадали",
+      "Input": "Далі, ніж ми гадли",
+      "Expected": "гадали"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "мпзок",
-      "expected": "мозок"
+      "Name": "Phonetic | нашим",
+      "Input": "він десь там поза ношим засягом",
+      "Expected": "нашим"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "шлкнок",
-      "expected": "шлунок"
+      "Name": "Doubling | обрій",
+      "Input": "Це лише оббрій, далека можливість",
+      "Expected": "обрій"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "компютер",
-      "expected": "комп'ютер"
+      "Name": "Keyboard | сокирою",
+      "Input": "Рука з соаирою зупиняється в дуже точний час",
+      "Expected": "сокирою"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "мяч",
-      "expected": "м'яч"
+      "Name": "Doubling | вперед",
+      "Input": "Вирвавшись далеко впереед, вона вертається до мене звідти втомлена і каже: все",
+      "Expected": "вперед"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "сімя",
-      "expected": "сім'я"
+      "Name": "Omission | розумію",
+      "Input": "І я аж тепер розуію: вона каже про той чистий, живий час",
+      "Expected": "розумію"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "здоровя",
-      "expected": "здоров'я"
+      "Name": "Transposition | виплекати",
+      "Input": "коли душа встигла впилекати собі тіло, освоїла його",
+      "Expected": "виплекати"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "пять",
-      "expected": "п'ять"
+      "Name": "Doubling | грудей",
+      "Input": "кожен вигин гррудей, шиї, кожну родимку",
+      "Expected": "грудей"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "імя",
-      "expected": "ім'я"
+      "Name": "Keyboard | відтінок",
+      "Input": "кожен відтвнок вранішній, і вечірній, і нічний",
+      "Expected": "відтінок"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "память",
-      "expected": "пам'ять"
+      "Name": "Doubling | кудись",
+      "Input": "Потім вийти з нього кудиссь невідомо куди",
+      "Expected": "кудись"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "хлопя",
-      "expected": "хлоп'я"
+      "Name": "Omission | повернутись",
+      "Input": "а потім знов поернутись додому",
+      "Expected": "повернутись"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "любовю",
-      "expected": "любов'ю"
+      "Name": "Transposition | повернулась",
+      "Input": "Торс — це тіло, куди повенрулась душа",
+      "Expected": "повернулась"
     },
     {
-      "name": "Doubling Error",
-      "input": "пташиннє",
-      "expected": "пташине"
+      "Name": "Transposition | якесь",
+      "Input": "А в яексь, може, й не повернулась",
+      "Expected": "якесь"
     },
     {
-      "name": "Doubling Error",
-      "input": "осіній",
-      "expected": "осінній"
+      "Name": "Keyboard | може",
+      "Input": "мjже, вона ще повертається, десь у дорозі",
+      "Expected": "може"
     },
     {
-      "name": "Doubling Error",
-      "input": "житя",
-      "expected": "життя"
+      "Name": "Phonetic | кожен",
+      "Input": "Кажен торс — згусток дуже точного часу",
+      "Expected": "Кожен"
     },
     {
-      "name": "Doubling Error",
-      "input": "знаня",
-      "expected": "знання"
+      "Name": "Doubling | невідомий",
+      "Input": "Але він невідоммий",
+      "Expected": "невідомий"
     },
     {
-      "name": "Doubling Error",
-      "input": "волося",
-      "expected": "волосся"
+      "Name": "Doubling | сказати",
+      "Input": "Не можна сказаати: цьому торсові стільки-то часу — чи днів, чи століть",
+      "Expected": "сказати"
     },
     {
-      "name": "Doubling Error",
-      "input": "гіля",
-      "expected": "гілля"
+      "Name": "Doubling | знає",
+      "Input": "Лише сокира зннає свої удари",
+      "Expected": "знає"
     },
     {
-      "name": "Doubling Error",
-      "input": "судя",
-      "expected": "суддя"
+      "Name": "Transposition | думав",
+      "Input": "Колись, не так уже й давно, дмуав, що часу не існує",
+      "Expected": "думав"
     },
     {
-      "name": "Doubling Error",
-      "input": "статя",
-      "expected": "стаття"
+      "Name": "Omission | нема",
+      "Input": "а часу неа",
+      "Expected": "нема"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "робиця",
-      "expected": "робиться"
+      "Name": "Transposition | люди",
+      "Input": "Лдюи не помічають скульптуру",
+      "Expected": "Люди"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "смієця",
-      "expected": "сміється"
+      "Name": "Doubling | лялька",
+      "Input": "Застиглий бовдур чи поламана ляльька",
+      "Expected": "лялька"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "вчиця",
-      "expected": "вчиться"
+      "Name": "Doubling | еталон",
+      "Input": "І ніхто не думає, що її вертикаль в земних координатах — то витончений еталоон часу",
+      "Expected": "еталон"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "дивиця",
-      "expected": "дивиться"
+      "Name": "Phonetic | стовп",
+      "Input": "Людське око пробує всіляко оминути застиглий ставп попереду",
+      "Expected": "стовп"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "граєця",
-      "expected": "грається"
+      "Name": "Phonetic | милує",
+      "Input": "Око більше мелує краєвид чи ваза з квітами",
+      "Expected": "милує"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "миєця",
-      "expected": "миється"
+      "Name": "Omission | приглушені",
+      "Input": "Яскраві чи пригушені барви",
+      "Expected": "приглушені"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "одягаєця",
-      "expected": "одягається"
+      "Name": "Transposition | хліба",
+      "Input": "І музика мила — вона, як вода чи кусень хлбіа в дорозі",
+      "Expected": "хліба"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "ховаєця",
-      "expected": "ховається"
+      "Name": "Phonetic | людського",
+      "Input": "Але мовчазний стовпчик в подобі людськоґо тіла — торс небезпечний: об нього можна спіткнутись",
+      "Expected": "людського"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "зустрічаєця",
-      "expected": "зустрічається"
+      "Name": "Phonetic | предки",
+      "Input": "У ньому темні невиразні тіні предків, далекі невідомі придки",
+      "Expected": "предки"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "прокидаєця",
-      "expected": "прокидається"
+      "Name": "Keyboard | краще",
+      "Input": "їх крвще не чіпати",
+      "Expected": "краще"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "готуєця",
-      "expected": "готується"
+      "Name": "Transposition | подумалось",
+      "Input": "Щось таке відразу подумалсоь, коли побачив крука на молоденькій яблуні",
+      "Expected": "подумалось"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "хвилюєця",
-      "expected": "хвилюється"
+      "Name": "Keyboard | яблуні",
+      "Input": "Я не повірив своїм очам: так низенько на гілці — величезний, майже на половину ябьуні",
+      "Expected": "яблуні"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "вітаєця",
-      "expected": "вітається"
+      "Name": "Omission | видко",
+      "Input": "Я підкрався — підглядаю: видо, молодий, чорний із синім вилиском",
+      "Expected": "видко"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "повертаєця",
-      "expected": "повертається"
+      "Name": "Keyboard | склав",
+      "Input": "раптом розправив чуб на голові і знову склсв",
+      "Expected": "склав"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "змагаєця",
-      "expected": "змагається"
+      "Name": "Phonetic | ніби",
+      "Input": "ти нїби гасиш світ",
+      "Expected": "ніби"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "сподіваєця",
-      "expected": "сподівається"
+      "Name": "Phonetic | породжуєш",
+      "Input": "І наново пароджуєш, високо піднявши брови",
+      "Expected": "породжуєш"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "спускаєця",
-      "expected": "спускається"
+      "Name": "Transposition | цілими",
+      "Input": "скубе, трощить ціилми жмутами — отак вам усім — раз і назавжди розправився зі світом шелесткої напівтемряви",
+      "Expected": "цілими"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "піднімаєця",
-      "expected": "піднімається"
+      "Name": "Transposition | ховалося",
+      "Input": "Хто знає, що в ній ховаолся, чиї тіні",
+      "Expected": "ховалося"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "купаєця",
-      "expected": "купається"
+      "Name": "Transposition | витріщився",
+      "Input": "Тепер витрщіився просто себе — в ніщо",
+      "Expected": "витріщився"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "катаєця",
-      "expected": "катається"
+      "Name": "Omission | кайлом",
+      "Input": "Знов довбе гілку своїм могутнім кайлм: він мусить щось рубати — інакше світ завмре",
+      "Expected": "кайлом"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "дивитця",
-      "expected": "дивиться"
+      "Name": "Keyboard | яблунею",
+      "Input": "Я вийшов на город, щоби під яббунею вирвати щось на сніданок",
+      "Expected": "яблунею"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "смієтця",
-      "expected": "сміється"
+      "Name": "Omission | зелені",
+      "Input": "помідор, огірок, якоїсь злені",
+      "Expected": "зелені"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "вчитця",
-      "expected": "вчиться"
+      "Name": "Transposition | підійти",
+      "Input": "Але не можу підітйи, бо він там",
+      "Expected": "підійти"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "робитця",
-      "expected": "робиться"
+      "Name": "Transposition | сонце",
+      "Input": "Соцне пекло, голодний, знову вийшов на город",
+      "Expected": "Сонце"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "граєтця",
-      "expected": "грається"
+      "Name": "Transposition | зіскочив",
+      "Input": "Він вже зіскчоив з яблуні",
+      "Expected": "зіскочив"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "дивися",
-      "expected": "дивишся"
+      "Name": "Phonetic | летить",
+      "Input": "але не лететь",
+      "Expected": "летить"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "смієся",
-      "expected": "смієшся"
+      "Name": "Doubling | крило",
+      "Input": "Може, поранене криило",
+      "Expected": "крило"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "вчися",
-      "expected": "вчишся"
+      "Name": "Omission | мізерне",
+      "Input": "Ніби міряв його, як щось мзерне, нікчемне",
+      "Expected": "мізерне"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "граєся",
-      "expected": "граєшся"
+      "Name": "Keyboard | ходив",
+      "Input": "І справді — там, де він тепер хшдив — западалась земля",
+      "Expected": "ходив"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "миєся",
-      "expected": "миєшся"
+      "Name": "Doubling | недавно",
+      "Input": "Ще недаввно після повені там стояла вода",
+      "Expected": "недавно"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "одягаєся",
-      "expected": "одягаєшся"
+      "Name": "Omission | повінь",
+      "Input": "Можливо, коли підходить пвінь — раптово усе випростується, оживає",
+      "Expected": "повінь"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "зустрічаєся",
-      "expected": "зустрічаєшся"
+      "Name": "Phonetic | спливло",
+      "Input": "але потім — коли вже все сплевло — як сумно",
+      "Expected": "спливло"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "прокидаєся",
-      "expected": "прокидаєшся"
+      "Name": "Doubling | гриби",
+      "Input": "У лісі ні душі, бо грриби теж знесла вода",
+      "Expected": "гриби"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "готуєся",
-      "expected": "готуєшся"
+      "Name": "Omission | чекають",
+      "Input": "лише всі чогось чекють",
+      "Expected": "чекають"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "хвилюєся",
-      "expected": "хвилюєшся"
+      "Name": "Phonetic | вивалюється",
+      "Input": "Усе виволюється з рук",
+      "Expected": "вивалюється"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "знаєшь",
-      "expected": "знаєш"
+      "Name": "Keyboard | відчував",
+      "Input": "Я це вудчував усім тілом",
+      "Expected": "відчував"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "робишь",
-      "expected": "робиш"
+      "Name": "Doubling | хату",
+      "Input": "Я вернувся в хатту",
+      "Expected": "хату"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "бачишь",
-      "expected": "бачиш"
+      "Name": "Transposition | білі",
+      "Input": "Там чекали три бліі жіночі фігурки — усі з одного кленового бивня",
+      "Expected": "білі"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "пишешь",
-      "expected": "пишеш"
+      "Name": "Keyboard | форму",
+      "Input": "Мені подобається, коли вигин гілки підказує флрму майбутньої скульптури",
+      "Expected": "форму"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "читаєшь",
-      "expected": "читаєш"
+      "Name": "Transposition | робота",
+      "Input": "Але яка робтоа",
+      "Expected": "робота"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "думаєшь",
-      "expected": "думаєш"
+      "Name": "Transposition | зрозумів",
+      "Input": "І тоді я зрзоумів",
+      "Expected": "зрозумів"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "ходишь",
-      "expected": "ходиш"
+      "Name": "Omission | сидіти",
+      "Input": "Тут уже нічого сидіи",
+      "Expected": "сидіти"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "кажешь",
-      "expected": "кажеш"
+      "Name": "Keyboard | показав",
+      "Input": "Поfазав інший світ",
+      "Expected": "Показав"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "спишь",
-      "expected": "спиш"
+      "Name": "Doubling | вода",
+      "Input": "Де не підеш — крізь сліпучий очерет мерехтить воода",
+      "Expected": "вода"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "мовчишь",
-      "expected": "мовчиш"
+      "Name": "Keyboard | коропів",
+      "Input": "А глибше пасуться темні череди короиів",
+      "Expected": "коропів"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "біжишь",
-      "expected": "біжиш"
+      "Name": "Keyboard | рибалки",
+      "Input": "І жодного рибалаи",
+      "Expected": "рибалки"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "лежишь",
-      "expected": "лежиш"
+      "Name": "Phonetic | однаково",
+      "Input": "Лебідь застиг, одноково віддалений від берегів",
+      "Expected": "однаково"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "плачешь",
-      "expected": "плачеш"
+      "Name": "Keyboard | далекий",
+      "Input": "Далеrий лебідь був у своєму світі — тому єдиному, віддаленому від усіх",
+      "Expected": "Далекий"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "скачешь",
-      "expected": "скачеш"
+      "Name": "Transposition | світі",
+      "Input": "У тому вибраному з неба сівті",
+      "Expected": "світі"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "малюєшь",
-      "expected": "малюєш"
+      "Name": "Transposition | високий",
+      "Input": "Який всиокий і дивний вибір",
+      "Expected": "високий"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "працюєшь",
-      "expected": "працюєш"
+      "Name": "Keyboard | ніде",
+      "Input": "Буду саме тут і більше ніюе",
+      "Expected": "ніде"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "співаєшь",
-      "expected": "співаєш"
+      "Name": "Doubling | собі",
+      "Input": "Чи я так сообі обирав місце під сонцем",
+      "Expected": "собі"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "слухаєшь",
-      "expected": "слухаєш"
+      "Name": "Omission | знає",
+      "Input": "Але хто його зає — чи варто переймати чуже життя",
+      "Expected": "знає"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "нічь",
-      "expected": "ніч"
+      "Name": "Keyboard | було",
+      "Input": "Його вже не бушо",
+      "Expected": "було"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "пічь",
-      "expected": "піч"
+      "Name": "Phonetic | собаки",
+      "Input": "може, роздерли собоки",
+      "Expected": "собаки"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "річь",
-      "expected": "річ"
+      "Name": "Phonetic | городу",
+      "Input": "У кінці гароду, за латкою кукурудзи, раптом щось зблисло",
+      "Expected": "городу"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "розкішь",
-      "expected": "розкіш"
+      "Name": "Omission | може",
+      "Input": "зачорніло і згасло — мое, він",
+      "Expected": "може"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "подорожь",
-      "expected": "подорож"
+      "Name": "Keyboard | раптово",
+      "Input": "То раптоуо повернувся листок хрону другим боком",
+      "Expected": "раптово"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "тушь",
-      "expected": "туш"
+      "Name": "Keyboard | хвостом",
+      "Input": "Поруч Білик крутнув хвостлм",
+      "Expected": "хвостом"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "фальшь",
-      "expected": "фальш"
+      "Name": "Transposition | посміхається",
+      "Input": "Вишкірив писок, посміхєаться",
+      "Expected": "посміхається"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "жовчь",
-      "expected": "жовч"
+      "Name": "Transposition | хитрість",
+      "Input": "Він розкусив давно мою хиртість: йду ніби по огірок знов і знов на город",
+      "Expected": "хитрість"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "сілю",
-      "expected": "сіллю"
+      "Name": "Doubling | третю",
+      "Input": "Я вже закінчив треттю фігурку",
+      "Expected": "третю"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "тіню",
-      "expected": "тінню"
+      "Name": "Transposition | мені",
+      "Input": "Мнеі чомусь вони здалися сестрами",
+      "Expected": "Мені"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "нічю",
-      "expected": "ніччю"
+      "Name": "Omission | бавляться",
+      "Input": "Роздяглись і баляться собі — затулюють одна одну якимись прозорими серпанками — а від кого",
+      "Expected": "бавляться"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "міцю",
-      "expected": "міццю"
+      "Name": "Omission | пушинка",
+      "Input": "І до кори вчепилася розпелехана його пушнка",
+      "Expected": "пушинка"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "пічю",
-      "expected": "піччю"
+      "Name": "Omission | здмухнув",
+      "Input": "Вже третій день і ніякий вітер не здмунув її",
+      "Expected": "здмухнув"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "річю",
-      "expected": "річчю"
+      "Name": "Omission | навскіс",
+      "Input": "іде сюди, переходить нвскіс наш город — йде до латки кукурудзи",
+      "Expected": "навскіс"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "подорожю",
-      "expected": "подорожжю"
+      "Name": "Doubling | наче",
+      "Input": "виринув начче з якого марева",
+      "Expected": "наче"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "розкішю",
-      "expected": "розкішшю"
+      "Name": "Doubling | пушинки",
+      "Input": "Народився з тої єдиної пушшинки",
+      "Expected": "пушинки"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "зеленю",
-      "expected": "зеленню"
+      "Name": "Omission | тоді",
+      "Input": "впевнено — як і тді, випнув груди",
+      "Expected": "тоді"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Over-doubling",
-      "input": "радісттю",
-      "expected": "радістю"
+      "Name": "Doubling | розкидає",
+      "Input": "вже щось шматує, щось біле — розкиидає довкола",
+      "Expected": "розкидає"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Over-doubling",
-      "input": "гордісттю",
-      "expected": "гордістю"
+      "Name": "Keyboard | стало",
+      "Input": "І ствло набагато легше",
+      "Expected": "стало"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Over-doubling",
-      "input": "молодісттю",
-      "expected": "молодістю"
+      "Name": "Keyboard | пропадеш",
+      "Input": "Ти так просто не прjпадеш",
+      "Expected": "пропадеш"
     },
     {
-      "name": "Ending Error: Nouns Instrumental O-E",
-      "input": "коньом",
-      "expected": "конем"
+      "Name": "Phonetic | команди",
+      "Input": "Відповідно до жеребкування комонди були розподілені на дві групи",
+      "Expected": "команди"
     },
     {
-      "name": "Ending Error: Nouns Instrumental O-E",
-      "input": "дньом",
-      "expected": "днем"
+      "Name": "Keyboard | потрапили",
+      "Input": "До першої пkтрапили футбольні дружини Козельщинського, Кременчуцького і Полтавського районів",
+      "Expected": "потрапили"
     },
     {
-      "name": "Ending Error: Nouns Instrumental O-E",
-      "input": "серцьом",
-      "expected": "серцем"
+      "Name": "Transposition | районів",
+      "Input": "Наступна гра між командами Козельщинського і Кременчуцького рйаонів була напрочуд цікавою, напруженою і сповненою драматизму",
+      "Expected": "районів"
     },
     {
-      "name": "Ending Error: Nouns Instrumental O-E",
-      "input": "сонцьом",
-      "expected": "сонцем"
+      "Name": "Apostrophe Missed | м'ячі",
+      "Input": "Вони забили у ворота суперника два мячі",
+      "Expected": "м'ячі"
     },
     {
-      "name": "Ending Error: Nouns Instrumental O-E",
-      "input": "пальцьом",
-      "expected": "пальцем"
+      "Name": "Omission | нічийним",
+      "Input": "Але до кінця першого тайму рахунок став нчийним",
+      "Expected": "нічийним"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "текста",
-      "expected": "тексту"
+      "Name": "Doubling | другого",
+      "Input": "Початок дрругого тайму був точною копією першого",
+      "Expected": "другого"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "рока",
-      "expected": "року"
+      "Name": "Transposition | м'ячі",
+      "Input": "Козельщинські футболісти забили два мя'чі",
+      "Expected": "м'ячі"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "університета",
-      "expected": "університету"
+      "Name": "Transposition | розпочалася",
+      "Input": "Інтрига розпочаался, коли до завершення гри залишалось хвилин п'ять",
+      "Expected": "розпочалася"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "інститута",
-      "expected": "інституту"
+      "Name": "Transposition | завадить",
+      "Input": "До кінця гри залишалась одна хвилина, здавалось уже ніхто не завадтиь кременчужанам перемогти",
+      "Expected": "завадить"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "класа",
-      "expected": "класу"
+      "Name": "Transposition | видовищною",
+      "Input": "Фінальна гра між футболістами Полтавського і Зіньківського району була мало вдиовищною",
+      "Expected": "видовищною"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "спорта",
-      "expected": "спорту"
+      "Name": "Keyboard | футболісти",
+      "Input": "Футбьлісти Зіньківського району лише захищалися",
+      "Expected": "Футболісти"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "вокзала",
-      "expected": "вокзалу"
+      "Name": "Doubling | кінець",
+      "Input": "Але під кінецць гри трибуни ожили",
+      "Expected": "кінець"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "театра",
-      "expected": "театру"
+      "Name": "Transposition | наркотиком",
+      "Input": "Нафта є не даром Бога, а його наркотиокм",
+      "Expected": "наркотиком"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "процеса",
-      "expected": "процесу"
+      "Name": "Doubling | якими",
+      "Input": "Хоч якимми незмірними будуть її поклади, вони обов'язково вичерпаються у найнестерпнішу мить",
+      "Expected": "якими"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "розвитка",
-      "expected": "розвитку"
+      "Name": "Phonetic | довічний",
+      "Input": "Потім настає довічней параліч або принаймні щось, дуже на нього схоже",
+      "Expected": "довічний"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "синьова",
-      "expected": "синього"
+      "Name": "Omission | утвореннями",
+      "Input": ") й усю надбудову з її фантомними утворенняи",
+      "Expected": "утвореннями"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "білова",
-      "expected": "білого"
+      "Name": "Omission | цьому",
+      "Input": "У цьму сенсі нафта — це справді золото, причому чорне",
+      "Expected": "цьому"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "червонова",
-      "expected": "червоного"
+      "Name": "Doubling | біле",
+      "Input": "У цьому ж сенсі білле золото — не сіль, а кокаїн",
+      "Expected": "біле"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "гарнова",
-      "expected": "гарного"
+      "Name": "Omission | пеклом",
+      "Input": "Про нього відомо передусім те, що він є пелом",
+      "Expected": "пеклом"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "доброва",
-      "expected": "доброго"
+      "Name": "Doubling | може",
+      "Input": "Тому він ніяк не мооже перестати сміятися",
+      "Expected": "може"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "старова",
-      "expected": "старого"
+      "Name": "Doubling | видивами",
+      "Input": "За цими виддивами — кілька першоджерел",
+      "Expected": "видивами"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "новова",
-      "expected": "нового"
+      "Name": "Phonetic | свідоцтва",
+      "Input": "Є й об'єктивніші свїдоцтва",
+      "Expected": "свідоцтва"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "сміливова",
-      "expected": "сміливого"
+      "Name": "Transposition | напівзруйноване",
+      "Input": "Пам'ятаю, як ми зайшли під її напвізруйноване склепіння",
+      "Expected": "напівзруйноване"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "довгова",
-      "expected": "довгого"
+      "Name": "Doubling | нашими",
+      "Input": "І як над нашшими головами шугнули сполоханою зграєю доти не бачені птахи",
+      "Expected": "нашими"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "короткова",
-      "expected": "короткого"
+      "Name": "Omission | пов'язані",
+      "Input": "І обидві ці реалії щонайтісніше між собою пв'язані",
+      "Expected": "пов'язані"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "веселова",
-      "expected": "веселого"
+      "Name": "Phonetic | зачати",
+      "Input": "Безпліддям вважається неможливість подружньої пари зочати дитину протягом одного року",
+      "Expected": "зачати"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "сумнова",
-      "expected": "сумного"
+      "Name": "Keyboard | україні",
+      "Input": "Безпліддя в Уураїні є проблемою, що включає в себе медичні, економічні та соціальні фактори",
+      "Expected": "Україні"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "ріднова",
-      "expected": "рідного"
+      "Name": "Doubling | подружніх",
+      "Input": "В Україні безплідними є понад десять відсотків поддружніх пар репродуктивного віку",
+      "Expected": "подружніх"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "незрівняний",
-      "expected": "незрівнянний"
+      "Name": "Doubling | проблем",
+      "Input": "Інтерес до проблеми екстракорпорального запліднення у всьому світі зумовлений пріоритетністю дослідження проблеем безпліддя",
+      "Expected": "проблем"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "нездоланий",
-      "expected": "нездоланний"
+      "Name": "Transposition | єдиним",
+      "Input": "В минулому найчастішим (а подекуди і єдиинм можливим) рішенням для пар з безпліддям було усиновлення",
+      "Expected": "єдиним"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "зробленний",
-      "expected": "зроблений"
+      "Name": "Omission | найкращого",
+      "Input": "Останнім етапом є відбір накращого ембріона та пересадка його в порожнину матки",
+      "Expected": "найкращого"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "написанний",
-      "expected": "написаний"
+      "Name": "Doubling | геометричній",
+      "Input": "Внаслідок наступних мітотичних поділів кількість бластомерів збільшується в геоометричній прогресії",
+      "Expected": "геометричній"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "прочитанний",
-      "expected": "прочитаний"
+      "Name": "Keyboard | знизу",
+      "Input": "Інвертований мікроскоп має особливу конструкцію: джерело світла розташоване зверху, а об'єкт досліджується зни[у",
+      "Expected": "знизу"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "сказанний",
-      "expected": "сказаний"
+      "Name": "Phonetic | цього",
+      "Input": "Ефективність цьоґо методу є незаперечною",
+      "Expected": "цього"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "намальованний",
-      "expected": "намальований"
+      "Name": "Transposition | дослідник",
+      "Input": "Зазвичай такі критерії визначаються його досвідом та якістю оптичної системи, яку використовує досілдник",
+      "Expected": "дослідник"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "побудованний",
-      "expected": "побудований"
+      "Name": "Keyboard | несе",
+      "Input": "Це нксе певну небезпеку",
+      "Expected": "несе"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "впевненний",
-      "expected": "впевнений"
+      "Name": "Phonetic | найефективнішим",
+      "Input": "Найефективнїшим методом обрати найкращий ембріон є генетичний скрінінг ембріонів під час їх культивування у лабораторії",
+      "Expected": "Найефективнішим"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "вивченний",
-      "expected": "вивчений"
+      "Name": "Phonetic | віддзеркалюють",
+      "Input": "Стан яйцеклітини і, як наслідок, якість утворених ембріонів також вїддзеркалюють загальний фізіологічний стан жінки",
+      "Expected": "віддзеркалюють"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "закінченний",
-      "expected": "закінчений"
+      "Name": "Omission | спадковими",
+      "Input": "Ступінь ризику народження дитини з генетичними вадами визначається типом захворювання та спадковии механізмами",
+      "Expected": "спадковими"
     },
     {
-      "name": "Ending Error: Verb Conjugation",
-      "input": "бачеш",
-      "expected": "бачиш"
+      "Name": "Doubling | допоміжних",
+      "Input": "Сьогодні більшість людей, які мають генетичні аномалії, мають народжувати дітей шляхом застосування допооміжних репродуктивних технологій",
+      "Expected": "допоміжних"
     },
     {
-      "name": "Ending Error: Verb Conjugation",
-      "input": "робеш",
-      "expected": "робиш"
+      "Name": "Doubling | грибів",
+      "Input": "На сьогоднішній день немає єдиної загальноприйнятої класифікації гррибів",
+      "Expected": "грибів"
     },
     {
-      "name": "Ending Error: Verb Conjugation",
-      "input": "носеш",
-      "expected": "носиш"
+      "Name": "Doubling | характеристику",
+      "Input": "Нижче наведено коротку характтеристику згаданих груп",
+      "Expected": "характеристику"
     },
     {
-      "name": "Ending Error: Verb Conjugation",
-      "input": "ходеш",
-      "expected": "ходиш"
+      "Name": "Transposition | слизовики",
+      "Input": "Слизоивки, або міксоміцети",
+      "Expected": "Слизовики"
     },
     {
-      "name": "Transposition",
-      "input": "кітвка",
-      "expected": "квітка"
+      "Name": "Omission | царства",
+      "Input": "Порівняно невелика група безхлорофільних, позбавлених пластид організмів, яку традиційно розглядали в складі цартва грибів",
+      "Expected": "царства"
     },
     {
-      "name": "Transposition",
-      "input": "рчіка",
-      "expected": "річка"
+      "Name": "Transposition | плодових",
+      "Input": "Проте через зовнішній вигляд та вивільнення спор вони подібні до плдоових тіл дощовиків",
+      "Expected": "плодових"
     },
     {
-      "name": "Transposition",
-      "input": "озрео",
-      "expected": "озеро"
+      "Name": "Doubling | міколог",
+      "Input": "відомий австрійський ботанік та мііколог А",
+      "Expected": "міколог"
     },
     {
-      "name": "Transposition",
-      "input": "зріка",
-      "expected": "зірка"
+      "Name": "Transposition | вважають",
+      "Input": "У цих умовах і виникли, як вавжають, прості органічні молекули",
+      "Expected": "вважають"
     },
     {
-      "name": "Transposition",
-      "input": "хмаар",
-      "expected": "хмара"
+      "Name": "Doubling | процесу",
+      "Input": "Лабораторні експерименти підтвердили можливість такого проццесу",
+      "Expected": "процесу"
     },
     {
-      "name": "Transposition",
-      "input": "дождж",
-      "expected": "дощ"
+      "Name": "Doubling | лінійних",
+      "Input": "Послідовне повторення цієї реакції веде до утворення лінійниих полімерів, поліпептидів і полінуклеотидів відповідно",
+      "Expected": "лінійних"
     },
     {
-      "name": "Transposition",
-      "input": "грмрм",
-      "expected": "грім"
+      "Name": "Transposition | саме",
+      "Input": "Смае ці механізми й лягли в основу функціонування біологічних структур, зумовили пристосувальні можливості живої системи",
+      "Expected": "Саме"
     },
     {
-      "name": "Transposition",
-      "input": "блкиа",
-      "expected": "блискавка"
+      "Name": "Doubling | утворення",
+      "Input": "Але якщо полімер уже утворився, він здатний впливати на утвореення інших полімерів",
+      "Expected": "утворення"
     },
     {
-      "name": "Transposition",
-      "input": "веснкаа",
-      "expected": "веселка"
+      "Name": "Phonetic | поліфункціональними",
+      "Input": "З погляду еволюції нуклеотиди виявилися поліфункціональнеми сполуками",
+      "Expected": "поліфункціональними"
     },
     {
-      "name": "Transposition",
-      "input": "пташк",
-      "expected": "пташка"
+      "Name": "Apostrophe Extra | спарювання",
+      "Input": "Специфічне спар'ювання комплементарних нуклеотидів зіграло, як вважають сьогодні, вирішальну роль у виникненні життя",
+      "Expected": "спарювання"
     },
     {
-      "name": "Transposition",
-      "input": "листк",
-      "expected": "листок"
+      "Name": "Doubling | етапі",
+      "Input": "На другому етаапі копіювання з використанням їх як матриці відновлює вихідну послідовність",
+      "Expected": "етапі"
     },
     {
-      "name": "Transposition",
-      "input": "корнья",
-      "expected": "коріння"
+      "Name": "Omission | якому",
+      "Input": "Проте в будь-якму процесі копіювання можливі помилки й розмноження неточної копії оригіналу",
+      "Expected": "якому"
     },
     {
-      "name": "Transposition",
-      "input": "квтіи",
-      "expected": "квіти"
+      "Name": "Transposition | розчині",
+      "Input": "Конкретна послідовність нуклеотидів зумовлює властивості молекули, особливо її конформацію в розичні",
+      "Expected": "розчині"
     },
     {
-      "name": "Transposition",
-      "input": "траав",
-      "expected": "трава"
+      "Name": "Omission | упаковка",
+      "Input": "А тривимірна упакова полінуклеотиду впливає на його стабільність і здатність реплікуватися",
+      "Expected": "упаковка"
     },
     {
-      "name": "Transposition",
-      "input": "грибб",
-      "expected": "гриби"
+      "Name": "Keyboard | різну",
+      "Input": "У результаті молекули реплікативної суміші матимуть рфзну здатність до розмноження",
+      "Expected": "різну"
     },
     {
-      "name": "Transposition",
-      "input": "ягодди",
-      "expected": "ягоди"
+      "Name": "Omission | їхня",
+      "Input": "Було встановлено, що їня вторинна структура утворюється завдяки водневим зв'язкам між комплементарними основами",
+      "Expected": "їхня"
     },
     {
-      "name": "Transposition",
-      "input": "фруктти",
-      "expected": "фрукти"
+      "Name": "Keyboard | зусиллями",
+      "Input": "Пізніше зцсиллями дослідницьких груп А",
+      "Expected": "зусиллями"
     },
     {
-      "name": "Transposition",
-      "input": "овоччі",
-      "expected": "овочі"
+      "Name": "Omission | відомо",
+      "Input": "Відмо, що природний добір залежить від умов довкілля",
+      "Expected": "Відомо"
     },
     {
-      "name": "Transposition",
-      "input": "картопял",
-      "expected": "картопля"
+      "Name": "Doubling | стають",
+      "Input": "Це приводить до того, що один або декілька нуклеотидів сттають високоактивними",
+      "Expected": "стають"
     },
     {
-      "name": "Transposition",
-      "input": "моркав",
-      "expected": "морква"
+      "Name": "Omission | стабільності",
+      "Input": "Успіх залежав від точності та швидкості копіювання, а також від стабілності копій",
+      "Expected": "стабільності"
     },
     {
-      "name": "Transposition",
-      "input": "бурякк",
-      "expected": "буряк"
+      "Name": "Transposition | структурних",
+      "Input": "Властивості поліпептидів роблять їх ідеальними для виконання численних структруних і функціональних завдань",
+      "Expected": "структурних"
     },
     {
-      "name": "Transposition",
-      "input": "капустаа",
-      "expected": "капуста"
+      "Name": "Keyboard | могли",
+      "Input": "Але яким чином полінуклеотиди могои здійснювати подібний контроль",
+      "Expected": "могли"
     },
     {
-      "name": "Transposition",
-      "input": "помідоор",
-      "expected": "помідор"
+      "Name": "Phonetic | інформація",
+      "Input": "Як інформоція, закодована в їхній послідовності, може визначати послідовність полімерів іншого типу",
+      "Expected": "інформація"
     },
     {
-      "name": "Transposition",
-      "input": "яблукко",
-      "expected": "яблуко"
+      "Name": "Omission | відібраних",
+      "Input": "Ясно, що полінуклеотиди мають діяти як каталізатори для збирання відібраих амінокислот",
+      "Expected": "відібраних"
     },
     {
-      "name": "Omission Middle",
-      "input": "груш",
-      "expected": "груша"
+      "Name": "Transposition | зони",
+      "Input": "Землю фірма отримала для обладнання знои відпочинку",
+      "Expected": "зони"
     },
     {
-      "name": "Omission Middle",
-      "input": "вишн",
-      "expected": "вишня"
+      "Name": "Keyboard | рекреаційного",
+      "Input": "Цільове призначення ділянки було вказане як землі рекрgаційного призначення",
+      "Expected": "рекреаційного"
     },
     {
-      "name": "Omission Middle",
-      "input": "слив",
-      "expected": "слива"
+      "Name": "Transposition | крім",
+      "Input": "Кірм того, було порушено порядок зміни цільового призначення ділянки",
+      "Expected": "Крім"
     },
     {
-      "name": "Omission Middle",
-      "input": "банн",
-      "expected": "банан"
+      "Name": "Keyboard | цільове",
+      "Input": "Це землі сільськогосподарського призначення (сінокосу) і у встановленому законом порядку ццльове призначення ділянки не змінювалося",
+      "Expected": "цільове"
     },
     {
-      "name": "Omission Middle",
-      "input": "апельсн",
-      "expected": "апельсин"
+      "Name": "Transposition | сільськогосподарського",
+      "Input": "Це, зокрема, дало змогу орендареві уникнути відшкодування втрат сілсьькогосподарського виробництва",
+      "Expected": "сільськогосподарського"
     },
     {
-      "name": "Omission Middle",
-      "input": "лимонн",
-      "expected": "лимон"
+      "Name": "Keyboard | головою",
+      "Input": "Після чого на початку листопада він став гоkовою Сокирянської райради",
+      "Expected": "головою"
     },
     {
-      "name": "Omission Middle",
-      "input": "мандарн",
-      "expected": "мандарин"
+      "Name": "Transposition | господарства",
+      "Input": "Блок приміщень вестибюльної групи є основною сполучною ланкою всіх груп приміщень готельного гопсодарства",
+      "Expected": "господарства"
     },
     {
-      "name": "Omission Middle",
-      "input": "ків",
-      "expected": "ківі"
+      "Name": "Doubling | враження",
+      "Input": "Саме за ними гості формують перше вражження про підприємство готельного господарства",
+      "Expected": "враження"
     },
     {
-      "name": "Omission Middle",
-      "input": "ананс",
-      "expected": "ананас"
+      "Name": "Transposition | виключити",
+      "Input": "Функціональний взаємозв'язок зон і приміщень вестибюльної групи повинен виключтии перетинання людських потоків",
+      "Expected": "виключити"
     },
     {
-      "name": "Omission Middle",
-      "input": "кавн",
-      "expected": "каву"
+      "Name": "Keyboard | розташування",
+      "Input": "Розташуваноя функціональних зон може бути фронтальним, поздовжнім і концентричним",
+      "Expected": "Розташування"
     },
     {
-      "name": "Omission Middle",
-      "input": "чоколад",
-      "expected": "шоколад"
+      "Name": "Phonetic | готелю",
+      "Input": "Склад зон та їх планувальна організація залежать від типу гателю",
+      "Expected": "готелю"
     },
     {
-      "name": "Omission Middle",
-      "input": "тортт",
-      "expected": "торт"
+      "Name": "Doubling | чотири",
+      "Input": "На чоотири- та п'ятизіркових підприємствах готельного господарства передбачають магазини і торговельні кіоски",
+      "Expected": "чотири"
     },
     {
-      "name": "Omission Middle",
-      "input": "пирріг",
-      "expected": "пиріг"
+      "Name": "Doubling | вибір",
+      "Input": "Велике значення має виибір місця для ліфтів",
+      "Expected": "вибір"
     },
     {
-      "name": "Omission Middle",
-      "input": "печивво",
-      "expected": "печиво"
+      "Name": "Keyboard | правило",
+      "Input": "Ліфти, як пракило, компонують групами",
+      "Expected": "правило"
     },
     {
-      "name": "Omission End",
-      "input": "морози",
-      "expected": "морозиво"
+      "Name": "Doubling | коридори",
+      "Input": "Кориидори, як і вестибюлі, формують перше уявлення про підприємство готельного господарства",
+      "Expected": "Коридори"
     },
     {
-      "name": "Omission End",
-      "input": "йогур",
-      "expected": "йогурт"
+      "Name": "Transposition | починають",
+      "Input": "Вестибюль - приміщення, де починюать обслуговувати споживачів продукції закладу харчування",
+      "Expected": "починають"
     },
     {
-      "name": "Omission End",
-      "input": "сметан",
-      "expected": "сметана"
+      "Name": "Apostrophe Missed | м'якими",
+      "Input": "Облаштовують вестибюль дзеркалами, картинами, вазами, скульптурами в нішах стін, мякими меблями, журнальними столиками",
+      "Expected": "м'якими"
     },
     {
-      "name": "Omission End",
-      "input": "йогур",
-      "expected": "йогурт"
+      "Name": "Transposition | туалетні",
+      "Input": "Туалтені кімнати найчастіше розташовують поряд з гардеробом",
+      "Expected": "Туалетні"
     },
     {
-      "name": "Omission End",
-      "input": "ри",
-      "expected": "рис"
+      "Name": "Phonetic | диванами",
+      "Input": "Облаштовують аванзали кріслами, дивонами, журнальними столиками тощо",
+      "Expected": "диванами"
     },
     {
-      "name": "Omission End",
-      "input": "гречк",
-      "expected": "гречка"
+      "Name": "Doubling | камера",
+      "Input": "Камеера схову - приміщення без вікон, із броньованими дверима, сигналізацією, стелажами для багажу, сейфів",
+      "Expected": "Камера"
     },
     {
-      "name": "Omission End",
-      "input": "макарон",
-      "expected": "макарони"
+      "Name": "Transposition | сейфом",
+      "Input": "Кімната для охорони повинна бути непомітною для гостей, прохідною, із сейофм для зберігання зброї",
+      "Expected": "сейфом"
     },
     {
-      "name": "Omission Start",
-      "input": "алат",
-      "expected": "салат"
+      "Name": "Omission | вільні",
+      "Input": "Відвідувачка піднялася на найвищий, третій ярус-балкон, де всі столики були вльні",
+      "Expected": "вільні"
     },
     {
-      "name": "Omission Start",
-      "input": "упа",
-      "expected": "гупа"
+      "Name": "Doubling | полиці",
+      "Input": "Тут вона помітила на стінах ще й поолиці з книжками, доступні для відвідувачів",
+      "Expected": "полиці"
     },
     {
-      "name": "Omission Start",
-      "input": "арнір",
-      "expected": "гарнір"
+      "Name": "Transposition | розкрила",
+      "Input": "Чекаючи на замовлення, простягла руку до полиці, витягла навмання книжку й розкирла її навздогад",
+      "Expected": "розкрила"
     },
     {
-      "name": "Omission Start",
-      "input": "урка",
-      "expected": "курка"
+      "Name": "Doubling | долю",
+      "Input": "Очі вихопили абзац тексту, у якому невідома авторка розмірковувала про життя та нелегку жіночу доолю",
+      "Expected": "долю"
     },
     {
-      "name": "Omission Start",
-      "input": "ачка",
-      "expected": "качка"
+      "Name": "Phonetic | минув",
+      "Input": "День менув, як менув",
+      "Expected": "минув"
     },
     {
-      "name": "Omission Start",
-      "input": "ндичка",
-      "expected": "індичка"
+      "Name": "Transposition | мобільний",
+      "Input": "Раптом у сумочці запікав есемескою мбоільний",
+      "Expected": "мобільний"
     },
     {
-      "name": "Insertion Middle",
-      "input": "рибба",
-      "expected": "риба"
+      "Name": "Omission | вона",
+      "Input": "Вна здригнулася й швидко рушила в коридор",
+      "Expected": "Вона"
     },
     {
-      "name": "Insertion Middle",
-      "input": "риббка",
-      "expected": "рибка"
+      "Name": "Transposition | каталозі",
+      "Input": "Читач обирає в ктаалозі Книгу й повідомляє бажані день і годину зустрічі",
+      "Expected": "каталозі"
     },
     {
-      "name": "Insertion Middle",
-      "input": "оккеан",
-      "expected": "океан"
+      "Name": "Transposition | життя",
+      "Input": "Протягом цього часу Книга розповідатиме Читачеві історії зі свого жтитя",
+      "Expected": "життя"
     },
     {
-      "name": "Insertion Middle",
-      "input": "мморя",
-      "expected": "моря"
+      "Name": "Doubling | бажаємо",
+      "Input": "Баажаємо приємного Читання та спілкування",
+      "Expected": "Бажаємо"
     },
     {
-      "name": "Insertion Middle",
-      "input": "осттрів",
-      "expected": "острів"
+      "Name": "Omission | впевнені",
+      "Input": "Ми впевені, що цікавих історій у світі набагато більше, ніж уже написаних книжок",
+      "Expected": "впевнені"
     },
     {
-      "name": "Insertion Middle",
-      "input": "пляяж",
-      "expected": "пляж"
+      "Name": "Doubling | розминулися",
+      "Input": "Вони роззминулися біля вхідних дверей",
+      "Expected": "розминулися"
     },
     {
-      "name": "Insertion Middle",
-      "input": "піісок",
-      "expected": "пісок"
+      "Name": "Transposition | знову",
+      "Input": "Ви знвоу до нас",
+      "Expected": "знову"
     },
     {
-      "name": "Insertion Middle",
-      "input": "муушля",
-      "expected": "мушля"
+      "Name": "Doubling | відрізняються",
+      "Input": "Ні, люди мистецтва таки направду відрізнняються від інших",
+      "Expected": "відрізняються"
     },
     {
-      "name": "Insertion Middle",
-      "input": "коорал",
-      "expected": "корал"
+      "Name": "Omission | акцію",
+      "Input": "То так зрадів, дізнавшись про нашу ацію",
+      "Expected": "акцію"
     },
     {
-      "name": "Insertion Middle",
-      "input": "аккула",
-      "expected": "акула"
+      "Name": "Doubling | видно",
+      "Input": "То по ньому ж виднно, що він звичайний",
+      "Expected": "видно"
     },
     {
-      "name": "Insertion Middle",
-      "input": "дельффіін",
-      "expected": "дельфін"
+      "Name": "Keyboard | замислилася",
+      "Input": "Жінка на мить замислилкся, а потім повільно промовила, ніби проспівала:",
+      "Expected": "замислилася"
     },
     {
-      "name": "Insertion Middle",
-      "input": "ккиит",
-      "expected": "кит"
+      "Name": "Omission | віро",
+      "Input": "Я ж казала, Віо",
+      "Expected": "Віро"
     },
     {
-      "name": "Insertion Middle",
-      "input": "ммедуза",
-      "expected": "медуза"
+      "Name": "Omission | будь",
+      "Input": "Ось, заповніть, бдь ласка, цю картку",
+      "Expected": "будь"
     },
     {
-      "name": "Insertion Middle",
-      "input": "ззмія",
-      "expected": "змія"
+      "Name": "Keyboard | каву",
+      "Input": "А каdу сьогодні будете",
+      "Expected": "каву"
     },
     {
-      "name": "Insertion Middle",
-      "input": "жжаба",
-      "expected": "жаба"
+      "Name": "Phonetic | спогади",
+      "Input": "Жінка знову поринула в спагади, які цього разу замерехтіли в уяві слайдами колишніх закордонних подорожей",
+      "Expected": "спогади"
     },
     {
-      "name": "Insertion End",
-      "input": "ящіркаа",
-      "expected": "ящірка"
+      "Name": "Omission | стримано",
+      "Input": "Стримно всміхнулася і взялася за наступну листівку",
+      "Expected": "Стримано"
     },
     {
-      "name": "Insertion End",
-      "input": "черепахаа",
-      "expected": "черепаха"
+      "Name": "Keyboard | кинула",
+      "Input": "Вона кину,а зацікавлений погляд на літню пару, вловлюючи уривки розмови",
+      "Expected": "кинула"
     },
     {
-      "name": "Insertion End",
-      "input": "крокодилл",
-      "expected": "крокодил"
+      "Name": "Phonetic | схоче",
+      "Input": "І чи схаче вона взагалі зі мною говорити",
+      "Expected": "схоче"
     },
     {
-      "name": "Insertion End",
-      "input": "аллігаторр",
-      "expected": "алігатор"
+      "Name": "Keyboard | навіщо",
+      "Input": "Навізо їй це",
+      "Expected": "Навіщо"
     },
     {
-      "name": "Insertion End",
-      "input": "левв",
-      "expected": "лев"
+      "Name": "Transposition | було",
+      "Input": "Їй блуо, певне, за шістдесят",
+      "Expected": "було"
     },
     {
-      "name": "Insertion End",
-      "input": "тигрр",
-      "expected": "тигр"
+      "Name": "Transposition | захваті",
+      "Input": "Я в захавті",
+      "Expected": "захваті"
     },
     {
-      "name": "Insertion End",
-      "input": "пантераа",
-      "expected": "пантера"
+      "Name": "Keyboard | щось",
+      "Input": "Щkсь іще замовите",
+      "Expected": "Щось"
     },
     {
-      "name": "Insertion End",
-      "input": "леопардд",
-      "expected": "леопард"
+      "Name": "Transposition | шахах",
+      "Input": "Учасники турніру змагалися в бадмінтоні, шаахх, шашках, нардах, настільному тенісі, стрільбі, дартсі та футбольному більярді",
+      "Expected": "шахах"
     },
     {
-      "name": "Insertion End",
-      "input": "вовкк",
-      "expected": "вовк"
+      "Name": "Transposition | балетмейстер",
+      "Input": "- головний балетмесйтер Національної опери України",
+      "Expected": "балетмейстер"
     },
     {
-      "name": "Insertion End",
-      "input": "лисицяя",
-      "expected": "лисиця"
+      "Name": "Keyboard | видатного",
+      "Input": "Творчість видатноiо балетмейстера збагатила українське балетне мистецтво, розширила його стилістичні й естетичні виднокола",
+      "Expected": "видатного"
     },
     {
-      "name": "Insertion Start",
-      "input": "введмідь",
-      "expected": "ведмідь"
+      "Name": "Keyboard | поставлених",
+      "Input": "Багато поставлеоих вистав стали етапними у світовому хореографічному мистецтві",
+      "Expected": "поставлених"
     },
     {
-      "name": "Insertion Start",
-      "input": "ззаєць",
-      "expected": "заєць"
+      "Name": "Doubling | медалісти",
+      "Input": "Також цього дня відбудеться загальноміське свято випускників, на якому заслужені відзнаки отримають медаалісти",
+      "Expected": "медалісти"
     },
     {
-      "name": "Insertion Start",
-      "input": "ббілка",
-      "expected": "білка"
+      "Name": "Keyboard | хоча",
+      "Input": "А першокласників щороку, хjча й не набагато, та все ж постійно більшає",
+      "Expected": "хоча"
     },
     {
-      "name": "Insertion Start",
-      "input": "єєнот",
-      "expected": "єнот"
+      "Name": "Keyboard | творчості",
+      "Input": "З чотирнадцятого травня в місті триває місячник дитячої твоjчості",
+      "Expected": "творчості"
     },
     {
-      "name": "Insertion Start",
-      "input": "бборсук",
-      "expected": "борсук"
+      "Name": "Doubling | медичні",
+      "Input": "Уже складено графік цих відвідувань, а діти завершують необхідні меддичні огляди",
+      "Expected": "медичні"
     },
     {
-      "name": "Insertion Start",
-      "input": "ккуниця",
-      "expected": "куниця"
+      "Name": "Keyboard | силою",
+      "Input": "За сиkою та вправністю вона може зрівнятися хіба що з ведмедем",
+      "Expected": "силою"
     },
     {
-      "name": "Insertion Start",
-      "input": "ттхір",
-      "expected": "тхір"
+      "Name": "Doubling | гарний",
+      "Input": "Тигр сильний, гаррний, вправний та агресивний",
+      "Expected": "гарний"
     },
     {
-      "name": "Insertion Start",
-      "input": "ввидра",
-      "expected": "видра"
+      "Name": "Transposition | малюки",
+      "Input": "Але маленькі тигренята народжуються беззахисними, кумедними, як і малкюи будь-якої іншої тварини",
+      "Expected": "малюки"
     },
     {
-      "name": "Insertion Start",
-      "input": "ллосось",
-      "expected": "лосось"
+      "Name": "Transposition | кицями",
+      "Input": "Їх навіть можна сплутати з домашніми кицмяи",
+      "Expected": "кицями"
     },
     {
-      "name": "Insertion Start",
-      "input": "ффауна",
-      "expected": "фауна"
+      "Name": "Doubling | матусь",
+      "Input": "Трохи про тигрів маатусь і татусів",
+      "Expected": "матусь"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "флпра",
-      "expected": "флора"
+      "Name": "Doubling | дика",
+      "Input": "Тигр — це найбільша і найважча дикка кішка",
+      "Expected": "дика"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "екосистпма",
-      "expected": "екосистема"
+      "Name": "Omission | видів",
+      "Input": "Розміри та маса тигрів відрізняються залежно від їхніх видв",
+      "Expected": "видів"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "біорізномніття",
-      "expected": "біорізноманіття"
+      "Name": "Transposition | тигри",
+      "Input": "Наприклад, тирги, що живуть на материках, значно більші від своїх острівних родичів",
+      "Expected": "тигри"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "прирпда",
-      "expected": "природа"
+      "Name": "Transposition | явище",
+      "Input": "Це яивще називають полігамією",
+      "Expected": "явище"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "забрудненння",
-      "expected": "забруднення"
+      "Name": "Transposition | поширене",
+      "Input": "Воно досить пошриене у тваринному світі",
+      "Expected": "поширене"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "екологгія",
-      "expected": "екологія"
+      "Name": "Doubling | також",
+      "Input": "Наприклад, домашні коти та собаки — це таккож полігамні тварини",
+      "Expected": "також"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "паливво",
-      "expected": "паливо"
+      "Name": "Omission | взимку",
+      "Input": "Тигри, як справжні хижаки, схрещуються тільки взиму (у грудні або січні)",
+      "Expected": "взимку"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "бензиин",
-      "expected": "бензин"
+      "Name": "Doubling | право",
+      "Input": "Якщо ж на території тигрів-самців кілька, то правво спаровування з тигрицею потрібно ще заслужити",
+      "Expected": "право"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "дизельне палливво",
-      "expected": "дизельне паливо"
+      "Name": "Phonetic | іншим",
+      "Input": "Для цього треба перемогти у поєдинку з іншем претендентом",
+      "Expected": "іншим"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "газз",
-      "expected": "газ"
+      "Name": "Keyboard | трапляються",
+      "Input": "Поєдинки тигрів, що нерідко закінчуються для одного з них смертю, траgляються в природі досить часто",
+      "Expected": "трапляються"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "вугілляа",
-      "expected": "вугілля"
+      "Name": "Omission | самець",
+      "Input": "Саець дізнається про готовність самиці до розмноження за запахом її сечі",
+      "Expected": "Самець"
     },
     {
-      "name": "Keyboard Substitution",
-      "input": "нафтта",
-      "expected": "нафта"
+      "Name": "Omission | протягом",
+      "Input": "Тигриця здатна паруватися лише кілька днів протгом року",
+      "Expected": "протягом"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "обєкт",
-      "expected": "об'єкт"
+      "Name": "Omission | тигренята",
+      "Input": "Зростають тиренята дуже швидко",
+      "Expected": "тигренята"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "субєкт",
-      "expected": "суб'єкт"
+      "Name": "Keyboard | тільки",
+      "Input": "Перші два місяці тигренята ростуть, харчуючись тідьки молоком матері",
+      "Expected": "тільки"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "підємник",
-      "expected": "під'ємник"
+      "Name": "Omission | тигренята",
+      "Input": "Тигреняа залишаються з матір'ю до двох років",
+      "Expected": "Тигренята"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "вянути",
-      "expected": "в'янути"
+      "Name": "Phonetic | перші",
+      "Input": "Тигриця — дуже дбайлива матуся, у пирші місяці життя тигренят вона намагається не залишати їх наодинці",
+      "Expected": "перші"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "мятний",
-      "expected": "м'ятний"
+      "Name": "Omission | чотири",
+      "Input": "Статева зрілість самиць настає у три-чоири роки, самців — у чоири-п'ять років",
+      "Expected": "чотири"
     },
     {
-      "name": "Apostrophe Error",
-      "input": "пятка",
-      "expected": "п'ятка"
+      "Name": "Transposition | немає",
+      "Input": "У природі ворогів у тигра практично нмеає",
+      "Expected": "немає"
     },
     {
-      "name": "Doubling Error",
-      "input": "коріня",
-      "expected": "коріння"
+      "Name": "Omission | тигреня",
+      "Input": "Тигрея в небезпеці",
+      "Expected": "Тигреня"
     },
     {
-      "name": "Doubling Error",
-      "input": "насіня",
-      "expected": "насіння"
+      "Name": "Omission | повелителів",
+      "Input": "Досить часто дорослих тигрів описують як повелиелів мешканців суші, символ влади й мужності",
+      "Expected": "повелителів"
     },
     {
-      "name": "Doubling Error",
-      "input": "плоття",
-      "expected": "плоті"
+      "Name": "Doubling | доволі",
+      "Input": "Доволлі часто тигр асоціюється з військовою відвагою й доблестю",
+      "Expected": "Доволі"
     },
     {
-      "name": "Doubling Error",
-      "input": "колісся",
-      "expected": "колосся"
+      "Name": "Doubling | символом",
+      "Input": "Маленькі ж тигренята стали сиимволом наївності та доброти",
+      "Expected": "символом"
     },
     {
-      "name": "Doubling Error",
-      "input": "морквя",
-      "expected": "морква"
+      "Name": "Transposition | знищити",
+      "Input": "Людина завжди боялася тигра і продовжує його боятися, а тому прагне знщиити цього величного звіра",
+      "Expected": "знищити"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "говоритця",
-      "expected": "говориться"
+      "Name": "Transposition | таких",
+      "Input": "Результатом ткаих популярних полювань стало винищення тигрів",
+      "Expected": "таких"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "читаєця",
-      "expected": "читається"
+      "Name": "Phonetic | сьогодні",
+      "Input": "На сьоґодні красиві шкури смугастого хижака коштують дуже дорого",
+      "Expected": "сьогодні"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "пишеця",
-      "expected": "пишеться"
+      "Name": "Transposition | зайняту",
+      "Input": "Молоді тигри не можуть прийти на вже зайянту територію",
+      "Expected": "зайняту"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "малюєця",
-      "expected": "малюється"
+      "Name": "Transposition | щоби",
+      "Input": "Щбои зберегти тигра, потрібно залишити незайманими ліси",
+      "Expected": "Щоби"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "танцюєця",
-      "expected": "танцюється"
+      "Name": "Transposition | жаль",
+      "Input": "Однак нелегальні вирубування зелених насаджень, на жлаь, тривають",
+      "Expected": "жаль"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "співаєця",
-      "expected": "співається"
+      "Name": "Omission | тигренята",
+      "Input": "Ось такі вони кумедні тиренята й дорослі тигри, такі страшні та водночас беззахисні",
+      "Expected": "тигренята"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "бігаєця",
-      "expected": "бігається"
+      "Name": "Omission | зрозуміло",
+      "Input": "Козаки, зозуміло, обурилися",
+      "Expected": "зрозуміло"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "стрибаєця",
-      "expected": "стрибається"
+      "Name": "Doubling | козацтво",
+      "Input": "Гуня негайно скликав усе козаацтво і спитав, чи згодні козаки підкоритися вимогам поляків",
+      "Expected": "козацтво"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "плаваєця",
-      "expected": "плавається"
+      "Name": "Doubling | листі",
+      "Input": "Відповідь була дана майже така, як і в знаменитому лиссті запорожців до турецького султана",
+      "Expected": "листі"
     },
     {
-      "name": "Ending Error: Verbs Phonetical",
-      "input": "летитця",
-      "expected": "летиться"
+      "Name": "Doubling | братовбивство",
+      "Input": "Гетьман не став брати гріх на душу й розпочинати брратовбивство",
+      "Expected": "братовбивство"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "їдешь",
-      "expected": "їдеш"
+      "Name": "Keyboard | уряд",
+      "Input": "Така нерішучість реєстрового гетьмана тільки роздратувала польський уnяд",
+      "Expected": "уряд"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "їстьш",
-      "expected": "їси"
+      "Name": "Omission | історія",
+      "Input": "Іторія зберігає свої таємниці і неохоче їх розкриває",
+      "Expected": "Історія"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "п'єшь",
-      "expected": "п'єш"
+      "Name": "Doubling | подробиць",
+      "Input": "Подрробиць його біографії нам відомо небагато",
+      "Expected": "Подробиць"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "живешь",
-      "expected": "живеш"
+      "Name": "Doubling | навколо",
+      "Input": "Гетьман потрапив у полон, і тоді запорожці згуртувалися наавколо енергійного й швидкого розумом Гуні",
+      "Expected": "навколо"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "любишь",
-      "expected": "любиш"
+      "Name": "Phonetic | пропозицію",
+      "Input": "Але поляки на цю прапозицію не пристати",
+      "Expected": "пропозицію"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "ненавидишь",
-      "expected": "ненавидиш"
+      "Name": "Phonetic | старшини",
+      "Input": "Частина старшени вирішила розпочати переговори про здачу",
+      "Expected": "старшини"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "говоришь",
-      "expected": "говориш"
+      "Name": "Phonetic | життя",
+      "Input": "Гуня розумів, що в таборі знайдуться зрадники, які забажають купити жеття ціною його власної голови",
+      "Expected": "життя"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "слухаешь",
-      "expected": "слухаєш"
+      "Name": "Transposition | сталося",
+      "Input": "Що сталсоя з ним потім — невідомо",
+      "Expected": "сталося"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "дивишься",
-      "expected": "дивишся"
+      "Name": "Keyboard | новим",
+      "Input": "Сагайдачний, довго сперечалися, не бажаючи підкорятися ноdим вимогам уряду",
+      "Expected": "новим"
     },
     {
-      "name": "Ending Error: Verbs Soft Sign",
-      "input": "читаєшь",
-      "expected": "читаєш"
+      "Name": "Phonetic | угоду",
+      "Input": "Проте уґоду було таки підписано",
+      "Expected": "угоду"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "митьь",
-      "expected": "мить"
+      "Name": "Omission | свого",
+      "Input": "Запорожці збунтувалися проти сого ватажка, і на Низу з'явився свій, нереєстровий, гетьман",
+      "Expected": "свого"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "митьь",
-      "expected": "мить"
+      "Name": "Doubling | виявилося",
+      "Input": "Тим часом виявилосся, що польський уряд дуже поспішив зі скороченням козацької армії",
+      "Expected": "виявилося"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "граньь",
-      "expected": "грань"
+      "Name": "Omission | гоноровитим",
+      "Input": "Однак гетьман не збирався так задарма допомагати гноровитим сусідам",
+      "Expected": "гоноровитим"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "печатьь",
-      "expected": "печать"
+      "Name": "Transposition | виступив",
+      "Input": "Трохи пізніше проти турок висутпив і сам гетьман, зібравши сорокатисячну козацьку армію",
+      "Expected": "виступив"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "печераь",
-      "expected": "печера"
+      "Name": "Transposition | гетьманства",
+      "Input": "Після цього Бородавку скинули з гетьмнаства, судили й прирекли до страти",
+      "Expected": "гетьманства"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "тіньь",
-      "expected": "тінь"
+      "Name": "Doubling | заступатися",
+      "Input": "Що ж до Сагайдачного, то він уважав за краще не заступпатися за нереєстрового ватажка",
+      "Expected": "заступатися"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "мережаь",
-      "expected": "мережа"
+      "Name": "Phonetic | постало",
+      "Input": "Оскільки ніхто з бунтарів не збирався складати зброю, постоло питання про організацію гурту",
+      "Expected": "постало"
     },
     {
-      "name": "Ending Error: Nouns Soft Sign",
-      "input": "кризаь",
-      "expected": "криза"
+      "Name": "Transposition | невеликі",
+      "Input": "Селяни та розрізнені невлеикі групи повстанців приєднувалися до армії нереєстрового гетьмана",
+      "Expected": "невеликі"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Doubling",
-      "input": "мітю",
-      "expected": "міттю"
+      "Name": "Phonetic | гетьманських",
+      "Input": "Обидва ватажки охоче приєдналися до гетьмонських лав",
+      "Expected": "гетьманських"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Over-doubling",
-      "input": "красоттю",
-      "expected": "красотою"
+      "Name": "Doubling | гетьмана",
+      "Input": "Але помилка геттьмана перекреслила всі сподівання українців",
+      "Expected": "гетьмана"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Over-doubling",
-      "input": "доброттю",
-      "expected": "добротою"
+      "Name": "Doubling | скидана",
+      "Input": "Подальша доля Сккидана залишається невідомою, але, скоріше за все, уряд стратив небезпечного козацького ватажка",
+      "Expected": "Скидана"
     },
     {
-      "name": "Ending Error: Nouns Instrumental Over-doubling",
-      "input": "мудрісттю",
-      "expected": "мудрістю"
+      "Name": "Omission | коронного",
+      "Input": "Після того, як козаки протягом трьох тижнів билися з армією коронноо гетьмана С",
+      "Expected": "коронного"
     },
     {
-      "name": "Ending Error: Nouns Instrumental O-E",
-      "input": "каміньом",
-      "expected": "каменем"
+      "Name": "Omission | жаль",
+      "Input": "На жаь, друге повстання нереєстровому гетьману підняти вже не вдалося",
+      "Expected": "жаль"
     },
     {
-      "name": "Ending Error: Nouns Genitive",
-      "input": "селла",
-      "expected": "села"
+      "Name": "Omission | гетьманства",
+      "Input": "Незабаром його було скинуто з гетьмнства",
+      "Expected": "гетьманства"
     },
     {
-      "name": "Ending Error: Nouns Plural",
-      "input": "книгга",
-      "expected": "книги"
+      "Name": "Phonetic | ватажка",
+      "Input": "Подальша доля цього неприборканого вотажка невідома",
+      "Expected": "ватажка"
     },
     {
-      "name": "Ending Error: Nouns Plural",
-      "input": "столла",
-      "expected": "столи"
+      "Name": "Keyboard | його",
+      "Input": "За йошо словами, цей проект наразі пілотний",
+      "Expected": "його"
     },
     {
-      "name": "Ending Error: Nouns Plural",
-      "input": "вікнна",
-      "expected": "вікна"
+      "Name": "Omission | зможе",
+      "Input": "Долучитися до опитування змое кожен кам'янчанин",
+      "Expected": "зможе"
     },
     {
-      "name": "Ending Error: Nouns Plural",
-      "input": "дверра",
-      "expected": "двері"
+      "Name": "Keyboard | подорожування",
+      "Input": "Нема для подорjжування гіршого транспорту за літака",
+      "Expected": "подорожування"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "великова",
-      "expected": "великого"
+      "Name": "Doubling | мандрів",
+      "Input": "Та йому бракує найголовнішої принади мандррів",
+      "Expected": "мандрів"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "малова",
-      "expected": "малого"
+      "Name": "Phonetic | подорожування",
+      "Input": "Власне процесу падорожування",
+      "Expected": "подорожування"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "високова",
-      "expected": "високого"
+      "Name": "Keyboard | мандрівець",
+      "Input": "Манлрівець був нарешті готовий приїхати, прийняти цю країну такою, якою вона є: далекою й іншою",
+      "Expected": "Мандрівець"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "низькова",
-      "expected": "низького"
+      "Name": "Phonetic | проходимо",
+      "Input": "Бо праходимо кордон на летовищі, нічого не усвідомлюючи",
+      "Expected": "проходимо"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "широкова",
-      "expected": "широкого"
+      "Name": "Keyboard | руйнує",
+      "Input": "Літак є транспортним засобом, що рeйнує нам магію подорожі",
+      "Expected": "руйнує"
     },
     {
-      "name": "Ending Error: Adjectives Phonetical",
-      "input": "вузькова",
-      "expected": "вузького"
+      "Name": "Keyboard | тому",
+      "Input": "Такий же, який і вилетів дві чи скільки там годин ттму",
+      "Expected": "тому"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "побаченийй",
-      "expected": "побачений"
+      "Name": "Transposition | змінює",
+      "Input": "Тоді як подорож зімнює тебе, вчить, випробовує, втомлює й надихає",
+      "Expected": "змінює"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "почутийй",
-      "expected": "почутий"
+      "Name": "Transposition | часу",
+      "Input": "Він лягав із смерком і прокидався від піяння когутів, природно звикаючи до поступової зміни чсау",
+      "Expected": "часу"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "зробленийй",
-      "expected": "зроблений"
+      "Name": "Keyboard | залежала",
+      "Input": "А також температури, бо зміна клімату залежкла від ландшафту й проявлялася не одразу, вона вибруньковувалася",
+      "Expected": "залежала"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "відкритийй",
-      "expected": "відкритий"
+      "Name": "Omission | уявляю",
+      "Input": "Я часто уявяю собі цю мить",
+      "Expected": "уявляю"
     },
     {
-      "name": "Ending Error: Participles Doubling",
-      "input": "закритийй",
-      "expected": "закритий"
+      "Name": "Omission | якого",
+      "Input": "Це був спостережний пункт, з якоо відкривався вид навсібіч",
+      "Expected": "якого"
     },
     {
-      "name": "Ending Error: Verb Conjugation",
-      "input": "їдешш",
-      "expected": "їдеш"
+      "Name": "Omission | ночі",
+      "Input": "Але що можна побачити о другій нчі",
+      "Expected": "ночі"
     },
     {
-      "name": "Ending Error: Verb Conjugation",
-      "input": "п'єшш",
-      "expected": "п'єш"
+      "Name": "Keyboard | була",
+      "Input": "Уявімо, що то бцла місячна ніч",
+      "Expected": "була"
     },
     {
-      "name": "Ending Error: Verb Conjugation",
-      "input": "живешш",
-      "expected": "живеш"
+      "Name": "Omission | згадував",
+      "Input": "Можливо, згадуав дитинство",
+      "Expected": "згадував"
     },
     {
-      "name": "Ending Error: Verb Conjugation",
-      "input": "любишш",
-      "expected": "любиш"
+      "Name": "Transposition | м'якість",
+      "Input": "Або уявляв єдвабну м'яіксть шкіри якоїсь дівчини із портового еспанського міста",
+      "Expected": "м'якість"
     },
     {
-      "name": "Ending Error: Verb Conjugation",
-      "input": "говоришш",
-      "expected": "говориш"
+      "Name": "Transposition | блукають",
+      "Input": "Сконають під палаючим сонцем, стануть привидами, що вічно блкуають морями й океанами",
+      "Expected": "блукають"
     },
     {
-      "name": "Transposition",
-      "input": "мріія",
-      "expected": "мрія"
+      "Name": "Omission | хвилі",
+      "Input": "Місяць бешкетував на небі, лоскотав своїм світлом хвлі, і перед кораблем стелилася місячна доріжка",
+      "Expected": "хвилі"
     },
     {
-      "name": "Transposition",
-      "input": "снніданок",
-      "expected": "сніданок"
+      "Name": "Transposition | суходіл",
+      "Input": "Це був схуоділ",
+      "Expected": "суходіл"
     },
     {
-      "name": "Transposition",
-      "input": "оббід",
-      "expected": "обід"
+      "Name": "Phonetic | одразу",
+      "Input": "Його призвичаєні до каютного світла очі не одрозу побачили смужку землі на горизонті",
+      "Expected": "одразу"
     },
     {
-      "name": "Transposition",
-      "input": "ввечеря",
-      "expected": "вечеря"
+      "Name": "Doubling | темряви",
+      "Input": "Знадобилося трохи часу, щоб звикнути до нічної темрявви",
+      "Expected": "темряви"
     },
     {
-      "name": "Transposition",
-      "input": "їжжа",
-      "expected": "їжа"
+      "Name": "Transposition | саме",
+      "Input": "І вважав, що відкрив морський шлях смае до цієї країни, до її багатств і прянощів",
+      "Expected": "саме"
     },
     {
-      "name": "Transposition",
-      "input": "ннапій",
-      "expected": "напій"
+      "Name": "Omission | ньому",
+      "Input": "Що своєю чергою змінило погляд на світ, адже в ньоу з'явилася горизонтальна вісь",
+      "Expected": "ньому"
     },
     {
-      "name": "Transposition",
-      "input": "ччай",
-      "expected": "чай"
+      "Name": "Transposition | лише",
+      "Input": "Заходу як такого не існувало, а Схід був лшие сном",
+      "Expected": "лише"
     },
     {
-      "name": "Transposition",
-      "input": "ккава",
-      "expected": "кава"
+      "Name": "Keyboard | було",
+      "Input": "Треба бrло шукати щось нове",
+      "Expected": "було"
     },
     {
-      "name": "Transposition",
-      "input": "ммолоко",
-      "expected": "молоко"
+      "Name": "Doubling | шкалу",
+      "Input": "Разом ці напрямки створювали шкаалу координат у формі хреста, що є дуже символічним для Середньовіччя",
+      "Expected": "шкалу"
     },
     {
-      "name": "Transposition",
-      "input": "ссік",
-      "expected": "сік"
+      "Name": "Transposition | резиденції",
+      "Input": "Мені було двадцять два роки, коли я отримав можливість попрацювати на цій реизденції",
+      "Expected": "резиденції"
     },
     {
-      "name": "Transposition",
-      "input": "ппіво",
-      "expected": "пиво"
+      "Name": "Keyboard | свою",
+      "Input": "У морозні грудневі ночі я писав там сврю першу збірку оповідань",
+      "Expected": "свою"
     },
     {
-      "name": "Transposition",
-      "input": "ввино",
-      "expected": "вино"
+      "Name": "Doubling | переважно",
+      "Input": "Писав я тоді переваажно вночі",
+      "Expected": "переважно"
     },
     {
-      "name": "Transposition",
-      "input": "ххліб",
-      "expected": "хліб"
+      "Name": "Transposition | мене",
+      "Input": "у тиші, поки всі спали й ніхто не міг мнее потурбувати",
+      "Expected": "мене"
     },
     {
-      "name": "Transposition",
-      "input": "ммасло",
-      "expected": "масло"
+      "Name": "Keyboard | променями",
+      "Input": "Із першими прьменями сонця я зашторював вікна і вкладався спати",
+      "Expected": "променями"
     },
     {
-      "name": "Transposition",
-      "input": "ццукор",
-      "expected": "цукор"
+      "Name": "Keyboard | половину",
+      "Input": "Відповідно, і всі види моєї побутової активності переносилися на другу полjвину доби",
+      "Expected": "половину"
     },
     {
-      "name": "Transposition",
-      "input": "ссіль",
-      "expected": "сіль"
+      "Name": "Keyboard | собі",
+      "Input": "Пополудні я ходив гуляти містом, увечері шкандибав до крамниці, готував сjбі їжу й таке інше",
+      "Expected": "собі"
     },
     {
-      "name": "Transposition",
-      "input": "пперець",
-      "expected": "перець"
+      "Name": "Omission | моїм",
+      "Input": "Ніч узагалі завжди була мїм найпродуктивнішим часом",
+      "Expected": "моїм"
     },
     {
-      "name": "Transposition",
-      "input": "мм'ясо",
-      "expected": "м'ясо"
+      "Name": "Omission | складом",
+      "Input": "А повітка зі склдом, господарськими приміщеннями, пралкою та навіть сауною розташована у дворі",
+      "Expected": "складом"
     },
     {
-      "name": "Transposition",
-      "input": "кковбаса",
-      "expected": "ковбаса"
+      "Name": "Transposition | звуці",
+      "Input": "Було щось моторошне в цьому зувці",
+      "Expected": "звуці"
     },
     {
-      "name": "Transposition",
-      "input": "ссир",
-      "expected": "сир"
+      "Name": "Omission | значно",
+      "Input": "Бо до бемкання середньовічного часоміра додалися знчно тривожніші звуки",
+      "Expected": "значно"
     },
     {
-      "name": "Omission Middle",
-      "input": "яйц",
-      "expected": "яйце"
+      "Name": "Phonetic | виття",
+      "Input": "Якесь жаске веття",
+      "Expected": "виття"
     },
     {
-      "name": "Omission Middle",
-      "input": "медд",
-      "expected": "мед"
+      "Name": "Doubling | сигналізація",
+      "Input": "Це була сигналізаація",
+      "Expected": "сигналізація"
     },
     {
-      "name": "Omission Middle",
-      "input": "фруктт",
-      "expected": "фрукт"
+      "Name": "Transposition | майже",
+      "Input": "Мажйе миттєво приїхали поліцаї",
+      "Expected": "Майже"
     },
     {
-      "name": "Omission Middle",
-      "input": "овооч",
-      "expected": "овоч"
+      "Name": "Transposition | ніяк",
+      "Input": "Я все ще був шокований, і ми няік не могли порозумітися",
+      "Expected": "ніяк"
     },
     {
-      "name": "Omission Middle",
-      "input": "горіхх",
-      "expected": "горіх"
+      "Name": "Phonetic | краде",
+      "Input": "Мабуть, у перші миті вони були переконані, що я злодій, який кроде брудний одяг",
+      "Expected": "краде"
     },
     {
-      "name": "Omission Middle",
-      "input": "фундукк",
-      "expected": "фундук"
+      "Name": "Phonetic | його",
+      "Input": "Мені здалося, що на роботу йаго взяли з жалю",
+      "Expected": "його"
     },
     {
-      "name": "Omission Middle",
-      "input": "нассіння",
-      "expected": "насіння"
+      "Name": "Transposition | були",
+      "Input": "Хай там як, а блуи у нього, на думку молодого письменника, й позитивні риси",
+      "Expected": "були"
+    },
+    {
+      "Name": "Omission | проблеми",
+      "Input": "Наприклад, цілком очевидні прблеми з алкоголем",
+      "Expected": "проблеми"
+    },
+    {
+      "Name": "Keyboard | такий",
+      "Input": "Мовляв, як я міг, це ж текий переполох — сигналізація, поліція",
+      "Expected": "такий"
+    },
+    {
+      "Name": "Omission | потім",
+      "Input": "А птім його й зовсім понесло:",
+      "Expected": "потім"
+    },
+    {
+      "Name": "Doubling | можуть",
+      "Input": "— Так можууть робити тільки люди зі Сходу",
+      "Expected": "можуть"
+    },
+    {
+      "Name": "Keyboard | вони",
+      "Input": "Вkни взагалі не перуть, їм прати не треба",
+      "Expected": "Вони"
+    },
+    {
+      "Name": "Doubling | сходу",
+      "Input": "А як хтось до нас приїде зі Схооду, починаються проблеми",
+      "Expected": "Сходу"
+    },
+    {
+      "Name": "Transposition | вночі",
+      "Input": "Хто таке бачив, щоб прати внчоі",
+      "Expected": "вночі"
+    },
+    {
+      "Name": "Doubling | ображений",
+      "Input": "Я був ошелешений і обрражений",
+      "Expected": "ображений"
+    },
+    {
+      "Name": "Doubling | угорці",
+      "Input": "Уггорці заговорили українською",
+      "Expected": "Угорці"
+    },
+    {
+      "Name": "Omission | іноземною",
+      "Input": "Вистава на дві дії, іноемною мовою",
+      "Expected": "іноземною"
+    },
+    {
+      "Name": "Transposition | пішла",
+      "Input": "Чесно кажучи, я на неї пілша з чіткою готовністю, що буде нудненько",
+      "Expected": "пішла"
+    },
+    {
+      "Name": "Transposition | один",
+      "Input": "Але ж недаремно говорять: краще оидн раз побачити, ніж сто разів почути",
+      "Expected": "один"
+    },
+    {
+      "Name": "Omission | друге",
+      "Input": "По-дуге, учасники вистави час від часу говорили українською",
+      "Expected": "друге"
     }
   ]
 }

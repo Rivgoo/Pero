@@ -2,16 +2,23 @@
 using Pero.Abstractions.Models.Morphology;
 using Pero.Kernel.Utils;
 using Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
+using Pero.Languages.Uk_UA.Dictionaries.Ngrams;
+using Pero.Languages.Uk_UA.Utils;
+using System.Text;
 
 namespace Pero.Languages.Uk_UA.Components.Spelling.Context;
 
 public class ContextRanker
 {
 	private readonly DocumentSessionCache _sessionCache;
+	private readonly NgramLanguageModel _ngramModel;
 
-	public ContextRanker(DocumentSessionCache sessionCache)
+	private const float NgramBonusMultiplier = 0.015f;
+
+	public ContextRanker(DocumentSessionCache sessionCache, NgramLanguageModel ngramModel)
 	{
 		_sessionCache = sessionCache;
+		_ngramModel = ngramModel;
 	}
 
 	public IReadOnlyList<CorrectionCandidate> Rank(
@@ -22,6 +29,9 @@ public class ContextRanker
 		var prevToken = sentence.GetPreviousSignificantToken(errorToken);
 		var nextToken = sentence.GetNextSignificantToken(errorToken);
 
+		ulong prevHash = prevToken != null && prevToken.Type == TokenType.Word ? MurmurHash3.Hash(prevToken.NormalizedText) : 0;
+		ulong nextHash = nextToken != null && nextToken.Type == TokenType.Word ? MurmurHash3.Hash(nextToken.NormalizedText) : 0;
+
 		var rankedList = new List<CorrectionCandidate>(candidates.Count);
 
 		foreach (var candidate in candidates)
@@ -29,7 +39,7 @@ public class ContextRanker
 			float penalty = 0f;
 			float bonus = 0f;
 
-			// Context rules
+			// 1. Morphological Agreement Rules
 			if (IsPreposition(prevToken, out string prepText))
 				penalty += EvaluatePrepositionGovernment(prepText, candidate.Tagsets);
 
@@ -38,15 +48,34 @@ public class ContextRanker
 			else if (IsNoun(nextToken, out var nounTags))
 				penalty += EvaluateAgreement(nounTags, candidate.Tagsets, PartOfSpeech.Adjective);
 
-			// Session cache (word seen elsewhere)
+			// 2. Document Session Cache (Word used elsewhere in text)
 			bonus += _sessionCache.GetSessionBonus(candidate.Word);
 
-			// Heuristic bonus (if score was explicitly set low by GenerateHeuristics)
+			// 3. N-gram Contextual Ranking
+			ulong candidateHash = MurmurHash3.Hash(candidate.Word);
+
+			if (prevHash != 0)
+			{
+				byte score = _ngramModel.GetBigramScore(prevHash, candidateHash);
+				bonus += score * NgramBonusMultiplier;
+
+				if (nextHash != 0)
+				{
+					byte triScore = _ngramModel.GetTrigramScore(prevHash, candidateHash, nextHash);
+					bonus += triScore * (NgramBonusMultiplier * 1.5f); // Trigrams are very strong signals
+				}
+			}
+
+			if (nextHash != 0)
+			{
+				byte score = _ngramModel.GetBigramScore(candidateHash, nextHash);
+				bonus += score * NgramBonusMultiplier;
+			}
+
+			// Heuristic flag bonus
 			if (candidate.Score < -1.0f) bonus += 2.0f;
 
 			float adjustedScore = candidate.Score + penalty - bonus;
-
-			// Cap min score to avoid sorting artifacts
 			if (adjustedScore < -10.0f) adjustedScore = -10.0f;
 
 			rankedList.Add(new CorrectionCandidate(
@@ -107,7 +136,7 @@ public class ContextRanker
 		};
 		if (allowedCases.Length == 0) return 0f;
 		bool hasValidCase = candidateTags.Any(tag => allowedCases.Contains(tag.Case));
-		return hasValidCase ? 0f : 1.0f;
+		return hasValidCase ? 0f : 1.0f; // Soft penalty, not absolute removal
 	}
 
 	private static float EvaluateAgreement(MorphologyTagset anchorTag, MorphologyTagset[] candidateTags, PartOfSpeech targetPos)
