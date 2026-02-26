@@ -1,7 +1,6 @@
-/* Container for the mirror overlay */
 .pero-overlay {
   position: absolute;
-  pointer-events: none; /* Let ALL clicks pass through to the textarea */
+  pointer-events: none;
   color: transparent;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -10,13 +9,10 @@
   background: transparent;
 }
 
-/* The actual error highlight */
 .pero-error {
-  /* No pointer-events: auto, no cursor: pointer. It's purely visual. */
   border-bottom: 2px solid #ff4444;
 }
 
-/* Tooltip styles remain unchanged */
 .pero-tooltip {
   position: absolute;
   z-index: 10000;
@@ -33,7 +29,6 @@
   padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   opacity: 0;
   transform: translateY(-5px);
   animation: tooltipFadeIn 0.15s ease-out forwards;
@@ -48,6 +43,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 8px;
+  margin-bottom: -4px;
 }
 
 .tooltip-brand {
@@ -81,6 +77,14 @@
   border-color: #8ab4f8;
 }
 
+.tooltip-title {
+  margin-top: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #919598;
+  margin-bottom: 7px;
+}
+
 .tooltip-reason {
   display: none;
   font-size: 12px;
@@ -89,6 +93,7 @@
   padding: 8px;
   border-radius: 6px;
   margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .tooltip-reason.visible {

@@ -35,6 +35,8 @@ export interface TextIssue {
   suggestions: string[];
   
   messageArgs?: Record<string, string>;
+  fallbackTitle?: string;
+  fallbackDescription?: string;
 }
 
 export type IssueCategory = 'Spelling' | 'Grammar' | 'Style' | 'Typography';

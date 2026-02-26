@@ -9,9 +9,26 @@
 		<WasmEmitSymbolMap>false</WasmEmitSymbolMap>
 		<CompressionEnabled>false</CompressionEnabled>
 	</PropertyGroup>
+
 	<ItemGroup>
-	  <ProjectReference Include="..\languages\Pero.Languages.Uk_UA\Pero.Languages.Uk_UA.csproj" />
-	  <ProjectReference Include="..\Pero.Abstractions\Pero.Abstractions.csproj" />
-	  <ProjectReference Include="..\Pero.Kernel\Pero.Kernel.csproj" />
+		<ProjectReference Include="..\languages\Pero.Languages.Uk_UA\Pero.Languages.Uk_UA.csproj" />
+		<ProjectReference Include="..\Pero.Abstractions\Pero.Abstractions.csproj" />
+		<ProjectReference Include="..\Pero.Kernel\Pero.Kernel.csproj" />
 	</ItemGroup>
+
+	<Target Name="CleanPublishFolder" BeforeTargets="BeforePublish">
+		<RemoveDir Directories="$(PublishDir)" />
+	</Target>
+
+	<Target Name="FilterOutputFiles" AfterTargets="Publish">
+		<ItemGroup>
+			<DeleteFiles Include="$(PublishDir)wwwroot\_framework\**\*.br" />
+			<DeleteFiles Include="$(PublishDir)wwwroot\_framework\**\*.gz" />
+			<DeleteFiles Include="$(PublishDir)wwwroot\_framework\**\*.pbr" />
+
+			<FilesToDelete Include="@DeleteFiles)" />
+		</ItemGroup>
+
+		<Delete Files="@(FilesToDelete)" />
+	</Target>
 </Project>

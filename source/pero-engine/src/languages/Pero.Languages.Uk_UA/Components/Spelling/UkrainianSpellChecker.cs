@@ -13,16 +13,15 @@ namespace Pero.Languages.Uk_UA.Components;
 public class UkrainianSpellChecker : ISpellChecker
 {
 	private const string IssueId = "UK_UA_SPELLING_ERROR";
+	private const string UnknownWordIssueId = "UK_UA_SPELLING_UNKNOWN_WORD";
 	private const char CanonicalApostrophe = '\'';
 
 	private const int MinCandidatesForEarlyExit = 3;
-	private const float HighConfidenceScoreThreshold = -1.0f;
 
 	private readonly FuzzyMatcher _fuzzyMatcher;
 	private readonly VirtualSymSpell _virtualSymSpell;
 	private readonly LexiconCache _lexicon;
 	private readonly NgramLanguageModel _ngramLanguageModel;
-	private readonly MorphologicalFilter _morphologicalFilter;
 
 	public bool EnableTelemetry { get; set; }
 	public SpellCheckTelemetry? LastTelemetry { get; private set; }
@@ -34,14 +33,12 @@ public class UkrainianSpellChecker : ISpellChecker
 		FuzzyMatcher fuzzyMatcher,
 		VirtualSymSpell virtualSymSpell,
 		LexiconCache lexicon,
-		NgramLanguageModel ngramLanguageModel,
-		MorphologicalFilter morphologicalFilter)
+		NgramLanguageModel ngramLanguageModel)
 	{
 		_fuzzyMatcher = fuzzyMatcher;
 		_virtualSymSpell = virtualSymSpell;
 		_lexicon = lexicon;
 		_ngramLanguageModel = ngramLanguageModel;
-		_morphologicalFilter = morphologicalFilter;
 	}
 
 	public IEnumerable<TextIssue> Check(AnalyzedDocument document)
@@ -68,7 +65,6 @@ public class UkrainianSpellChecker : ISpellChecker
 				bool hasHomoglyphs = HasLatinHomoglyphs(token.Text);
 				if (EnableTelemetry) telemetry!.StringNormalizationMs += GetElapsedMs(start);
 
-				// If word contains completely foreign chars (not homoglyphs), skip it
 				if (!hasHomoglyphs && ContainsNonUkrainianChars(normalizedText)) continue;
 
 				var combinedCandidates = new List<CorrectionCandidate>();
@@ -77,20 +73,25 @@ public class UkrainianSpellChecker : ISpellChecker
 
 				if (EnableTelemetry) start = Stopwatch.GetTimestamp();
 
-				// 1. Homoglyph Direct Match
 				if (hasHomoglyphs)
 				{
 					TryAddDictCandidates(searchTarget, combinedCandidates, 0f, 2.0f);
 				}
 
-				// 2. Linguistic Heuristics (Anti-Surzhyk & Phonetics)
+				if (combinedCandidates.Count == 0 && searchTarget.Length >= 4)
+				{
+					foreach (var splitCandidate in _virtualSymSpell.GetSplitCandidates(searchTarget))
+					{
+						combinedCandidates.Add(splitCandidate);
+					}
+				}
+
 				foreach (var heuristicWord in GenerateLinguisticHeuristics(searchTarget))
 				{
 					TryAddDictCandidates(heuristicWord, combinedCandidates, distance: 0.5f, bonus: 5.0f);
 				}
 				if (EnableTelemetry) telemetry!.HeuristicsGenerationMs += GetElapsedMs(start);
 
-				// 3. Virtual SymSpell (Omissions, Insertions, Transpositions)
 				if (combinedCandidates.Count < MinCandidatesForEarlyExit)
 				{
 					if (EnableTelemetry) start = Stopwatch.GetTimestamp();
@@ -104,29 +105,22 @@ public class UkrainianSpellChecker : ISpellChecker
 					if (EnableTelemetry) telemetry!.SymSpellMs += GetElapsedMs(start);
 				}
 
-				//// 4. Fuzzy Matcher (Deep Keyboard & Acoustic Search)
-				//// Execute only if we lack high confidence candidates
-				//if (combinedCandidates.Count == 0 || !combinedCandidates.Any(c => c.Score < HighConfidenceScoreThreshold))
+				//if (combinedCandidates.Count == 0)
 				//{
 				//	if (EnableTelemetry) start = Stopwatch.GetTimestamp();
 
 				//	foreach (var fuzzy in _fuzzyMatcher.Suggest(searchTarget))
 				//	{
-				//		if (!combinedCandidates.Any(c => c.Word == fuzzy.Word))
-				//			combinedCandidates.Add(fuzzy);
+				//		combinedCandidates.Add(fuzzy);
 				//	}
 
 				//	if (EnableTelemetry) telemetry!.FuzzyMatcherMs += GetElapsedMs(start);
 				//}
 
-				if (combinedCandidates.Count == 0) continue;
-
-				// 5. Context Ranking
 				if (EnableTelemetry) start = Stopwatch.GetTimestamp();
 				var rankedCandidates = contextRanker.Rank(sentence, token, combinedCandidates);
 				if (EnableTelemetry) telemetry!.ContextRankingMs += GetElapsedMs(start);
 
-				// 6. Formatting & Yielding
 				if (EnableTelemetry) start = Stopwatch.GetTimestamp();
 				var suggestions = rankedCandidates
 					.Take(5)
@@ -136,9 +130,15 @@ public class UkrainianSpellChecker : ISpellChecker
 
 				if (EnableTelemetry) telemetry!.SuggestionFormattingMs += GetElapsedMs(start);
 
+				var messageArgs = new Dictionary<string, string> { { "word", token.Text } };
+
 				if (suggestions.Count > 0)
 				{
-					yield return IssueFactory.CreateFrom(token, IssueId, IssueCategory.Spelling, suggestions);
+					yield return IssueFactory.CreateFrom(token, IssueId, IssueCategory.Spelling, suggestions, messageArgs);
+				}
+				else
+				{
+					yield return IssueFactory.CreateFrom(token, UnknownWordIssueId, IssueCategory.Spelling, null, messageArgs);
 				}
 			}
 		}
@@ -155,9 +155,6 @@ public class UkrainianSpellChecker : ISpellChecker
 		}
 	}
 
-	/// <summary>
-	/// Yields probable corrections based on common phonetic, morphologic, and Surzhyk errors.
-	/// </summary>
 	private static IEnumerable<string> GenerateLinguisticHeuristics(string word)
 	{
 		if (word.Length < 3) yield break;
@@ -168,7 +165,7 @@ public class UkrainianSpellChecker : ISpellChecker
 		if (word.Contains("ждн")) yield return word.Replace("ждн", "жн");
 		if (word.Contains("здн")) yield return word.Replace("здн", "зн");
 		if (word.Contains("тч")) yield return word.Replace("тч", "чч");
-		if (word.Contains("шся")) yield return word.Replace("шся", "шся").Replace("шся", "сся"); // phonetic spelling
+		if (word.Contains("шся")) yield return word.Replace("шся", "шся").Replace("шся", "сся");
 
 		// 2. Surzhyk Suffixes
 		if (SurzhykIrovatyRegex.IsMatch(word))

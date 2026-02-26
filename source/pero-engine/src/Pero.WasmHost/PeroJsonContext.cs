@@ -9,6 +9,7 @@ namespace Pero.WasmHost
 		WriteIndented = false)]
 	[JsonSerializable(typeof(AnalysisRequest))]
 	[JsonSerializable(typeof(AnalysisResponse))]
+	[JsonSerializable(typeof(Dictionary<string, string>))]
 	internal partial class PeroJsonContext : JsonSerializerContext
 	{
 	}

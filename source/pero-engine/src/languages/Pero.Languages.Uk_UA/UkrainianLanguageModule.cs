@@ -5,7 +5,6 @@ using Pero.Languages.Uk_UA.Components;
 using Pero.Languages.Uk_UA.Components.Caching;
 using Pero.Languages.Uk_UA.Components.Disambiguation;
 using Pero.Languages.Uk_UA.Components.Disambiguation.Rules;
-using Pero.Languages.Uk_UA.Components.Spelling.Context;
 using Pero.Languages.Uk_UA.Dictionaries;
 using Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
 using Pero.Languages.Uk_UA.Dictionaries.Ngrams;
@@ -21,7 +20,6 @@ public class UkrainianLanguageModule : ILanguageModule
 	private readonly FuzzyMatcher _fuzzyMatcher;
 	private readonly VirtualSymSpell _virtualSymSpell;
 	private readonly NgramLanguageModel _ngramLanguageModel;
-	private readonly MorphologicalFilter _morphologicalFilter;
 
 	public UkrainianLanguageModule()
 	{
@@ -31,7 +29,6 @@ public class UkrainianLanguageModule : ILanguageModule
 		_lexicon = new LexiconCache(_dictionary);
 		_fuzzyMatcher = new FuzzyMatcher(_dictionary);
 		_virtualSymSpell = new VirtualSymSpell(_dictionary);
-		_morphologicalFilter = new MorphologicalFilter(_dictionary);
 	}
 
 	public string LanguageCode => LanguageCodes.Ukrainian;
@@ -58,11 +55,11 @@ public class UkrainianLanguageModule : ILanguageModule
 		_fuzzyMatcher,
 		_virtualSymSpell,
 		_lexicon,
-		_ngramLanguageModel,
-		_morphologicalFilter);
+		_ngramLanguageModel);
 
 	public IEnumerable<IRule> GetRules()
 	{
 		yield return new MixedAlphabetRule();
+		yield return new WordBoundaryRule(_dictionary);
 	}
 }

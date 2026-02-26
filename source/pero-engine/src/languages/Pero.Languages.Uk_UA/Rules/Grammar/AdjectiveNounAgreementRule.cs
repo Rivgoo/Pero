@@ -34,12 +34,19 @@ public class AdjectiveNounAgreementRule : BaseGrammarRule
 
 				if (caseMismatch || genderMismatch)
 				{
+					var args = new Dictionary<string, string>
+					{
+						{ "adj", current.Text },
+						{ "noun", next.Text }
+					};
+
 					yield return IssueFactory.CreateSpanning(
 						new[] { current, next },
 						Id,
 						Category,
-						sentence.ToString(), // Passes original document text for exact extraction
-						new List<string> { "Перевірте узгодження відмінка та роду." }
+						sentence.ToString(),
+						null,
+						args
 					);
 				}
 			}

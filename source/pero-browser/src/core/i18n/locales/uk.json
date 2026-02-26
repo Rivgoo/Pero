@@ -12,21 +12,25 @@
       "title": "Відсутній пробіл",
       "description": "Після знаку '{punct}' потрібен пробіл."
     },
-    "SPELL_RUSSIAN_LETTER": {
-      "title": "Російська літера",
-      "description": "Знайдено літеру '{char}', якої немає в українській абетці."
-    },
     "UK_UA_GRAMMAR_ADJ_NOUN_AGREEMENT": {
       "title": "Граматична помилка",
       "description": "Прикметник '{adj}' не узгоджується з іменником '{noun}'."
     },
     "UK_UA_SPELLING_ERROR": {
-      "title": "Невідоме чи не правильно вжите слово",
-      "description": "Слово не вдалося розпізнати, або ж воно не у правильній формі."
+      "title": "Помилка у написанні",
+      "description": "Слово '{word}' написано з помилкою."
     },
     "UK_UA_SPELLING_MIXED_ALPHABETS": {
       "title": "Змішання алфавітів",
       "description": "У слові використано літери з різних алфавітів."
+    },
+    "UK_UA_SPELLING_INVALID_BOUNDARY":{
+      "title": "Помилка у написанні",
+      "description": "Можливе злиття кількох слів або зайві символи у слові."
+    },
+    "UK_UA_SPELLING_UNKNOWN_WORD": {
+      "title": "Невідоме слово",
+      "description": "Слово '{word}' не знайдено або ж його не вдалось розпізнати."
     }
   }
 }

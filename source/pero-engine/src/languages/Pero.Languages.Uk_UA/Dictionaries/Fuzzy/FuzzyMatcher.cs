@@ -7,9 +7,9 @@ namespace Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
 
 public class FuzzyMatcher
 {
-	private const int TargetResults = 4;
-	private const int MaxWordLength = 16;
-	private const float FrequencyBonusWeight = 0.000f;
+	private const int TargetResults = 1;
+	private const int MaxWordLength = 24;
+	private const float FrequencyBonusWeight = 0.05f;
 	private const float MaxFrequencyBonus = 31 * FrequencyBonusWeight;
 
 	private byte[] _fstData => _dictionary.FstData;
@@ -34,7 +34,7 @@ public class FuzzyMatcher
 
 		_context.InitializeForWord(targetWord);
 
-		float initialMaxDist = targetWord.Length <= 4 ? 2f : Math.Min(targetWord.Length - 2f, 3f);
+		float initialMaxDist = 2;
 		var pool = new CandidatePool(TargetResults, initialMaxDist);
 
 		int rowLength = targetWord.Length + 1;
@@ -133,7 +133,7 @@ public class FuzzyMatcher
 		public CandidatePool(int targetCapacity, float initialMaxDistance)
 		{
 			_targetCapacity = targetCapacity;
-			_items = new CorrectionCandidate[targetCapacity + 1];
+			_items = new CorrectionCandidate[targetCapacity];
 			WorstScore = initialMaxDistance;
 		}
 

@@ -73,6 +73,11 @@ export class Tooltip {
     header.appendChild(infoBtn);
     this.el.appendChild(header);
 
+    const titleEl = document.createElement('div');
+    titleEl.className = 'tooltip-title';
+    titleEl.textContent = error.title;
+    this.el.appendChild(titleEl);
+
     const reasonBox = document.createElement('div');
     reasonBox.className = 'tooltip-reason';
     reasonBox.textContent = error.description; 

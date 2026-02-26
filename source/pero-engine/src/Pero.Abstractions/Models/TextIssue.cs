@@ -32,5 +32,8 @@
 		/// Example: {"punct": ","} for the message "Do not add a space before {punct}".
 		/// </summary>
 		public Dictionary<string, string>? MessageArgs { get; set; }
+
+		public string? FallbackTitle { get; set; }
+		public string? FallbackDescription { get; set; }
 	}
 }

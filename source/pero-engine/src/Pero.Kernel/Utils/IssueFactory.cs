@@ -2,20 +2,16 @@
 
 namespace Pero.Kernel.Utils;
 
-/// <summary>
-/// A utility class providing helper methods for creating TextIssue objects.
-/// This helps ensure consistency and reduces boilerplate in rule implementations.
-/// </summary>
 public static class IssueFactory
 {
-	/// <summary>
-	/// Creates a TextIssue that is anchored to a single token.
-	/// </summary>
 	public static TextIssue CreateFrom(
 		Token token,
 		string ruleId,
 		IssueCategory category,
-		IEnumerable<string>? suggestions = null)
+		IEnumerable<string>? suggestions = null,
+		Dictionary<string, string>? messageArgs = null,
+		string? fallbackTitle = null,
+		string? fallbackDescription = null)
 	{
 		return new TextIssue
 		{
@@ -24,19 +20,22 @@ public static class IssueFactory
 			Start = token.Start,
 			End = token.End,
 			Original = token.Text,
-			Suggestions = suggestions?.ToList() ?? new List<string>()
+			Suggestions = suggestions?.ToList() ?? new List<string>(),
+			MessageArgs = messageArgs,
+			FallbackTitle = fallbackTitle,
+			FallbackDescription = fallbackDescription
 		};
 	}
 
-	/// <summary>
-	/// Creates a TextIssue that spans a range of tokens, from a start token to an end token.
-	/// </summary>
 	public static TextIssue CreateSpanning(
 		IEnumerable<Token> tokens,
 		string ruleId,
 		IssueCategory category,
 		string documentText,
-		IEnumerable<string>? suggestions = null)
+		IEnumerable<string>? suggestions = null,
+		Dictionary<string, string>? messageArgs = null,
+		string? fallbackTitle = null,
+		string? fallbackDescription = null)
 	{
 		var tokenList = tokens.ToList();
 		var startToken = tokenList.First();
@@ -49,7 +48,10 @@ public static class IssueFactory
 			Start = startToken.Start,
 			End = endToken.End,
 			Original = documentText.Substring(startToken.Start, endToken.End - startToken.Start),
-			Suggestions = suggestions?.ToList() ?? new List<string>()
+			Suggestions = suggestions?.ToList() ?? new List<string>(),
+			MessageArgs = messageArgs,
+			FallbackTitle = fallbackTitle,
+			FallbackDescription = fallbackDescription
 		};
 	}
 }
