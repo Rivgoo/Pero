@@ -1,6 +1,6 @@
 {
   "name": "pero-browser",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "version": "node scripts/version.js",
