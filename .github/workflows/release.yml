@@ -1,45 +1,61 @@
 name: Create Pero Release
-'on':
+on:
   push:
     tags:
       - v*
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    
+    defaults:
+      run:
+        working-directory: ./source/pero-browser
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+          cache-dependency-path: source/pero-browser/package-lock.json
+
       - name: Install
         run: npm install
+
       - name: Build
         run: npm run build
+
       - name: Package
         id: zip
         run: |
           # Extract version from manifest
           VER=$(grep '"version":' public/manifest.json | cut -d '"' -f 4)
-
+          
           # Define names
           FOLDER_NAME="Pero_v${VER}"
           ZIP_NAME="${FOLDER_NAME}.zip"
-
-          # Rename dist folder to Pero_vX.X
+          
+          # Rename dist folder
           mv dist $FOLDER_NAME
-
-          # Zip the renamed folder
+          
+          # Zip the folder
           zip -r $ZIP_NAME $FOLDER_NAME
-
-          # Output variables for the next step
+          
+          # 2. MOVE ZIP TO ROOT
+          mv $ZIP_NAME ../../$ZIP_NAME
+          
+          # Output variables
           echo "filename=${ZIP_NAME}" >> $GITHUB_OUTPUT
           echo "version=${VER}" >> $GITHUB_OUTPUT
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
