@@ -13,16 +13,26 @@ jobs:
         working-directory: ./source/pero-browser
 
     steps:
-      - name: Fetch
+      - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Node
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x 
+
+      - name: Install WASM Workload
+        run: dotnet workload install wasm-tools
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Setup
+      - name: Install Dependencies
         run: npm install
 
-      - name: Build
+      - name: Build Project
         run: npm run build

@@ -9,48 +9,48 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    
-    defaults:
-      run:
-        working-directory: ./source/pero-browser
-
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x 
+
+      - name: Install WASM Workload
+        run: dotnet workload install wasm-tools
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install
+      - name: Install Dependencies
         run: npm install
 
-      - name: Build
+      - name: Build Project
         run: npm run build
 
       - name: Package
         id: zip
         run: |
-          # Extract version from manifest
+          cd source/pero-browser
+          
           VER=$(grep '"version":' public/manifest.json | cut -d '"' -f 4)
           
-          # Define names
           FOLDER_NAME="Pero_v${VER}"
           ZIP_NAME="${FOLDER_NAME}.zip"
           
-          # Rename dist folder
           mv dist $FOLDER_NAME
           
-          # Zip the folder
           zip -r $ZIP_NAME $FOLDER_NAME
           
-          # 2. MOVE ZIP TO ROOT
           mv $ZIP_NAME ../../$ZIP_NAME
           
-          # Output variables
           echo "filename=${ZIP_NAME}" >> $GITHUB_OUTPUT
           echo "version=${VER}" >> $GITHUB_OUTPUT
 
