@@ -1,7 +1,17 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+      '@app': resolve(__dirname, './src/app'),
+      '@shared': resolve(__dirname, './src/shared'),
+      '@core': resolve(__dirname, './src/core')
+    }
+  },
   build: {
     rollupOptions: {
       external: ['/wasm/dotnet.js'],
@@ -9,12 +19,13 @@ export default defineConfig({
         background: resolve(__dirname, 'src/background/index.ts'),
         content: resolve(__dirname, 'src/content/index.ts'),
         offscreen: resolve(__dirname, 'src/offscreen/index.html'),
-        popup: resolve(__dirname, 'src/popup/index.html')
+        popup: resolve(__dirname, 'src/popup/index.html'),
+        app: resolve(__dirname, 'src/app/index.html')
       },
       output: {
         entryFileNames: '[name].js',
-        chunkFileNames: '[name].js',
-        assetFileNames: '[name].[ext]',
+        chunkFileNames: 'chunks/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
         format: 'es'
       }
     },
