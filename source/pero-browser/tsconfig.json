@@ -20,7 +20,8 @@
       "@/*": ["src/*"],
       "@app/*": ["src/app/*"],
       "@shared/*": ["src/shared/*"],
-      "@core/*": ["src/core/*"]
+      "@core/*": ["src/core/*"],
+      "@content/*": ["src/content/*"]
     }
   },
   "include": ["src"]

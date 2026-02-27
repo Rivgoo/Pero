@@ -9,7 +9,8 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
       '@app': resolve(__dirname, './src/app'),
       '@shared': resolve(__dirname, './src/shared'),
-      '@core': resolve(__dirname, './src/core')
+      '@core': resolve(__dirname, './src/core'),
+      '@content':  resolve(__dirname, './src/content'),
     }
   },
   build: {

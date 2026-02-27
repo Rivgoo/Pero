@@ -1,25 +1,46 @@
-import { IconSettings, IconBug } from '@tabler/icons-react';
+import { useState } from 'react';
+import { AppLayout } from './components/layout/AppLayout';
+import { Dashboard } from './views/Dashboard/Dashboard';
+import { DebugView } from './views/Debug/DebugView';
+import { Settings } from './views/Settings/Settings';
+import './styles/theme.css';
+import './styles/tooltip.css';
 
 export function App() {
+  const [currentView, setCurrentView] = useState('dashboard');
+
+  const renderView = () => {
+    switch (currentView) {
+      case 'dashboard':
+        return <Dashboard onNavigate={setCurrentView} />;
+      case 'debug':
+        return <DebugView />;
+      case 'morphology':
+        return <div>Морфологічний аналізатор (у розробці).</div>;
+      case 'settings':
+        return <Settings />;
+      default:
+        return <div>Невідоме вікно.</div>;
+    }
+  };
+
+  const getTitle = () => {
+    switch (currentView) {
+      case 'dashboard': return 'Головна Панель 📊';
+      case 'debug': return 'Debug Engine 🛠️';
+      case 'morphology': return 'Синтаксис та Морфологія 📚';
+      case 'settings': return 'Налаштування ⚙️';
+      default: return 'Pero';
+    }
+  };
+
   return (
-    <div className="pero-app-layout">
-      <aside className="pero-sidebar">
-        <h2>Pero 🪶</h2>
-        <nav>
-          <button className="pero-nav-btn">
-            <IconBug size={20} />
-            <span>Debug Engine</span>
-          </button>
-          <button className="pero-nav-btn">
-            <IconSettings size={20} />
-            <span>Settings</span>
-          </button>
-        </nav>
-      </aside>
-      <main className="pero-main-content">
-        <h1>Dashboard Initialization</h1>
-        <p>React architecture is ready for standalone tools.</p>
-      </main>
-    </div>
+    <AppLayout 
+      currentView={currentView} 
+      onViewChange={setCurrentView}
+      title={getTitle()}
+    >
+      {renderView()}
+    </AppLayout>
   );
 }
