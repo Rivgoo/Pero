@@ -10,7 +10,7 @@ export default defineConfig({
       '@app': resolve(__dirname, './src/app'),
       '@shared': resolve(__dirname, './src/shared'),
       '@core': resolve(__dirname, './src/core'),
-      '@content':  resolve(__dirname, './src/content'),
+      '@content': resolve(__dirname, './src/content')
     }
   },
   build: {
@@ -26,7 +26,15 @@ export default defineConfig({
       output: {
         entryFileNames: '[name].js',
         chunkFileNames: 'chunks/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]',
+        assetFileNames: (assetInfo) => {
+          const name = assetInfo.name || '';
+          
+          if (name === 'content.css' || name === 'styles.css' || name === 'session.css') {
+            return 'content.css';
+          }
+          
+          return 'assets/[name]-[hash].[ext]';
+        },
         format: 'es'
       }
     },
