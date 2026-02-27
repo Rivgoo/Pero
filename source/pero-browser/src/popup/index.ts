@@ -1,18 +1,39 @@
-import { STORAGE_KEYS } from '../shared/constants';
+import { StorageKeys } from '../shared/constants';
 
-const debugToggle = document.getElementById('debugToggle') as HTMLInputElement;
-const versionLabel = document.getElementById('version') as HTMLElement;
+class PopupController {
+  private readonly debugToggle: HTMLInputElement;
+  private readonly versionLabel: HTMLElement;
 
-// Initialize Version
-const manifest = chrome.runtime.getManifest();
-versionLabel.textContent = `v${manifest.version}`;
+  constructor() {
+    this.debugToggle = document.getElementById('debugToggle') as HTMLInputElement;
+    this.versionLabel = document.getElementById('appVersion') as HTMLElement;
+  }
 
-// Initialize Toggle State
-chrome.storage.local.get(STORAGE_KEYS.DEBUG_MODE, (result) => {
-  debugToggle.checked = (result[STORAGE_KEYS.DEBUG_MODE] as boolean) ?? false;
-});
+  initialize(): void {
+    this.renderVersion();
+    this.loadInitialState();
+    this.bindEvents();
+  }
 
-// Bind Event
-debugToggle.addEventListener('change', () => {
-  chrome.storage.local.set({ [STORAGE_KEYS.DEBUG_MODE]: debugToggle.checked });
-});
+  private renderVersion(): void {
+    const manifest = chrome.runtime.getManifest();
+    this.versionLabel.textContent = `v${manifest.version}`;
+  }
+
+  private loadInitialState(): void {
+    chrome.storage.local.get(StorageKeys.DebugMode, (result) => {
+      this.debugToggle.checked = Boolean(result[StorageKeys.DebugMode]);
+    });
+  }
+
+  private bindEvents(): void {
+    this.debugToggle.addEventListener('change', () => this.handleToggleChange());
+  }
+
+  private handleToggleChange(): void {
+    chrome.storage.local.set({ [StorageKeys.DebugMode]: this.debugToggle.checked });
+  }
+}
+
+const controller = new PopupController();
+controller.initialize();

@@ -1,4 +1,4 @@
-import { STORAGE_KEYS } from '../../shared/constants';
+import { StorageKeys } from '../../shared/constants';
 
 export class DebugLogger {
   private static instance: DebugLogger;
@@ -16,42 +16,36 @@ export class DebugLogger {
     return DebugLogger.instance;
   }
 
-  logRequest(json: string, forceLog = false): void {
-    if (!this.isEnabled && !forceLog) return;
-    
+  logRequest(json: string): void {
+    if (!this.isEnabled) return;
     this.printGroup('⬆️ Pero: To .NET', json);
   }
 
-  logResponse(json: string, duration?: number, forceLog = false): void {
-    if (!this.isEnabled && !forceLog) return;
-
-    const title = duration 
-      ? `⬇️ Pero: From .NET (${duration.toFixed(2)}ms)` 
-      : '⬇️ Pero: From .NET';
-
-    this.printGroup(title, json);
+  logResponse(json: string, durationMs: number): void {
+    if (!this.isEnabled) return;
+    this.printGroup(`⬇️ Pero: From .NET (${durationMs.toFixed(2)}ms)`, json);
   }
 
   private initializeState(): void {
-    if (typeof chrome === 'undefined' || !chrome.storage || !chrome.storage.local) {
-      return;
-    }
-
-    chrome.storage.local.get(STORAGE_KEYS.DEBUG_MODE, (result) => {
-      this.isEnabled = (result[STORAGE_KEYS.DEBUG_MODE] as boolean) ?? false;
+    if (!this.hasStorageApi()) return;
+    
+    chrome.storage.local.get(StorageKeys.DebugMode, (result) => {
+      this.isEnabled = Boolean(result[StorageKeys.DebugMode]);
     });
   }
 
   private watchStorage(): void {
-    if (typeof chrome === 'undefined' || !chrome.storage || !chrome.storage.onChanged) {
-      return;
-    }
+    if (!this.hasStorageApi()) return;
 
     chrome.storage.onChanged.addListener((changes, area) => {
-      if (area === 'local' && changes[STORAGE_KEYS.DEBUG_MODE]) {
-        this.isEnabled = changes[STORAGE_KEYS.DEBUG_MODE].newValue as boolean;
+      if (area === 'local' && changes[StorageKeys.DebugMode]) {
+        this.isEnabled = Boolean(changes[StorageKeys.DebugMode].newValue);
       }
     });
+  }
+
+  private hasStorageApi(): boolean {
+    return typeof chrome !== 'undefined' && Boolean(chrome.storage?.local);
   }
 
   private printGroup(title: string, json: string): void {

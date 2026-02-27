@@ -1,38 +1,47 @@
 import { AnalysisRequest } from './contracts';
 
-export type MessageType = 'PING' | 'ANALYZE_REQUEST' | 'OFFSCREEN_ANALYZE';
+export const MessageTypes = {
+  Ping: 'PING',
+  AnalyzeRequest: 'ANALYZE_REQUEST',
+  OffscreenAnalyze: 'OFFSCREEN_ANALYZE'
+} as const;
+
+export type MessageType = typeof MessageTypes[keyof typeof MessageTypes];
 
 export interface BaseMessage {
-  type: MessageType;
-  payload?: any;
+  readonly type: MessageType;
 }
 
 export interface PingMessage extends BaseMessage {
-  type: 'PING';
+  readonly type: typeof MessageTypes.Ping;
 }
 
 export interface AnalyzeRequestMessage extends BaseMessage {
-  type: 'ANALYZE_REQUEST';
-  payload: AnalysisRequest;
+  readonly type: typeof MessageTypes.AnalyzeRequest;
+  readonly payload: AnalysisRequest;
 }
 
 export interface OffscreenAnalyzeMessage extends BaseMessage {
-  type: 'OFFSCREEN_ANALYZE';
-  payload: AnalysisRequest;
+  readonly type: typeof MessageTypes.OffscreenAnalyze;
+  readonly payload: AnalysisRequest;
 }
 
 export type ExtensionMessage = PingMessage | AnalyzeRequestMessage | OffscreenAnalyzeMessage;
 
 export interface MessageResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: string;
+  readonly success: boolean;
+  readonly data?: T;
+  readonly error?: string;
 }
 
-export function isAnalyzeRequest(msg: any): msg is AnalyzeRequestMessage {
-  return msg && msg.type === 'ANALYZE_REQUEST' && msg.payload;
+export function isAnalyzeRequest(msg: unknown): msg is AnalyzeRequestMessage {
+  return isMessageOfType<AnalyzeRequestMessage>(msg, MessageTypes.AnalyzeRequest);
 }
 
-export function isOffscreenAnalyzeRequest(msg: any): msg is OffscreenAnalyzeMessage {
-  return msg && msg.type === 'OFFSCREEN_ANALYZE' && msg.payload;
+export function isOffscreenAnalyzeRequest(msg: unknown): msg is OffscreenAnalyzeMessage {
+  return isMessageOfType<OffscreenAnalyzeMessage>(msg, MessageTypes.OffscreenAnalyze);
+}
+
+function isMessageOfType<T extends BaseMessage>(msg: unknown, type: MessageType): msg is T {
+  return typeof msg === 'object' && msg !== null && 'type' in msg && (msg as BaseMessage).type === type;
 }

@@ -4,15 +4,16 @@ import { Bridge } from './bridge';
 import { Overlay } from '../ui/overlay';
 import { Tooltip } from '../ui/tooltip';
 
-/**
- * Manages the lifecycle of interaction with a single text input field.
- */
+const SessionConfig = {
+  DebounceDelayMs: 500
+} as const;
+
 export class InputSession {
-  private element: HTMLInputElement | HTMLTextAreaElement;
-  private overlay: Overlay;
+  private readonly element: HTMLInputElement | HTMLTextAreaElement;
+  private readonly overlay: Overlay;
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
   private animationFrameId: number | null = null;
-  private errors: HydratedIssue[] = [];
+  private errors: ReadonlyArray<HydratedIssue> = [];
 
   constructor(element: HTMLInputElement | HTMLTextAreaElement) {
     this.element = element;
@@ -21,27 +22,33 @@ export class InputSession {
     this.runCheck(); 
   }
 
-  private bindEvents() {
-    this.element.addEventListener('input', this.onInput);
-    this.element.addEventListener('scroll', this.onScroll); 
-    this.element.addEventListener('click', this.onClick);
-    window.addEventListener('resize', this.onWindowResize); 
-  }
-
-  destroy() {
-    this.element.removeEventListener('input', this.onInput);
-    this.element.removeEventListener('scroll', this.onScroll);
-    this.element.removeEventListener('click', this.onClick);
-    window.removeEventListener('resize', this.onWindowResize);
-    
-    if (this.debounceTimer) clearTimeout(this.debounceTimer);
-    if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
-
+  destroy(): void {
+    this.unbindEvents();
+    this.clearPendingTasks();
     this.overlay.destroy();
     Tooltip.getInstance().hide();
   }
 
-  private onWindowResize = () => {
+  private bindEvents(): void {
+    this.element.addEventListener('input', this.handleInput);
+    this.element.addEventListener('scroll', this.handleScroll); 
+    this.element.addEventListener('click', this.handleClick);
+    window.addEventListener('resize', this.handleWindowResize); 
+  }
+
+  private unbindEvents(): void {
+    this.element.removeEventListener('input', this.handleInput);
+    this.element.removeEventListener('scroll', this.handleScroll);
+    this.element.removeEventListener('click', this.handleClick);
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  private clearPendingTasks(): void {
+    if (this.debounceTimer) clearTimeout(this.debounceTimer);
+    if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+  }
+
+  private handleWindowResize = (): void => {
     if (this.animationFrameId) return;
     this.animationFrameId = requestAnimationFrame(() => {
       this.overlay.refreshPosition();
@@ -49,47 +56,50 @@ export class InputSession {
     });
   };
 
-  private onInput = () => {
+  private handleInput = (): void => {
     Tooltip.getInstance().hide();
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
-    this.debounceTimer = setTimeout(() => this.runCheck(), 500);
+    this.debounceTimer = setTimeout(() => this.runCheck(), SessionConfig.DebounceDelayMs);
   };
 
-  private onScroll = () => {
+  private handleScroll = (): void => {
     Tooltip.getInstance().hide();
   };
 
-  private onClick = (event: Event) => {
-    const caret = this.element.selectionStart;
-    if (caret === null) return;
+  private handleClick = (event: Event): void => {
+    const caretPosition = this.element.selectionStart;
+    if (caretPosition === null) return;
 
-    const error = this.errors.find(e => caret >= e.start && caret <= e.end);
+    const activeError = this.errors.find(e => caretPosition >= e.start && caretPosition <= e.end);
     
-    if (error) {
-      const errorId = `${error.start}-${error.end}`;
-      const targetEl = this.overlay.getElementByErrorId(errorId);
-      
-      if (targetEl) {
-        event.stopPropagation();
-        Tooltip.getInstance().show(
-          targetEl, 
-          this.element, 
-          error, 
-          errorId, 
-          (fix) => this.applyFix(error, fix)
-        );
-        return;
-      }
+    if (activeError) {
+      this.displayTooltipForError(event, activeError);
+      return;
     }
 
     Tooltip.getInstance().hide();
   };
 
-  private async runCheck() {
+  private displayTooltipForError(event: Event, error: HydratedIssue): void {
+    const errorId = `${error.start}-${error.end}`;
+    const targetElement = this.overlay.getElementByErrorId(errorId);
+    
+    if (targetElement) {
+      event.stopPropagation();
+      Tooltip.getInstance().show(
+        targetElement, 
+        this.element, 
+        error, 
+        errorId, 
+        (fix) => this.applyFix(error, fix)
+      );
+    }
+  }
+
+  private async runCheck(): Promise<void> {
     const text = this.element.value;
     if (!text.trim()) {
-      this.errors = [];
-      this.overlay.renderErrors(text, []);
+      this.updateErrors(text, []);
       return;
     }
 
@@ -97,14 +107,20 @@ export class InputSession {
     if (this.element.value !== text) return; 
 
     if (response.isSuccess) {
-      this.errors = response.issues.map(IssuePresenter.hydrate);
-      this.overlay.renderErrors(text, this.errors);
+      const hydratedErrors = response.issues.map(IssuePresenter.hydrate);
+      this.updateErrors(text, hydratedErrors);
     }
   }
 
-  private applyFix(error: HydratedIssue, fixValue: string) {
+  private updateErrors(text: string, errors: ReadonlyArray<HydratedIssue>): void {
+    this.errors = errors;
+    this.overlay.renderErrors(text, this.errors);
+  }
+
+  private applyFix(error: HydratedIssue, fixValue: string): void {
     const originalText = this.element.value;
     const currentSegment = originalText.substring(error.start, error.end);
+    
     if (currentSegment !== error.original) {
       this.runCheck(); 
       return;

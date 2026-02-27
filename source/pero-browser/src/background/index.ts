@@ -1,31 +1,30 @@
 import { OffscreenManager } from './OffscreenManager';
-import { isAnalyzeRequest, OffscreenAnalyzeMessage } from '../shared/messages';
+import { isAnalyzeRequest, OffscreenAnalyzeMessage, MessageTypes } from '../shared/messages';
 
 const offscreenManager = new OffscreenManager();
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  
-  if (isAnalyzeRequest(message)) {
-    offscreenManager.ensureCreated()
-      .then(() => {
-        const offscreenMsg: OffscreenAnalyzeMessage = {
-          type: 'OFFSCREEN_ANALYZE',
-          payload: message.payload
-        };
-        return chrome.runtime.sendMessage(offscreenMsg);
-      })
-      .then(response => {
-        sendResponse(response);
-      })
-      .catch(err => {
-        console.error('Pero: Background Error', err);
-        sendResponse({ success: false, error: 'Background orchestration failed' });
-      });
+  if (!isAnalyzeRequest(message)) return false;
 
-    return true; 
-  }
-
-  return false;
+  handleAnalysisRequest(message, sendResponse);
+  return true;
 });
 
-console.log('Pero: Background Service Worker Ready');
+async function handleAnalysisRequest(message: any, sendResponse: (response: any) => void): Promise<void> {
+  try {
+    await offscreenManager.ensureCreated();
+    
+    const offscreenMsg: OffscreenAnalyzeMessage = {
+      type: MessageTypes.OffscreenAnalyze,
+      payload: message.payload
+    };
+    
+    const response = await chrome.runtime.sendMessage(offscreenMsg);
+    sendResponse(response);
+  } catch (error) {
+    sendResponse({ 
+      success: false, 
+      error: (error as Error).message 
+    });
+  }
+}

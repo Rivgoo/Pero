@@ -1,23 +1,22 @@
 export class OffscreenManager {
-  private static readonly OFFSCREEN_PATH = 'src/offscreen/index.html';
-  private static readonly IDLE_THRESHOLD_MS = 2 * 60 * 1000; 
+  private static readonly OffscreenPath = 'src/offscreen/index.html';
+  private static readonly IdleThresholdMs = 120_000;
 
-  private creating: Promise<void> | null = null;
-  private shutdownTimer: ReturnType<typeof setTimeout> | null = null;
+  private creatingPromise: Promise<void> | null = null;
+  private shutdownTimerId: ReturnType<typeof setTimeout> | null = null;
 
   async ensureCreated(): Promise<void> {
     this.resetInactivityTimer();
 
-    const hasDoc = await this.hasOffscreenDocument();
-    if (hasDoc) return;
+    const isCreated = await this.hasOffscreenDocument();
+    if (isCreated) return;
 
-    if (this.creating) {
-      await this.creating;
-    } else {
-      this.creating = this.createDocument();
-      await this.creating;
-      this.creating = null;
+    if (!this.creatingPromise) {
+      this.creatingPromise = this.createDocument();
     }
+    
+    await this.creatingPromise;
+    this.creatingPromise = null;
   }
 
   private async hasOffscreenDocument(): Promise<boolean> {
@@ -30,36 +29,34 @@ export class OffscreenManager {
   private async createDocument(): Promise<void> {
     try {
       await chrome.offscreen.createDocument({
-        url: OffscreenManager.OFFSCREEN_PATH,
+        url: OffscreenManager.OffscreenPath,
         reasons: [chrome.offscreen.Reason.WORKERS],
         justification: 'Hosting .NET WASM runtime for text analysis',
       });
-      console.log('Pero: Offscreen Document Created');
-    } catch (e: any) {
-      if (!e.message.includes('Only one offscreen')) {
-        throw e;
-      }
+    } catch (error) {
+      this.handleCreationError(error as Error);
     }
   }
 
-  private resetInactivityTimer() {
-    if (this.shutdownTimer) {
-      clearTimeout(this.shutdownTimer);
+  private handleCreationError(error: Error): void {
+    if (!error.message.includes('Only one offscreen')) {
+      throw error;
     }
-    this.shutdownTimer = setTimeout(() => {
-      this.terminate();
-    }, OffscreenManager.IDLE_THRESHOLD_MS);
   }
 
-  private async terminate() {
-    this.shutdownTimer = null;
-    if (await this.hasOffscreenDocument()) {
-      try {
-        await chrome.offscreen.closeDocument();
-        console.log('Pero: Offscreen Document Terminated due to inactivity');
-      } catch (e) {
-        console.warn('Pero: Failed to terminate offscreen document', e);
-      }
+  private resetInactivityTimer(): void {
+    if (this.shutdownTimerId) {
+      clearTimeout(this.shutdownTimerId);
+    }
+    this.shutdownTimerId = setTimeout(() => this.terminate(), OffscreenManager.IdleThresholdMs);
+  }
+
+  private async terminate(): Promise<void> {
+    this.shutdownTimerId = null;
+    const isCreated = await this.hasOffscreenDocument();
+    
+    if (isCreated) {
+      await chrome.offscreen.closeDocument();
     }
   }
 }

@@ -1,45 +1,53 @@
 import { AnalysisResponse, AnalysisRequest } from '../../shared/contracts';
-import { AnalyzeRequestMessage, MessageResponse } from '../../shared/messages';
-import { STORAGE_KEYS } from '../../shared/constants';
+import { AnalyzeRequestMessage, MessageResponse, MessageTypes } from '../../shared/messages';
+import { StorageKeys } from '../../shared/constants';
 
 export class Bridge {
   static async checkText(text: string): Promise<AnalysisResponse> {
     try {
-      if (!chrome.runtime?.id) {
-        throw new Error('Extension context invalidated');
-      }
+      this.ensureValidContext();
 
-      const storage = await chrome.storage.local.get(STORAGE_KEYS.DEBUG_MODE);
-      const isDebug = (storage[STORAGE_KEYS.DEBUG_MODE] as boolean) ?? false;
+      const storage = await chrome.storage.local.get(StorageKeys.DebugMode);
+      const isDebugMode = Boolean(storage[StorageKeys.DebugMode]);
 
       const payload: AnalysisRequest = {
         requestId: crypto.randomUUID(),
-        text: text,
+        text,
         languageCode: 'uk-UA',
-        debug: isDebug
+        debug: isDebugMode
       };
 
       const message: AnalyzeRequestMessage = {
-        type: 'ANALYZE_REQUEST',
+        type: MessageTypes.AnalyzeRequest,
         payload
       };
 
       const response = await chrome.runtime.sendMessage(message) as MessageResponse<AnalysisResponse>;
-
-      if (response.success && response.data) {
-        return response.data;
-      }
-
-      console.warn('Pero: Analysis failed with error:', response.error);
-      return this.createEmptyResponse();
+      return this.extractResponseData(response);
 
     } catch (error) {
-      console.warn('Pero Bridge Error:', error);
       return this.createEmptyResponse();
     }
   }
 
+  private static ensureValidContext(): void {
+    if (!chrome.runtime?.id) {
+      throw new Error('Extension context invalidated.');
+    }
+  }
+
+  private static extractResponseData(response: MessageResponse<AnalysisResponse>): AnalysisResponse {
+    if (response.success && response.data) {
+      return response.data;
+    }
+    return this.createEmptyResponse();
+  }
+
   private static createEmptyResponse(): AnalysisResponse {
-    return { requestId: '', isSuccess: false, issues: [] };
+    return { 
+      requestId: '', 
+      isSuccess: false, 
+      issues: [] 
+    };
   }
 }

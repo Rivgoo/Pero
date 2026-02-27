@@ -1,84 +1,95 @@
 import { HydratedIssue } from '../../shared/contracts';
 import { mirrorStyles } from '../dom/styles';
 
+export const OverlayClasses = {
+  Container: 'pero-overlay',
+  Error: 'pero-overlay__error'
+} as const;
+
 export class Overlay {
-  private el: HTMLElement;
-  private resizeObserver: ResizeObserver;
-  private target: HTMLElement;
+  private readonly element: HTMLElement;
+  private readonly target: HTMLElement;
+  private readonly resizeObserver: ResizeObserver;
   private isDestroyed = false;
 
   constructor(target: HTMLElement) {
     this.target = target;
+    this.element = this.createOverlayElement();
     
-    this.el = document.createElement('div');
-    this.el.className = 'pero-overlay';
-    document.body.appendChild(this.el);
-
-    this.resizeObserver = new ResizeObserver(() => {
-      if (!this.isDestroyed) this.syncGeometry();
-    });
+    this.resizeObserver = new ResizeObserver(() => this.refreshPosition());
     this.resizeObserver.observe(target);
     
     this.target.addEventListener('scroll', this.handleScroll);
     this.syncGeometry();
   }
 
-  renderErrors(text: string, errors: HydratedIssue[]) {
+  renderErrors(text: string, errors: ReadonlyArray<HydratedIssue>): void {
     if (this.isDestroyed) return;
 
     const fragment = document.createDocumentFragment();
+    const sortedErrors = [...errors].sort((a, b) => a.start - b.start);
     let cursor = 0;
     
-    errors.sort((a, b) => a.start - b.start).forEach(error => {
+    for (const error of sortedErrors) {
       if (cursor < error.start) {
         fragment.appendChild(document.createTextNode(text.substring(cursor, error.start)));
       }
 
-      const span = document.createElement('span');
-      span.className = 'pero-error';
-      span.dataset.errorId = `${error.start}-${error.end}`;
-      span.textContent = text.substring(error.start, error.end);
-      fragment.appendChild(span);
-
+      const errorSpan = this.createErrorSpan(text, error);
+      fragment.appendChild(errorSpan);
       cursor = error.end;
-    });
+    }
 
     if (cursor < text.length) {
       fragment.appendChild(document.createTextNode(text.substring(cursor)));
     }
 
-    this.el.innerHTML = '';
-    this.el.appendChild(fragment);
+    this.element.innerHTML = '';
+    this.element.appendChild(fragment);
     this.syncGeometry();
   }
 
   getElementByErrorId(id: string): HTMLElement | null {
-    return this.el.querySelector(`[data-error-id="${id}"]`);
+    return this.element.querySelector(`[data-error-id="${id}"]`);
   }
 
-  refreshPosition() {
+  refreshPosition(): void {
     if (this.isDestroyed) return;
     this.syncGeometry();
   }
 
-  destroy() {
+  destroy(): void {
     this.isDestroyed = true;
     this.resizeObserver.disconnect();
     this.target.removeEventListener('scroll', this.handleScroll);
-    this.el.remove();
+    this.element.remove();
   }
 
-  private handleScroll = () => {
+  private createOverlayElement(): HTMLElement {
+    const el = document.createElement('div');
+    el.className = OverlayClasses.Container;
+    document.body.appendChild(el);
+    return el;
+  }
+
+  private createErrorSpan(text: string, error: HydratedIssue): HTMLSpanElement {
+    const span = document.createElement('span');
+    span.className = OverlayClasses.Error;
+    span.dataset.errorId = `${error.start}-${error.end}`;
+    span.textContent = text.substring(error.start, error.end);
+    return span;
+  }
+
+  private handleScroll = (): void => {
     requestAnimationFrame(() => {
-      if (!this.isDestroyed) {
-        this.el.scrollTop = this.target.scrollTop;
-        this.el.scrollLeft = this.target.scrollLeft;
-      }
+      if (this.isDestroyed) return;
+      this.element.scrollTop = this.target.scrollTop;
+      this.element.scrollLeft = this.target.scrollLeft;
     });
   };
 
-  private syncGeometry() {
-    mirrorStyles(this.target, this.el);
+  private syncGeometry(): void {
+    mirrorStyles(this.target, this.element);
     this.handleScroll(); 
   }
 }

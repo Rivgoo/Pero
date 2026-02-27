@@ -1,3 +1,3 @@
-export const STORAGE_KEYS = {
-  DEBUG_MODE: 'pero_debug_mode'
+export const StorageKeys = {
+  DebugMode: 'pero_debug_mode'
 } as const;

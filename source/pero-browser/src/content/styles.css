@@ -1,3 +1,18 @@
+:root {
+  --pero-z-overlay: 9999;
+  --pero-z-tooltip: 10000;
+  
+  --pero-color-error: #ff4444;
+  --pero-color-bg: #202124;
+  --pero-color-text-primary: #e8eaed;
+  --pero-color-text-secondary: #bdc1c6;
+  --pero-color-text-muted: #9aa0a6;
+  --pero-color-accent: #8ab4f8;
+  --pero-color-pill-bg: #174ea6;
+  --pero-color-pill-hover: #1a73e8;
+  --pero-color-tooltip-reason: #303134;
+}
+
 .pero-overlay {
   position: absolute;
   pointer-events: none;
@@ -5,21 +20,21 @@
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow: hidden;
-  z-index: 9999;
+  z-index: var(--pero-z-overlay);
   background: transparent;
 }
 
-.pero-error {
-  border-bottom: 2px solid #ff4444;
+.pero-overlay__error {
+  border-bottom: 2px solid var(--pero-color-error);
 }
 
 .pero-tooltip {
   position: absolute;
-  z-index: 10000;
-  background: #202124;
-  color: #e8eaed;
+  z-index: var(--pero-z-tooltip);
+  background: var(--pero-color-bg);
+  color: var(--pero-color-text-primary);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 2px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 2px rgba(0, 0, 0, 0.5);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
   font-size: 13px;
   line-height: 1.4;
@@ -31,14 +46,17 @@
   flex-direction: column;
   opacity: 0;
   transform: translateY(-5px);
-  animation: tooltipFadeIn 0.15s ease-out forwards;
+  animation: pero-tooltip-fade-in 0.15s ease-out forwards;
 }
 
-@keyframes tooltipFadeIn {
-  to { opacity: 1; transform: translateY(0); }
+@keyframes pero-tooltip-fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.tooltip-header-row {
+.pero-tooltip__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,16 +64,16 @@
   margin-bottom: -4px;
 }
 
-.tooltip-brand {
+.pero-tooltip__brand {
   font-size: 11px;
-  color: #9aa0a6;
+  color: var(--pero-color-text-muted);
   white-space: nowrap;
 }
 
-.tooltip-info-btn {
+.pero-tooltip__info-btn {
   background: transparent;
-  border: 1px solid #5f6368;
-  color: #9aa0a6;
+  border: 1px solid var(--pero-color-text-secondary);
+  color: var(--pero-color-text-muted);
   border-radius: 50%;
   width: 22px;
   height: 22px;
@@ -71,44 +89,44 @@
   flex-shrink: 0;
 }
 
-.tooltip-info-btn:hover, .tooltip-info-btn.active {
-  background: #8ab4f8;
-  color: #202124;
-  border-color: #8ab4f8;
+.pero-tooltip__info-btn:hover,
+.pero-tooltip__info-btn--active {
+  background: var(--pero-color-accent);
+  color: var(--pero-color-bg);
+  border-color: var(--pero-color-accent);
 }
 
-.tooltip-title {
+.pero-tooltip__title {
   margin-top: 5px;
   font-size: 11px;
   font-weight: 600;
-  color: #919598;
+  color: var(--pero-color-text-muted);
   margin-bottom: 7px;
 }
 
-.tooltip-reason {
+.pero-tooltip__reason {
   display: none;
   font-size: 12px;
-  color: #bdc1c6;
-  background: #303134;
+  color: var(--pero-color-text-secondary);
+  background: var(--pero-color-tooltip-reason);
   padding: 8px;
   border-radius: 6px;
-  margin-bottom: 4px;
   margin-bottom: 8px;
 }
 
-.tooltip-reason.visible {
+.pero-tooltip__reason--visible {
   display: block;
 }
 
-.suggestions-list {
+.pero-tooltip__suggestions {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
 
-.suggestion-pill {
-  background: #174ea6;
-  color: #ffffff;
+.pero-tooltip__suggestion {
+  background: var(--pero-color-pill-bg);
+  color: var(--pero-color-text-primary);
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
@@ -118,13 +136,6 @@
   flex-grow: 0;
 }
 
-.suggestion-pill:hover {
-  background: #1a73e8;
-}
-
-.no-suggestions {
-  font-size: 12px;
-  color: #9aa0a6;
-  font-style: italic;
-  padding: 4px;
+.pero-tooltip__suggestion:hover {
+  background: var(--pero-color-pill-hover);
 }
