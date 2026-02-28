@@ -2,13 +2,14 @@
 using FluentAssertions.Execution;
 using Pero.Abstractions.Models;
 using Pero.Kernel.Components;
+using Pero.Kernel.Configuration;
 using Pero.Testing.Shared.Loaders;
 
 namespace Pero.Tests.Kernel.Components;
 
 public class StandardPreTokenizerTests
 {
-	private readonly StandardPreTokenizer _preTokenizer = new();
+	private readonly StandardPreTokenizer _preTokenizer = new(PreTokenizerConfig.CreateDefault());
 
 	public class PreTokenizationTestSuite
 	{

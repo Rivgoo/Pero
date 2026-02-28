@@ -1,6 +1,7 @@
 ﻿using Pero.Languages.Uk_UA.Tools.Console.Commands;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
+using Pero.Tools.Compiler.Services;
 
 namespace Pero.Languages.Uk_UA.Tools.Console;
 
@@ -18,15 +19,24 @@ public class Application
 	public Application()
 	{
 		_ui = new ConsoleInterface();
-
 		var currentDirectory = Directory.GetCurrentDirectory();
 		var fileLocator = new FileLocator(currentDirectory);
 
-		_compileCommand = new CompileCommand(_ui, fileLocator);
+		var tagParser = new UkTagParser();
+		var dictParser = new DictionaryParser(tagParser);
+		var fstSerializer = new FstSerializer();
+		var compilerFacade = new DictionaryCompilerFacade(dictParser, fstSerializer);
+
+		var ngramCounter = new NgramCounter();
+		var ngramCompressor = new NgramCompressor();
+		var builderFacade = new NgramBuilderFacade(ngramCounter, ngramCompressor);
+
+		_compileCommand = new CompileCommand(_ui, fileLocator, compilerFacade);
+		_buildNgramsCommand = new BuildNgramsCommand(_ui, fileLocator, builderFacade);
+
 		_analyzeCommand = new AnalyzeCommand(_ui, fileLocator);
 		_memoryUsageCommand = new MemoryUsageCommand(_ui, fileLocator);
 		_stressTestCommand = new StressTestCommand(_ui, fileLocator);
-		_buildNgramsCommand = new BuildNgramsCommand(_ui, fileLocator);
 		_analyzeNgramCommand = new AnalyzeNgramCommand(_ui, fileLocator);
 		_generateTestsCommand = new GenerateTestsCommand(_ui, fileLocator);
 	}

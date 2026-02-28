@@ -4,10 +4,6 @@ using Pero.Kernel.Utils;
 
 namespace Pero.Languages.Uk_UA.Rules.Spelling;
 
-/// <summary>
-/// Detects words that illegally mix Cyrillic and Latin alphabets.
-/// Generates corrections using both Visual Homoglyph mapping and Keyboard Layout mapping.
-/// </summary>
 public class MixedAlphabetRule : BaseGrammarRule
 {
 	public override string Id => "UK_UA_SPELLING_MIXED_ALPHABETS";
@@ -22,7 +18,6 @@ public class MixedAlphabetRule : BaseGrammarRule
 		{'T', 'Т'}, {'X', 'Х'}, {'x', 'х'}, {'y', 'у'}, {'Y', 'У'}
 	};
 
-	// (QWERTY -> ЙЦУКЕН)
 	private static readonly Dictionary<char, char> Layout = new()
 	{
 		{'q', 'й'}, {'w', 'ц'}, {'e', 'у'}, {'r', 'к'}, {'t', 'е'}, {'y', 'н'}, {'u', 'г'}, {'i', 'ш'}, {'o', 'щ'}, {'p', 'з'}, {'[', 'х'}, {']', 'ї'},
@@ -114,13 +109,6 @@ public class MixedAlphabetRule : BaseGrammarRule
 		return suggestions;
 	}
 
-	private static bool IsCyrillic(char c)
-	{
-		return (c >= '\u0400' && c <= '\u04FF') || (c >= '\u0500' && c <= '\u052F');
-	}
-
-	private static bool IsLatin(char c)
-	{
-		return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
-	}
+	private static bool IsCyrillic(char c) => (c >= '\u0400' && c <= '\u04FF') || (c >= '\u0500' && c <= '\u052F');
+	private static bool IsLatin(char c) => (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
 }

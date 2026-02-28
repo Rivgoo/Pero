@@ -4,30 +4,23 @@ using Pero.Kernel.Registry;
 
 namespace Pero.Kernel;
 
-/// <summary>
-/// Provides a high-level facade for the text analysis engine.
-/// This is the primary entry point for external consumers like the WasmHost.
-/// </summary>
 public class Analyzer
 {
-	private readonly LanguageRegistry _registry;
+	private readonly LanguageRegistry registry;
 
 	public Analyzer(LanguageRegistry registry)
 	{
-		_registry = registry;
+		this.registry = registry;
 	}
 
-	/// <summary>
-	/// Analyzes a text using the appropriate language module.
-	/// </summary>
-	public IReadOnlyList<TextIssue> Analyze(string text, string languageCode)
+	public IReadOnlyList<TextIssue> Analyze(string text, string languageCode, bool enableTelemetry = false)
 	{
 		if (string.IsNullOrEmpty(text))
-			return Array.Empty<TextIssue>();
+			return new List<TextIssue>();
 
-		var module = _registry.GetByCode(languageCode);
-		var pipeline = new AnalysisPipeline(module);
-		var result = pipeline.Run(text);
+		var module = registry.GetByCode(languageCode);
+		var pipeline = new AnalysisPipeline(module, enableTelemetry);
+		var result = pipeline.Run(text, enableTelemetry);
 
 		return result.Issues;
 	}

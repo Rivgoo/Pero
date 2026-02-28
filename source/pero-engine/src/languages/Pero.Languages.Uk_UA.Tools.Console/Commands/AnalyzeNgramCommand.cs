@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
-using Pero.Languages.Uk_UA.Dictionaries.Ngrams;
+using Pero.Kernel.Ngrams;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
-using Pero.Languages.Uk_UA.Utils;
+using Pero.Kernel.Utils;
 
 namespace Pero.Languages.Uk_UA.Tools.Console.Commands;
 

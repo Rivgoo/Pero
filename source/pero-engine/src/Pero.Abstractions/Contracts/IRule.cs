@@ -1,23 +1,10 @@
 ﻿using Pero.Abstractions.Models;
+using Pero.Abstractions.Telemetry;
 
-namespace Pero.Abstractions.Contracts
+namespace Pero.Abstractions.Contracts;
+
+public interface IRule
 {
-	/// <summary>
-	/// Defines the contract for a single analysis rule.
-	/// </summary>
-	public interface IRule
-	{
-		/// <summary>
-		/// A unique, machine-readable identifier for the rule.
-		/// Example: "TYPO_SPACE_BEFORE_PUNCT".
-		/// </summary>
-		string Id { get; }
-
-		/// <summary>
-		/// Analyzes a sentence and returns any issues found.
-		/// </summary>
-		/// <param name="sentence">The sentence to check.</param>
-		/// <returns>A collection of found issues.</returns>
-		IEnumerable<TextIssue> Check(Sentence sentence);
-	}
+	string Id { get; }
+	IEnumerable<TextIssue> Check(Sentence sentence, ITelemetryTracker telemetry);
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Concurrent;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
-using Pero.Languages.Uk_UA.Dictionaries;
-using Pero.Languages.Uk_UA.Utils;
+using Pero.Kernel.Dictionaries;
+using Pero.Kernel.Utils;
 
 namespace Pero.Languages.Uk_UA.Tools.Console.Services;
 

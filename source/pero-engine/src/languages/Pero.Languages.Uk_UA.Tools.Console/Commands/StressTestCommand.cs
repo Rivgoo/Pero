@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using Pero.Languages.Uk_UA.Dictionaries;
+using Pero.Kernel.Dictionaries;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
 

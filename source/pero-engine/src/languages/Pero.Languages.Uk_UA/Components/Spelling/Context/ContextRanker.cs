@@ -1,8 +1,7 @@
 ﻿using Pero.Abstractions.Models;
+using Pero.Kernel.Fuzzy;
+using Pero.Kernel.Ngrams;
 using Pero.Kernel.Utils;
-using Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
-using Pero.Languages.Uk_UA.Dictionaries.Ngrams;
-using Pero.Languages.Uk_UA.Utils;
 
 namespace Pero.Languages.Uk_UA.Components.Spelling.Context;
 

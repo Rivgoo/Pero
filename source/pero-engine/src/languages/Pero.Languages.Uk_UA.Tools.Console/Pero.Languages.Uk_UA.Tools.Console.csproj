@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Pero.Abstractions\Pero.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Pero.Kernel\Pero.Kernel.csproj" />
+    <ProjectReference Include="..\..\Pero.Tools.Compiler\Pero.Tools.Compiler.csproj" />
     <ProjectReference Include="..\Pero.Languages.Uk_UA\Pero.Languages.Uk_UA.csproj" />
   </ItemGroup>
 

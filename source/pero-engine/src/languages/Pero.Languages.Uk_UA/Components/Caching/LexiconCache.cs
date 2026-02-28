@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using Pero.Abstractions.Models;
-using Pero.Languages.Uk_UA.Dictionaries;
+using Pero.Kernel.Dictionaries;
 
 namespace Pero.Languages.Uk_UA.Components.Caching;
 

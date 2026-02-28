@@ -1,19 +1,18 @@
 ﻿using Pero.Abstractions.Contracts;
 using Pero.Abstractions.Models;
+using Pero.Kernel.Components.Segmentation;
 
 namespace Pero.Kernel.Components;
 
 public abstract class BaseSentenceSegmenter : ISentenceSegmenter
 {
-	protected readonly HashSet<string> Terminators;
-	protected readonly HashSet<string> ClosingQuotes;
+	protected readonly ISegmentationProfile Profile;
+	private readonly IReadOnlyList<ISentenceBoundaryRule> boundaryRules;
 
-	protected BaseSentenceSegmenter(
-		IEnumerable<string> terminators,
-		IEnumerable<string> closingQuotes)
+	protected BaseSentenceSegmenter(ISegmentationProfile profile, IEnumerable<ISentenceBoundaryRule> rules)
 	{
-		Terminators = terminators.ToHashSet();
-		ClosingQuotes = closingQuotes.ToHashSet();
+		Profile = profile;
+		boundaryRules = rules.ToList();
 	}
 
 	public IEnumerable<Sentence> Segment(IEnumerable<Token> tokens)
@@ -48,65 +47,21 @@ public abstract class BaseSentenceSegmenter : ISentenceSegmenter
 		}
 	}
 
-	protected abstract bool ShouldBreakSentence(List<Token> context, int currentIndex);
-
-	protected Token? GetPreviousSignificant(List<Token> context, int index)
+	protected virtual bool ShouldBreakSentence(List<Token> context, int currentIndex)
 	{
-		return GetPreviousSignificantWithIndex(context, index).Token;
-	}
-
-	protected (Token? Token, int Index) GetPreviousSignificantWithIndex(List<Token> context, int index)
-	{
-		for (int i = index - 1; i >= 0; i--)
+		foreach (var rule in boundaryRules)
 		{
-			if (context[i].Type != TokenType.Whitespace) return (context[i], i);
+			var decision = rule.Check(context, currentIndex, Profile);
+			if (decision == SentenceBoundaryDecision.Break) return true;
+			if (decision == SentenceBoundaryDecision.DoNotBreak) return false;
 		}
-		return (null, -1);
-	}
 
-	protected Token? GetNextSignificant(List<Token> context, int index)
-	{
-		for (int i = index + 1; i < context.Count; i++)
-		{
-			if (context[i].Type != TokenType.Whitespace) return context[i];
-		}
-		return null;
-	}
-
-	protected bool IsCapitalized(Token? token)
-	{
-		if (token == null || token.Type != TokenType.Word) return false;
-		return char.IsUpper(token.Text[0]);
-	}
-
-	protected bool IsLowerCase(Token? token)
-	{
-		if (token == null || token.Type != TokenType.Word) return false;
-		return char.IsLower(token.Text[0]);
-	}
-
-	protected bool IsInitial(Token? token)
-	{
-		return token != null
-			   && token.Type == TokenType.Word
-			   && token.Text.Length == 1
-			   && char.IsUpper(token.Text[0]);
-	}
-
-	protected bool IsNumber(Token? token)
-	{
-		return token != null && token.Type == TokenType.Number;
-	}
-
-	protected bool IsInternalPunctuation(Token? token)
-	{
-		if (token == null || token.Type != TokenType.Punctuation) return false;
-		return token.Text == "," || token.Text == ";" || token.Text == ":";
+		return true;
 	}
 
 	protected bool IsPotentialTerminator(Token token)
 	{
-		return token != null && token.Type == TokenType.Punctuation && Terminators.Contains(token.Text);
+		return token != null && token.Type == TokenType.Punctuation && Profile.Terminators.Contains(token.Text);
 	}
 
 	private bool IsHardLineBreak(Token token)
@@ -122,7 +77,7 @@ public abstract class BaseSentenceSegmenter : ISentenceSegmenter
 			var next = tokens[lookahead];
 			if (next.Type == TokenType.Whitespace) break;
 
-			if (ClosingQuotes.Contains(next.Text) || Terminators.Contains(next.Text))
+			if (Profile.ClosingQuotes.Contains(next.Text) || Profile.Terminators.Contains(next.Text))
 			{
 				buffer.Add(next);
 				lookahead++;

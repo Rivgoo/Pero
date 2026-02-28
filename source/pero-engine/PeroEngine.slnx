@@ -2,6 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Pero.Abstractions/Pero.Abstractions.csproj" />
     <Project Path="src/Pero.Kernel/Pero.Kernel.csproj" />
+    <Project Path="src/Pero.Tools.Compiler/Pero.Tools.Compiler.csproj" Id="819574e2-950b-4529-b86e-bf03ec8a5e2c" />
     <Project Path="src/Pero.WasmHost/Pero.WasmHost.csproj" />
   </Folder>
   <Folder Name="/src/languages/">

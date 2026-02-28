@@ -10,23 +10,23 @@ namespace Pero.Tests.Languages.Uk_UA.Pipeline;
 
 public class UkrainianStressTests
 {
-	private readonly ITestOutputHelper _output;
-	private readonly AnalysisPipeline _pipeline;
+	private readonly ITestOutputHelper output;
+	private readonly AnalysisPipeline pipeline;
 
 	public UkrainianStressTests(ITestOutputHelper output)
 	{
-		_output = output;
-		_pipeline = new AnalysisPipeline(new UkrainianLanguageModule());
+		this.output = output;
+
+		pipeline = new AnalysisPipeline(new UkrainianLanguageModule(), enableTelemetry: true);
 	}
 
 	[Fact]
 	public void Run_ShouldProcessLargeTextWithoutExceptionsAndReportMetrics()
 	{
 		var text = LoadStressText();
-
 		var stopwatch = Stopwatch.StartNew();
 
-		var result = _pipeline.Run(text, enableTelemetry: true);
+		var result = pipeline.Run(text, enableTelemetry: true);
 
 		stopwatch.Stop();
 
@@ -39,7 +39,7 @@ public class UkrainianStressTests
 
 	private void ReportMetrics(int textLength, AnalysisResult result, TimeSpan elapsed)
 	{
-		var sentencesCount = result.Document.Sentences.Count;
+		var sentencesCount = result.Document!.Sentences.Count;
 		var tokensCount = result.Document.Sentences.Sum(s => s.Tokens.Count);
 		var wordsCount = result.Document.Sentences.Sum(s => s.Tokens.Count(t => t.Type == TokenType.Word));
 		var issuesCount = result.Issues.Count;
@@ -47,51 +47,85 @@ public class UkrainianStressTests
 		var charsPerSecond = textLength / elapsed.TotalSeconds;
 		var wordsPerSecond = wordsCount / elapsed.TotalSeconds;
 
-		_output.WriteLine("=== PERFORMANCE METRICS ===");
-		_output.WriteLine($"Total Time:      {elapsed.TotalMilliseconds:N0} ms");
-		_output.WriteLine($"Text Length:     {textLength:N0} chars");
-		_output.WriteLine($"Words:           {wordsCount:N0}");
-		_output.WriteLine($"Tokens:          {tokensCount:N0}");
-		_output.WriteLine($"Sentences:       {sentencesCount:N0}");
-		_output.WriteLine($"Issues Found:    {issuesCount:N0}");
+		output.WriteLine("=== PERFORMANCE METRICS ===");
+		output.WriteLine($"Total Time:      {elapsed.TotalMilliseconds:N0} ms");
+		output.WriteLine($"Text Length:     {textLength:N0} chars");
+		output.WriteLine($"Words:           {wordsCount:N0}");
+		output.WriteLine($"Tokens:          {tokensCount:N0}");
+		output.WriteLine($"Sentences:       {sentencesCount:N0}");
+		output.WriteLine($"Issues Found:    {issuesCount:N0}");
 
-		_output.WriteLine("\n--- STAGE TELEMETRY ---");
-		_output.WriteLine($"1. Cleaning:       {result.Telemetry!.CleaningMs:F2} ms");
-		_output.WriteLine($"2. Pre-Tokenize:   {result.Telemetry.PreTokenizationMs:F2} ms");
-		_output.WriteLine($"3. Tokenize:       {result.Telemetry.TokenizationMs:F2} ms");
-		_output.WriteLine($"4. Segmentation:   {result.Telemetry.SegmentationMs:F2} ms");
-		_output.WriteLine($"5. Morphology:     {result.Telemetry.MorphologyMs:F2} ms");
-		_output.WriteLine($"6. Spell Check:    {result.Telemetry.SpellCheckMs:F2} ms");
-		_output.WriteLine($"7. Grammar Rules:  {result.Telemetry.GrammarRulesMs:F2} ms");
-		_output.WriteLine($"   [Pipeline Internal Total: {result.Telemetry.TotalMs:F2} ms]");
+		output.WriteLine("\n--- PIPELINE STAGES (Execution Order) ---");
+		var stages = result.Telemetry!.Metrics
+			.Where(k => k.Key.StartsWith("Stage."))
+			.ToList();
 
-		if (result.Telemetry.SpellCheckDetails != null)
+		foreach (var kvp in stages)
 		{
-			var sc = result.Telemetry.SpellCheckDetails;
-			_output.WriteLine("\n--- SPELL CHECK DETAILS ---");
-			_output.WriteLine($"Session Cache Init: {sc.SessionCacheInitMs:F2} ms");
-			_output.WriteLine($"Non-UA Check:       {sc.NonUkrainianCheckMs:F2} ms");
-			_output.WriteLine($"String Norm:        {sc.StringNormalizationMs:F2} ms");
-			_output.WriteLine($"Heuristics Gen:     {sc.HeuristicsGenerationMs:F2} ms");
-			_output.WriteLine($"Heuristics Lookup:  {sc.HeuristicsDictionaryLookupMs:F2} ms");
-			_output.WriteLine($"Virtual SymSpell:   {sc.SymSpellMs:F2} ms");
-			_output.WriteLine($"Fuzzy Matcher:      {sc.FuzzyMatcherMs:F2} ms");
-			_output.WriteLine($"Context Ranking:    {sc.ContextRankingMs:F2} ms");
-			_output.WriteLine($"Suggestion Format:  {sc.SuggestionFormattingMs:F2} ms");
+			output.WriteLine($"{kvp.Key.Replace("Stage.", ""),-20}: {kvp.Value,8:F2} ms");
 		}
 
-		_output.WriteLine("\n--- SPEED ---");
-		_output.WriteLine($"Chars/sec:       {charsPerSecond:N0}");
-		_output.WriteLine($"Words/sec:       {wordsPerSecond:N0}");
-		_output.WriteLine("===========================");
+		output.WriteLine("\n--- SPELL CHECK DETAILS (Slowest First) ---");
+		var spellCheckMetrics = result.Telemetry.Metrics
+			.Where(k => k.Key.StartsWith("SpellCheck."))
+			.OrderByDescending(x => x.Value)
+			.ToList();
+
+		foreach (var kvp in spellCheckMetrics)
+		{
+			output.WriteLine($"{kvp.Key.Replace("SpellCheck.", ""),-25}: {kvp.Value,8:F2} ms");
+		}
+
+		output.WriteLine("\n--- GRAMMAR & SPELLING RULES (Slowest First) ---");
+		var ruleMetrics = result.Telemetry.Metrics
+			.Where(k => k.Key.StartsWith("Rule."))
+			.OrderByDescending(x => x.Value)
+			.ToList();
+
+		if (ruleMetrics.Count > 0)
+		{
+			foreach (var kvp in ruleMetrics)
+			{
+				output.WriteLine($"{kvp.Key.Replace("Rule.", ""),-35}: {kvp.Value,8:F2} ms");
+			}
+		}
+		else
+		{
+			output.WriteLine("No rules executed or no telemetry collected.");
+		}
+
+		output.WriteLine($"\n[Total Internally Tracked Pipeline Time: {result.Telemetry.Metrics.GetValueOrDefault("Pipeline.Total", 0):F2} ms]");
+
+		output.WriteLine("\n--- SPEED ---");
+		output.WriteLine($"Chars/sec:       {charsPerSecond:N0}");
+		output.WriteLine($"Words/sec:       {wordsPerSecond:N0}");
+
+		output.WriteLine("\n--- ISSUES BREAKDOWN ---");
+		if (result.Issues.Count > 0)
+		{
+			var issuesByRule = result.Issues
+				.GroupBy(i => i.RuleId)
+				.OrderByDescending(g => g.Count());
+
+			foreach (var group in issuesByRule)
+			{
+				output.WriteLine($"{group.Key,-35}: {group.Count(),5:N0} issues");
+			}
+		}
+		else
+		{
+			output.WriteLine("No issues found in the text.");
+		}
+
+		output.WriteLine("===========================");
 	}
 
 	private static string LoadStressText()
 	{
 		var relativePath = Path.Combine("TestCases", "uk-UA", "Stress", "EndToEndStressTest.txt");
 		var baseDir = AppContext.BaseDirectory;
-
 		var primaryPath = Path.GetFullPath(Path.Combine(baseDir, relativePath));
+
 		if (File.Exists(primaryPath)) return File.ReadAllText(primaryPath);
 
 		return "Резервний текст. Файл для стрес-тесту не знайдено. Чекаю на наступний етап.";

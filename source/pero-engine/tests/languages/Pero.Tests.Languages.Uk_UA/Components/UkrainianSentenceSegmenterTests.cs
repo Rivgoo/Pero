@@ -1,5 +1,6 @@
 ﻿using Pero.Abstractions.Contracts;
 using Pero.Languages.Uk_UA.Components;
+using Pero.Languages.Uk_UA.Configuration;
 using Pero.Testing.Shared.Data.Segmentation;
 using Pero.Testing.Shared.Loaders;
 using Pero.Testing.Shared.Segmentation;
@@ -8,8 +9,16 @@ namespace Pero.Tests.Languages.Uk_UA.Components;
 
 public class UkrainianSentenceSegmenterTests : SentenceSegmenterTestBase
 {
+	private readonly ISegmentationProfile profile;
+
+	public UkrainianSentenceSegmenterTests()
+	{
+		profile = new UkrainianSegmentationProfile();
+	}
+
 	protected override ITokenizer CreateTokenizer() => new UkrainianTokenizer();
-	protected override ISentenceSegmenter CreateSegmenter() => new UkrainianSentenceSegmenter();
+
+	protected override ISentenceSegmenter CreateSegmenter() => new UkrainianSentenceSegmenter(profile);
 
 	[Theory]
 	[MemberData(nameof(GetTestCases))]

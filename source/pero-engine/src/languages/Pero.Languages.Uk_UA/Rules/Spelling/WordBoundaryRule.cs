@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Pero.Abstractions.Models;
+using Pero.Kernel.Dictionaries;
 using Pero.Kernel.Rules;
-using Pero.Languages.Uk_UA.Dictionaries;
 
 namespace Pero.Languages.Uk_UA.Rules.Spelling;
 
@@ -11,11 +11,11 @@ public class WordBoundaryRule : BaseGrammarRule
 	public override IssueCategory Category => IssueCategory.Spelling;
 	public override IssueSeverity Severity => IssueSeverity.Warning;
 
-	private readonly CompiledDictionary _dictionary;
+	private readonly CompiledDictionary dictionary;
 
 	public WordBoundaryRule(CompiledDictionary dictionary)
 	{
-		_dictionary = dictionary;
+		this.dictionary = dictionary;
 	}
 
 	protected override IEnumerable<TextIssue> Analyze(Sentence sentence)
@@ -55,7 +55,7 @@ public class WordBoundaryRule : BaseGrammarRule
 
 				var suggestions = new List<string>();
 
-				if (cleanText.Length > 0 && _dictionary.Analyze(cleanText.ToLowerInvariant()).Any())
+				if (cleanText.Length > 0 && dictionary.Analyze(cleanText.ToLowerInvariant()).Any())
 				{
 					suggestions.Add(MatchCapitalization(cleanText, originalText));
 				}

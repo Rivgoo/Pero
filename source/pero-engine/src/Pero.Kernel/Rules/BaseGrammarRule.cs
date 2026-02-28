@@ -1,42 +1,36 @@
 ﻿using Pero.Abstractions.Contracts;
 using Pero.Abstractions.Models;
+using Pero.Abstractions.Telemetry;
 
 namespace Pero.Kernel.Rules;
 
-/// <summary>
-/// A foundation for grammar and spelling rules.
-/// Automatically handles the skipping of technical fragments (URLs, code, etc.).
-/// </summary>
 public abstract class BaseGrammarRule : IRule
 {
 	public abstract string Id { get; }
 	public abstract IssueCategory Category { get; }
 	public abstract IssueSeverity Severity { get; }
 
-	public IEnumerable<TextIssue> Check(Sentence sentence)
+	public IEnumerable<TextIssue> Check(Sentence sentence, ITelemetryTracker telemetry)
 	{
 		if (sentence.Tokens.Count == 0)
 		{
 			yield break;
 		}
 
-		foreach (var issue in Analyze(sentence))
+		using (telemetry.Measure($"Rule.{Id}"))
 		{
-			issue.RuleId = Id;
-			issue.Category = Category;
-			issue.Severity = Severity;
-			yield return issue;
+			foreach (var issue in Analyze(sentence))
+			{
+				issue.RuleId = Id;
+				issue.Category = Category;
+				issue.Severity = Severity;
+				yield return issue;
+			}
 		}
 	}
 
-	/// <summary>
-	/// Implement this method to define the specific logic of the rule.
-	/// </summary>
 	protected abstract IEnumerable<TextIssue> Analyze(Sentence sentence);
 
-	/// <summary>
-	/// Determines if a token should be ignored by standard linguistic rules.
-	/// </summary>
 	protected bool IsTechnical(Token token)
 	{
 		return token.Type switch

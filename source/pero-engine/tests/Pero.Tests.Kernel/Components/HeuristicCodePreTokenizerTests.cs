@@ -2,18 +2,20 @@
 using FluentAssertions.Execution;
 using Pero.Abstractions.Models;
 using Pero.Kernel.Components;
+using Pero.Kernel.Configuration;
 using Pero.Testing.Shared.Loaders;
 
 namespace Pero.Tests.Kernel.Components;
 
 public class HeuristicCodePreTokenizerTests
 {
-	private readonly HeuristicCodePreTokenizer _tokenizer;
+	private readonly HeuristicCodePreTokenizer tokenizer;
 
 	public HeuristicCodePreTokenizerTests()
 	{
-		var inner = new StandardPreTokenizer();
-		_tokenizer = new HeuristicCodePreTokenizer(inner);
+		var config = PreTokenizerConfig.CreateDefault();
+		var inner = new StandardPreTokenizer(config);
+		tokenizer = new HeuristicCodePreTokenizer(inner, config);
 	}
 
 	public class CodeTestSuite
@@ -41,10 +43,8 @@ public class HeuristicCodePreTokenizerTests
 	[MemberData(nameof(GetCodeTestCases))]
 	public void Scan_ShouldDetectCodeBlocks(CodeTestCase testCase, string fileName)
 	{
-		// Act
-		var result = _tokenizer.Scan(testCase.Input).ToList();
+		var result = tokenizer.Scan(testCase.Input).ToList();
 
-		// Assert
 		using (new AssertionScope())
 		{
 			result.Should().HaveSameCount(testCase.Expected,

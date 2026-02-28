@@ -1,8 +1,8 @@
 ﻿using Pero.Abstractions.Models;
 using Pero.Abstractions.Models.Morphology;
+using Pero.Kernel.Dictionaries;
+using Pero.Kernel.Fuzzy;
 using Pero.Kernel.Utils;
-using Pero.Languages.Uk_UA.Dictionaries;
-using Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
 
 namespace Pero.Languages.Uk_UA.Components.Spelling.Context;
 
