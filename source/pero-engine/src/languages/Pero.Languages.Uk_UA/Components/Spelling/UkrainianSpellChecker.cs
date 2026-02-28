@@ -6,6 +6,7 @@ using Pero.Kernel.Ngrams;
 using Pero.Kernel.Utils;
 using Pero.Languages.Uk_UA.Components.Caching;
 using Pero.Languages.Uk_UA.Components.Spelling.Context;
+using Pero.Languages.Uk_UA.Extensions;
 
 namespace Pero.Languages.Uk_UA.Components;
 
@@ -16,15 +17,15 @@ public class UkrainianSpellChecker : ISpellChecker
 	private const char CanonicalApostrophe = '\'';
 	private const int MinCandidatesForEarlyExit = 3;
 
-	private readonly FuzzyMatcher fuzzyMatcher;
-	private readonly VirtualSymSpell virtualSymSpell;
+	private readonly FuzzyMatcher<UkMorphologyTag> fuzzyMatcher;
+	private readonly VirtualSymSpell<UkMorphologyTag> virtualSymSpell;
 	private readonly LexiconCache lexicon;
 	private readonly NgramLanguageModel ngramModel;
 	private readonly IReadOnlyList<ISpellingHeuristic> heuristics;
 
 	public UkrainianSpellChecker(
-		FuzzyMatcher fuzzyMatcher,
-		VirtualSymSpell virtualSymSpell,
+		FuzzyMatcher<UkMorphologyTag> fuzzyMatcher,
+		VirtualSymSpell<UkMorphologyTag> virtualSymSpell,
 		LexiconCache lexicon,
 		NgramLanguageModel ngramModel,
 		IEnumerable<ISpellingHeuristic> heuristics)
@@ -63,7 +64,7 @@ public class UkrainianSpellChecker : ISpellChecker
 
 				if (!hasHomoglyphs && ContainsNonUkrainianChars(normalizedText)) continue;
 
-				var combinedCandidates = new List<CorrectionCandidate>();
+				var combinedCandidates = new List<CorrectionCandidate<UkMorphologyTag>>();
 				string searchTarget = hasHomoglyphs ? CleanHomoglyphs(normalizedText) : normalizedText;
 				char userApostropheStyle = DetectUserApostrophe(token.Text);
 
@@ -103,7 +104,17 @@ public class UkrainianSpellChecker : ISpellChecker
 					}
 				}
 
-				IReadOnlyList<CorrectionCandidate> rankedCandidates;
+				//if (combinedCandidates.Count == 0)
+				//{
+				//	using (telemetry.Measure("SpellCheck.FuzzyMatcher"))
+				//	{
+				//		var deepCandidates = fuzzyMatcher.Suggest(searchTarget);
+				//		if (deepCandidates.Length > 0)
+				//			combinedCandidates.AddRange(deepCandidates);
+				//	}
+				//}
+
+				IReadOnlyList<CorrectionCandidate<UkMorphologyTag>> rankedCandidates;
 				using (telemetry.Measure("SpellCheck.ContextRanking"))
 				{
 					rankedCandidates = contextRanker.Rank(sentence, token, combinedCandidates);
@@ -133,13 +144,14 @@ public class UkrainianSpellChecker : ISpellChecker
 		}
 	}
 
-	private void TryAddDictCandidates(string word, List<CorrectionCandidate> pool, float distance, float bonus)
+	private void TryAddDictCandidates(string word, List<CorrectionCandidate<UkMorphologyTag>> pool, float distance, float bonus)
 	{
 		var dictTags = lexicon.GetCandidates(word);
 		if (dictTags.Count > 0)
 		{
 			float score = distance - bonus - 10.0f;
-			pool.Add(new CorrectionCandidate(word, distance, 31, score, dictTags.Select(tg => tg.Tagset).ToArray()));
+			var typedTags = dictTags.Select(tg => tg.Tag as UkMorphologyTag).Where(t => t != null).ToArray();
+			pool.Add(new CorrectionCandidate<UkMorphologyTag>(word, distance, 31, score, typedTags!));
 		}
 	}
 

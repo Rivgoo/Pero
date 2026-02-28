@@ -1,4 +1,5 @@
 ﻿using Pero.Kernel.Dictionaries;
+using Pero.Languages.Uk_UA.Models.Morphology;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
 
@@ -35,9 +36,10 @@ public class MemoryUsageCommand
 
 		long memoryBefore = GC.GetTotalMemory(true);
 
-		var dictionary = new CompiledDictionary();
+		var dictionary = new FstSuffixDictionary<UkMorphologyTag>();
+		var decoder = new UkMorphologyDecoder();
 		using var fileStream = new FileStream(selectedFile, FileMode.Open, FileAccess.Read);
-		dictionary.Load(fileStream);
+		dictionary.Load(fileStream, decoder);
 
 		long memoryAfter = GC.GetTotalMemory(true);
 		long memoryUsed = memoryAfter - memoryBefore;

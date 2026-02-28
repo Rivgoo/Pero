@@ -1,4 +1,6 @@
-﻿using Pero.Kernel.Dictionaries;
+﻿using Pero.Abstractions.Models.Morphology;
+using Pero.Kernel.Dictionaries;
+using Pero.Languages.Uk_UA.Models.Morphology;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
 using System.Diagnostics;
@@ -41,13 +43,14 @@ public class AnalyzeCommand
 
 		_ui.ShowMessage($"\nLoading dictionary: {selectedFile} ...");
 
-		var dictionary = new CompiledDictionary();
+		var dictionary = new FstSuffixDictionary<UkMorphologyTag>();
+		var decoder = new UkMorphologyDecoder();
 		var stopwatch = Stopwatch.StartNew();
 
 		try
 		{
 			using var fileStream = new FileStream(selectedFile, FileMode.Open, FileAccess.Read);
-			dictionary.Load(fileStream);
+			dictionary.Load(fileStream, decoder);
 
 			stopwatch.Stop();
 			_ui.ShowSuccess($"Dictionary loaded in {stopwatch.ElapsedMilliseconds} ms.");
@@ -85,8 +88,7 @@ public class AnalyzeCommand
 				{
 					_ui.ShowMessage($"\n>>> Result:");
 					_ui.ShowMessage($"  Lemma:    {info.Lemma.ToUpperInvariant()}");
-					_ui.ShowMessage($"  POS:      {info.Tagset.PartOfSpeech}");
-					_ui.ShowMessage($"  Tags:     {FormatTags(info.Tagset)}");
+					_ui.ShowMessage($"  Tags:     {FormatTags(info.Tag)}");
 				}
 
 				if (showParadigm)
@@ -102,7 +104,7 @@ public class AnalyzeCommand
 		}
 	}
 
-	private void GenerateAndShowParadigm(CompiledDictionary dictionary, string lemma)
+	private void GenerateAndShowParadigm(FstSuffixDictionary<UkMorphologyTag> dictionary, string lemma)
 	{
 		System.Console.WriteLine();
 		_ui.ShowMessage($"=== PARADIGM FOR: {lemma.ToUpperInvariant()} ===");
@@ -110,8 +112,10 @@ public class AnalyzeCommand
 		var stopwatch = Stopwatch.StartNew();
 
 		var allForms = dictionary.GetAllForms(lemma)
-			.OrderBy(f => f.Tagset.Case)
-			.ThenBy(f => f.Tagset.Number)
+			.Select(f => new { f.Form, f.Tag })
+			.Where(f => f.Tag != null)
+			.OrderBy(f => f.Tag!.Case)
+			.ThenBy(f => f.Tag!.Number)
 			.ToList();
 
 		stopwatch.Stop();
@@ -128,24 +132,27 @@ public class AnalyzeCommand
 
 		foreach (var form in allForms)
 		{
-			_ui.ShowMessage(string.Format(format, form.Form, FormatTags(form.Tagset)));
+			_ui.ShowMessage(string.Format(format, form.Form, FormatTags(form.Tag)));
 		}
 
 		_ui.ShowMessage(new string('-', 60));
 		_ui.ShowMessage($"Total forms: {allForms.Count} | Generation time: {stopwatch.Elapsed.TotalMilliseconds:F4} ms");
 	}
 
-	private string FormatTags(Pero.Abstractions.Models.Morphology.MorphologyTagset t)
+	private string FormatTags(MorphologicalTag? abstractTag)
 	{
+		if (abstractTag is not UkMorphologyTag t) return "Unknown Plugin";
+
 		var sb = new StringBuilder();
+		sb.Append($"POS:{t.PartOfSpeech} ");
 
-		if (t.Case != Abstractions.Models.Morphology.GrammarCase.None) sb.Append($"Case:{t.Case} ");
-		if (t.Gender != Abstractions.Models.Morphology.GrammarGender.None) sb.Append($"Gen:{t.Gender} ");
-		if (t.Number != Abstractions.Models.Morphology.GrammarNumber.None) sb.Append($"Num:{t.Number} ");
-		if (t.Person != Abstractions.Models.Morphology.GrammarPerson.None) sb.Append($"Pers:{t.Person} ");
-		if (t.Tense != Abstractions.Models.Morphology.GrammarTense.None) sb.Append($"Tense:{t.Tense} ");
+		if (t.Case != GrammarCase.None) sb.Append($"Case:{t.Case} ");
+		if (t.Gender != GrammarGender.None) sb.Append($"Gen:{t.Gender} ");
+		if (t.Number != GrammarNumber.None) sb.Append($"Num:{t.Number} ");
+		if (t.Person != GrammarPerson.None) sb.Append($"Pers:{t.Person} ");
+		if (t.Tense != GrammarTense.None) sb.Append($"Tense:{t.Tense} ");
 
-		if (t.Features != Abstractions.Models.Morphology.GrammarFeatures.None) sb.Append($"[{t.Features}]");
+		if (t.Features != GrammarFeatures.None) sb.Append($"[{t.Features}]");
 
 		return sb.ToString().Trim();
 	}

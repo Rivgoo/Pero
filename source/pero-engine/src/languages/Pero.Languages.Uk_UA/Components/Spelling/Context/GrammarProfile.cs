@@ -1,4 +1,4 @@
-﻿using Pero.Abstractions.Models.Morphology;
+﻿using Pero.Languages.Uk_UA.Models.Morphology;
 
 namespace Pero.Languages.Uk_UA.Components.Spelling.Context;
 

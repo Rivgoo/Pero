@@ -1,7 +1,8 @@
-﻿using System.Diagnostics;
-using Pero.Kernel.Dictionaries;
+﻿using Pero.Kernel.Dictionaries;
+using Pero.Languages.Uk_UA.Models.Morphology;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
+using System.Diagnostics;
 
 namespace Pero.Languages.Uk_UA.Tools.Console.Commands;
 
@@ -21,7 +22,6 @@ public class StressTestCommand
 	{
 		_ui.ShowHeader("Stress Test Dictionary Performance");
 
-		// 1. Select source text dictionary to get test words
 		var textFiles = _fileLocator.FindTextFiles();
 		if (textFiles.Count == 0)
 		{
@@ -31,7 +31,6 @@ public class StressTestCommand
 		}
 		var textFile = textFiles[_ui.SelectOption("Select a source .txt to get words from", textFiles.Select(Path.GetFileName).ToList()!)];
 
-		// 2. Select compiled binary dictionary to test
 		var dictFiles = _fileLocator.FindCompiledDictionaries();
 		if (dictFiles.Count == 0)
 		{
@@ -41,7 +40,6 @@ public class StressTestCommand
 		}
 		var dictFile = dictFiles[_ui.SelectOption("Select a compiled .perodic dictionary to test", dictFiles.Select(Path.GetFileName).ToList()!)];
 
-		// 3. Prepare test words
 		_ui.ShowMessage($"\nReading unique words from '{Path.GetFileName(textFile)}'...");
 		var allUniqueWords = ReadAllUniqueWords(textFile);
 		_ui.ShowMessage($"Found {allUniqueWords.Count:N0} unique words available for testing.");
@@ -52,12 +50,12 @@ public class StressTestCommand
 		var testWords = allUniqueWords.Take(wordsToTest).ToList();
 		_ui.ShowMessage($"Selected {testWords.Count:N0} random words for the test.");
 
-		// 4. Run the test
 		_ui.ShowMessage("Loading binary dictionary into memory...");
-		var dictionary = new CompiledDictionary();
+		var dictionary = new FstSuffixDictionary<UkMorphologyTag>();
+		var decoder = new UkMorphologyDecoder();
 		using (var fileStream = new FileStream(dictFile, FileMode.Open, FileAccess.Read))
 		{
-			dictionary.Load(fileStream);
+			dictionary.Load(fileStream, decoder);
 		}
 
 		_ui.ShowMessage("Starting performance measurement...");
@@ -65,11 +63,10 @@ public class StressTestCommand
 		var stopwatch = Stopwatch.StartNew();
 		foreach (var word in testWords)
 		{
-			dictionary.Analyze(word);
+			dictionary.Analyze(word).ToList();
 		}
 		stopwatch.Stop();
 
-		// 5. Report results
 		var totalMs = stopwatch.Elapsed.TotalMilliseconds;
 		var avgMs = totalMs / wordsToTest;
 		var avgNs = (totalMs * 1_000_000) / wordsToTest;

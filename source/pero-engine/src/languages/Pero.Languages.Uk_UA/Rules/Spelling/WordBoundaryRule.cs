@@ -11,9 +11,9 @@ public class WordBoundaryRule : BaseGrammarRule
 	public override IssueCategory Category => IssueCategory.Spelling;
 	public override IssueSeverity Severity => IssueSeverity.Warning;
 
-	private readonly CompiledDictionary dictionary;
+	private readonly FstSuffixDictionary<UkMorphologyTag> dictionary;
 
-	public WordBoundaryRule(CompiledDictionary dictionary)
+	public WordBoundaryRule(FstSuffixDictionary<UkMorphologyTag> dictionary)
 	{
 		this.dictionary = dictionary;
 	}

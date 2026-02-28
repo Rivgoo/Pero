@@ -1,6 +1,4 @@
-﻿using Pero.Abstractions.Models.Morphology;
-
-namespace Pero.Abstractions.Models;
+﻿namespace Pero.Abstractions.Models.Morphology;
 
 /// <summary>
 /// A container for morphological annotations of a token.
@@ -8,11 +6,11 @@ namespace Pero.Abstractions.Models;
 public class MorphologicalInfo
 {
 	public string Lemma { get; }
-	public MorphologyTagset Tagset { get; }
+	public MorphologicalTag Tag { get; }
 
-	public MorphologicalInfo(string lemma, MorphologyTagset tagset)
+	public MorphologicalInfo(string lemma, MorphologicalTag tag)
 	{
 		Lemma = lemma;
-		Tagset = tagset;
+		Tag = tag;
 	}
 }

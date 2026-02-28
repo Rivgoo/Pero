@@ -5,11 +5,11 @@ namespace Pero.Languages.Uk_UA.Tools.Console.Services.Typo;
 
 public class TypoGenerator
 {
-	private readonly CompiledDictionary _dictionary;
+	private readonly FstSuffixDictionary<UkMorphologyTag> _dictionary;
 	private readonly IReadOnlyList<ITypoStrategy> _strategies;
 	private readonly Random _random;
 
-	public TypoGenerator(CompiledDictionary dictionary)
+	public TypoGenerator(FstSuffixDictionary<UkMorphologyTag> dictionary)
 	{
 		_dictionary = dictionary;
 		_random = new Random();

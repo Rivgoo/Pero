@@ -1,8 +1,8 @@
-﻿using System.Collections.Concurrent;
+﻿using Pero.Kernel.Dictionaries;
+using Pero.Kernel.Utils;
+using System.Collections.Concurrent;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
-using Pero.Kernel.Dictionaries;
-using Pero.Kernel.Utils;
 
 namespace Pero.Languages.Uk_UA.Tools.Console.Services;
 
@@ -12,7 +12,7 @@ public class NgramBuilder
 	private const int MinTrigramFrequency = 7;
 	private const long MaxMemoryUsageBytes = 7_500_000_000;
 
-	public void Build(IReadOnlyList<string> corpusFiles, CompiledDictionary dictionary, string outputPath, string tempDir, Action<int, int> progressCallback)
+	public void Build(IReadOnlyList<string> corpusFiles, FstSuffixDictionary<UkMorphologyTag> dictionary, string outputPath, string tempDir, Action<int, int> progressCallback)
 	{
 		Directory.CreateDirectory(tempDir);
 		var bigramChunkPaths = new ConcurrentBag<string>();
@@ -105,7 +105,7 @@ public class NgramBuilder
 		File.Delete(finalBigramPath); File.Delete(finalTrigramPath);
 	}
 
-	private static void ParseFile(string path, CompiledDictionary dictionary, ConcurrentDictionary<string, bool> validCache, Dictionary<ulong, int> bigrams, Dictionary<ulong, int> trigrams)
+	private static void ParseFile(string path, FstSuffixDictionary<UkMorphologyTag> dictionary, ConcurrentDictionary<string, bool> validCache, Dictionary<ulong, int> bigrams, Dictionary<ulong, int> trigrams)
 	{
 		using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 64 * 1024);
 		using var reader = new StreamReader(stream);

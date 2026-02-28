@@ -22,14 +22,14 @@ public class Application
 		var currentDirectory = Directory.GetCurrentDirectory();
 		var fileLocator = new FileLocator(currentDirectory);
 
-		var tagParser = new UkTagParser();
-		var dictParser = new DictionaryParser(tagParser);
+		var tagParser = new UkMorphologyCompilerPlugin();
+		var dictParser = new FstSuffixDictionaryParser(tagParser);
 		var fstSerializer = new FstSerializer();
-		var compilerFacade = new DictionaryCompilerFacade(dictParser, fstSerializer);
+		var compilerFacade = new FstSuffixDictionaryCompilerFacade(dictParser, fstSerializer);
 
-		var ngramCounter = new NgramCounter();
+		var ngramCounter = new NgramCounter<UkMorphologyTag>();
 		var ngramCompressor = new NgramCompressor();
-		var builderFacade = new NgramBuilderFacade(ngramCounter, ngramCompressor);
+		var builderFacade = new NgramBuilderFacade<UkMorphologyTag>(ngramCounter, ngramCompressor);
 
 		_compileCommand = new CompileCommand(_ui, fileLocator, compilerFacade);
 		_buildNgramsCommand = new BuildNgramsCommand(_ui, fileLocator, builderFacade);

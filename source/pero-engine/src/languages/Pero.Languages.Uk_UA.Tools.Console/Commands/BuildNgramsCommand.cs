@@ -1,4 +1,5 @@
 ﻿using Pero.Kernel.Dictionaries;
+using Pero.Languages.Uk_UA.Models.Morphology;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
 using Pero.Tools.Compiler.Services;
@@ -10,9 +11,9 @@ public class BuildNgramsCommand
 {
 	private readonly ConsoleInterface ui;
 	private readonly FileLocator fileLocator;
-	private readonly NgramBuilderFacade builder;
+	private readonly NgramBuilderFacade<UkMorphologyTag> builder;
 
-	public BuildNgramsCommand(ConsoleInterface ui, FileLocator fileLocator, NgramBuilderFacade builder)
+	public BuildNgramsCommand(ConsoleInterface ui, FileLocator fileLocator, NgramBuilderFacade<UkMorphologyTag> builder)
 	{
 		this.ui = ui;
 		this.fileLocator = fileLocator;
@@ -36,11 +37,12 @@ public class BuildNgramsCommand
 		var selectedDictPath = dictFiles[ui.SelectOption("Available Dictionaries", dictFiles.Select(Path.GetFileName).ToList()!)];
 
 		ui.ShowMessage($"\nLoading dictionary: {Path.GetFileName(selectedDictPath)}...");
-		var dictionary = new CompiledDictionary();
+		var dictionary = new FstSuffixDictionary<UkMorphologyTag>();
+		var decoder = new UkMorphologyDecoder();
 		try
 		{
 			using var stream = new FileStream(selectedDictPath, FileMode.Open, FileAccess.Read);
-			dictionary.Load(stream);
+			dictionary.Load(stream, decoder);
 			ui.ShowSuccess("Dictionary loaded successfully.");
 		}
 		catch (Exception ex)

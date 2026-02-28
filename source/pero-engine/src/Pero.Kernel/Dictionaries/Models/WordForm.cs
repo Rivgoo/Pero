@@ -2,14 +2,14 @@
 
 namespace Pero.Kernel.Dictionaries.Models;
 
-public readonly struct WordForm
+public readonly struct WordForm<TTag> where TTag : MorphologicalTag
 {
 	public string Form { get; }
-	public MorphologyTagset Tagset { get; }
+	public TTag Tag { get; }
 
-	public WordForm(string form, MorphologyTagset tagset)
+	public WordForm(string form, TTag tag)
 	{
 		Form = form;
-		Tagset = tagset;
+		Tag = tag;
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using Pero.Abstractions.Models;
-using Pero.Kernel.Utils;
+using Pero.Languages.Uk_UA.Extensions;
 
 namespace Pero.Languages.Uk_UA.Components.Spelling.Context;
 

@@ -1,6 +1,5 @@
 ﻿using System.IO.Compression;
 using System.Text;
-using Pero.Abstractions.Models.Morphology;
 using Pero.Kernel.Dictionaries.Models;
 
 namespace Pero.Tools.Compiler.Services;
@@ -8,7 +7,7 @@ namespace Pero.Tools.Compiler.Services;
 public class FstSerializer
 {
 	public void WriteFlatBinary(
-		Stream outputStream, List<MorphologyTagset> tagsets,
+		Stream outputStream, byte[] tagsBlob,
 		List<FlatMorphologyRule> rules, List<FlatMorphologyRule> reverseRules,
 		List<ushort[]> paradigms, string suffixPool,
 		FstNode<ForwardPayload> forwardRoot, FstNode<LemmaPayload> lemmaRoot)
@@ -20,30 +19,19 @@ public class FstSerializer
 		byte[] lemmaData = SerializeLemmaFst(lemmaRoot);
 
 		var header = new BinaryDictionaryHeader(
-			(uint)tagsets.Count, (uint)rules.Count, (uint)reverseRules.Count,
+			(uint)tagsBlob.Length, (uint)rules.Count, (uint)reverseRules.Count,
 			(uint)paradigms.Count, (uint)forwardData.Length, (uint)lemmaData.Length);
 
 		writer.Write(header.Magic);
 		writer.Write(header.Version);
-		writer.Write(header.TagsetsCount);
+		writer.Write(header.TagsBlobSize);
 		writer.Write(header.RulesCount);
 		writer.Write(header.ReverseRulesCount);
 		writer.Write(header.ParadigmsCount);
 		writer.Write(header.FstSize);
 		writer.Write(header.LemmaFstSize);
 
-		foreach (var t in tagsets)
-		{
-			writer.Write((byte)t.PartOfSpeech);
-			writer.Write((byte)t.Case);
-			writer.Write((byte)t.Gender);
-			writer.Write((byte)t.Number);
-			writer.Write((byte)t.Animacy);
-			writer.Write((byte)t.Aspect);
-			writer.Write((byte)t.Tense);
-			writer.Write((byte)t.Person);
-			writer.Write((ushort)t.Features);
-		}
+		writer.Write(tagsBlob);
 
 		var suffixBytes = Encoding.UTF8.GetBytes(suffixPool);
 		writer.Write((uint)suffixBytes.Length);

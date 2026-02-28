@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Pero.Abstractions.Constants;
+﻿using Pero.Abstractions.Constants;
 using Pero.Abstractions.Contracts;
 using Pero.Kernel.Components;
 using Pero.Kernel.Configuration;
@@ -14,7 +13,9 @@ using Pero.Languages.Uk_UA.Components.Disambiguation.Rules;
 using Pero.Languages.Uk_UA.Components.Spelling.Heuristics;
 using Pero.Languages.Uk_UA.Configuration;
 using Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
+using Pero.Languages.Uk_UA.Models.Morphology;
 using Pero.Languages.Uk_UA.Rules.Spelling;
+using System.Reflection;
 
 namespace Pero.Languages.Uk_UA;
 
@@ -23,10 +24,10 @@ public class UkrainianLanguageModule : ILanguageModule
 	private const string DictionaryResourceName = "Pero.Languages.Uk_UA.Resources.uk_UA.perodic";
 	private const string NgramResourceName = "Pero.Languages.Uk_UA.Resources.uk_UA.perongram";
 
-	private readonly CompiledDictionary dictionary;
+	private readonly FstSuffixDictionary<UkMorphologyTag> dictionary;
 	private readonly LexiconCache lexicon;
-	private readonly FuzzyMatcher fuzzyMatcher;
-	private readonly VirtualSymSpell virtualSymSpell;
+	private readonly FuzzyMatcher<UkMorphologyTag> fuzzyMatcher;
+	private readonly VirtualSymSpell<UkMorphologyTag> virtualSymSpell;
 	private readonly NgramLanguageModel ngramLanguageModel;
 	private readonly PreTokenizerConfig preTokenizerConfig;
 	private readonly ISegmentationProfile segmentationProfile;
@@ -44,8 +45,8 @@ public class UkrainianLanguageModule : ILanguageModule
 		var penaltyMatrix = new UkrainianPenaltyMatrix();
 
 		lexicon = new LexiconCache(dictionary);
-		fuzzyMatcher = new FuzzyMatcher(dictionary, penaltyMatrix);
-		virtualSymSpell = new VirtualSymSpell(dictionary, penaltyMatrix);
+		fuzzyMatcher = new FuzzyMatcher<UkMorphologyTag>(dictionary, penaltyMatrix);
+		virtualSymSpell = new VirtualSymSpell<UkMorphologyTag>(dictionary, penaltyMatrix);
 
 		preTokenizerConfig = PreTokenizerConfig.CreateDefault();
 		segmentationProfile = new UkrainianSegmentationProfile();
@@ -98,7 +99,7 @@ public class UkrainianLanguageModule : ILanguageModule
 		yield return new WordBoundaryRule(dictionary);
 	}
 
-	private static CompiledDictionary LoadDictionary(IResourceLoader loader)
+	private static FstSuffixDictionary<UkMorphologyTag> LoadDictionary(IResourceLoader loader)
 	{
 		using var stream = loader.LoadResource(DictionaryResourceName);
 		if (stream == null)
@@ -106,8 +107,10 @@ public class UkrainianLanguageModule : ILanguageModule
 			throw new FileNotFoundException($"Embedded dictionary resource '{DictionaryResourceName}' not found.");
 		}
 
-		var dict = new CompiledDictionary();
-		dict.Load(stream);
+		var dict = new FstSuffixDictionary<UkMorphologyTag>();
+		var decoder = new UkMorphologyDecoder();
+		dict.Load(stream, decoder);
+
 		return dict;
 	}
 

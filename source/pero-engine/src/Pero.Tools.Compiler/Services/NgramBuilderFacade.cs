@@ -1,25 +1,26 @@
 ﻿using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
+using Pero.Abstractions.Models.Morphology;
 using Pero.Kernel.Dictionaries;
 
 namespace Pero.Tools.Compiler.Services;
 
-public class NgramBuilderFacade
+public class NgramBuilderFacade<TTag> where TTag : MorphologicalTag
 {
 	private const int MinBigramFrequency = 10;
 	private const int MinTrigramFrequency = 7;
 	private const long MaxMemoryUsageBytes = 7_500_000_000;
 
-	private readonly NgramCounter counter;
+	private readonly NgramCounter<TTag> counter;
 	private readonly NgramCompressor compressor;
 
-	public NgramBuilderFacade(NgramCounter counter, NgramCompressor compressor)
+	public NgramBuilderFacade(NgramCounter<TTag> counter, NgramCompressor compressor)
 	{
 		this.counter = counter;
 		this.compressor = compressor;
 	}
 
-	public void Build(IReadOnlyList<string> corpusFiles, CompiledDictionary dictionary, string outputPath, string tempDir, Action<int, int> progressCallback)
+	public void Build(IReadOnlyList<string> corpusFiles, FstSuffixDictionary<TTag> dictionary, string outputPath, string tempDir, Action<int, int> progressCallback)
 	{
 		Directory.CreateDirectory(tempDir);
 		var bigramChunkPaths = new ConcurrentBag<string>();
@@ -32,14 +33,12 @@ public class NgramBuilderFacade
 		var globalTrigrams = new Dictionary<ulong, int>(10_000_000);
 		object mergeLock = new();
 
-		var wordValidationCache = new ConcurrentDictionary<string, bool>(StringComparer.Ordinal);
-
 		Parallel.ForEach(corpusFiles, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, file =>
 		{
 			var localBigrams = new Dictionary<ulong, int>();
 			var localTrigrams = new Dictionary<ulong, int>();
 
-			counter.ProcessFile(file, dictionary, wordValidationCache, localBigrams, localTrigrams);
+			counter.ProcessFile(file, dictionary, localBigrams, localTrigrams);
 
 			bool memoryLimitReached = false;
 			lock (mergeLock)
@@ -94,7 +93,7 @@ public class NgramBuilderFacade
 			trigramChunkPaths.Add(DumpChunk(globalTrigrams, tempDir, "tri"));
 		}
 
-		globalBigrams = null; globalTrigrams = null; wordValidationCache = null;
+		globalBigrams = null; globalTrigrams = null;
 		GC.Collect();
 
 		Console.WriteLine("\nMerging chunks and reducing...");

@@ -1,16 +1,16 @@
 ﻿using Pero.Abstractions.Models;
-using Pero.Abstractions.Models.Morphology;
 using Pero.Kernel.Dictionaries;
 using Pero.Kernel.Fuzzy;
 using Pero.Kernel.Utils;
+using Pero.Languages.Uk_UA.Models.Morphology;
 
 namespace Pero.Languages.Uk_UA.Components.Spelling.Context;
 
 public class MorphologicalFilter
 {
-	private readonly CompiledDictionary _dictionary;
+	private readonly FstSuffixDictionary<UkMorphologyTag> _dictionary;
 
-	public MorphologicalFilter(CompiledDictionary dictionary)
+	public MorphologicalFilter(FstSuffixDictionary<UkMorphologyTag> dictionary)
 	{
 		_dictionary = dictionary;
 	}
@@ -64,13 +64,13 @@ public class MorphologicalFilter
 		return new GrammarProfile();
 	}
 
-	public IReadOnlyList<CorrectionCandidate> ExpandAndFilter(
-		IReadOnlyList<CorrectionCandidate> initialCandidates,
+	public IReadOnlyList<CorrectionCandidate<UkMorphologyTag>> ExpandAndFilter(
+		IReadOnlyList<CorrectionCandidate<UkMorphologyTag>> initialCandidates,
 		GrammarProfile profile)
 	{
 		if (profile.IsEmpty || initialCandidates.Count == 0) return initialCandidates;
 
-		var expandedPool = new List<CorrectionCandidate>();
+		var expandedPool = new List<CorrectionCandidate<UkMorphologyTag>>();
 		var processedLemmas = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
 		foreach (var candidate in initialCandidates)
@@ -91,7 +91,9 @@ public class MorphologicalFilter
 
 				foreach (var form in allForms)
 				{
-					if (profile.ExpectedPos.HasValue && form.Tagset.PartOfSpeech != profile.ExpectedPos.Value)
+					if (form.Tag is not UkMorphologyTag formTag) continue;
+
+					if (profile.ExpectedPos.HasValue && formTag.PartOfSpeech != profile.ExpectedPos.Value)
 					{
 						continue;
 					}
@@ -102,34 +104,34 @@ public class MorphologicalFilter
 
 					if (profile.ExpectedCases != null)
 					{
-						if (form.Tagset.Case == GrammarCase.None || form.Tagset.Case == GrammarCase.Uninflected)
+						if (formTag.Case == GrammarCase.None || formTag.Case == GrammarCase.Uninflected)
 						{
 							penalty += 3.0f;
 						}
-						else if (profile.ExpectedCases.Contains(form.Tagset.Case)) bonus += 2.0f;
+						else if (profile.ExpectedCases.Contains(formTag.Case)) bonus += 2.0f;
 						else penalty += 2.0f;
 					}
 
-					if (profile.ExpectedGender.HasValue && form.Tagset.Gender != GrammarGender.None)
+					if (profile.ExpectedGender.HasValue && formTag.Gender != GrammarGender.None)
 					{
-						if (form.Tagset.Gender == profile.ExpectedGender.Value) bonus += 1.0f;
+						if (formTag.Gender == profile.ExpectedGender.Value) bonus += 1.0f;
 						else penalty += 1.0f;
 					}
 
-					if (profile.ExpectedNumber.HasValue && form.Tagset.Number != GrammarNumber.None)
+					if (profile.ExpectedNumber.HasValue && formTag.Number != GrammarNumber.None)
 					{
-						if (form.Tagset.Number == profile.ExpectedNumber.Value) bonus += 1.0f;
+						if (formTag.Number == profile.ExpectedNumber.Value) bonus += 1.0f;
 						else penalty += 1.0f;
 					}
 
 					float finalScore = baseScore - bonus + penalty;
 
-					expandedPool.Add(new CorrectionCandidate(
+					expandedPool.Add(new CorrectionCandidate<UkMorphologyTag>(
 						form.Form,
 						candidate.Distance,
 						candidate.Frequency,
 						finalScore,
-						new[] { form.Tagset }
+						new[] { formTag }
 					));
 				}
 			}
@@ -137,7 +139,7 @@ public class MorphologicalFilter
 
 		expandedPool.Sort();
 
-		var distinctRanked = new List<CorrectionCandidate>();
+		var distinctRanked = new List<CorrectionCandidate<UkMorphologyTag>>();
 		var seenForms = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
 		foreach (var expanded in expandedPool)
@@ -154,7 +156,7 @@ public class MorphologicalFilter
 	private static bool IsPreposition(Token? token, out string text)
 	{
 		text = string.Empty;
-		if (token?.Morph?.Tagset.PartOfSpeech == PartOfSpeech.Preposition)
+		if (token?.Morph?.Tag is UkMorphologyTag tag && tag.PartOfSpeech == PartOfSpeech.Preposition)
 		{
 			text = token.NormalizedText;
 			return true;
@@ -162,23 +164,23 @@ public class MorphologicalFilter
 		return false;
 	}
 
-	private static bool IsAdjective(Token? token, out MorphologyTagset tags)
+	private static bool IsAdjective(Token? token, out UkMorphologyTag tags)
 	{
 		tags = default;
-		if (token?.Morph?.Tagset.PartOfSpeech == PartOfSpeech.Adjective)
+		if (token?.Morph?.Tag is UkMorphologyTag tag && tag.PartOfSpeech == PartOfSpeech.Adjective)
 		{
-			tags = token.Morph.Tagset;
+			tags = tag;
 			return true;
 		}
 		return false;
 	}
 
-	private static bool IsNoun(Token? token, out MorphologyTagset tags)
+	private static bool IsNoun(Token? token, out UkMorphologyTag tags)
 	{
 		tags = default;
-		if (token?.Morph?.Tagset.PartOfSpeech == PartOfSpeech.Noun || token?.Morph?.Tagset.PartOfSpeech == PartOfSpeech.Pronoun)
+		if (token?.Morph?.Tag is UkMorphologyTag tag && (tag.PartOfSpeech == PartOfSpeech.Noun || tag.PartOfSpeech == PartOfSpeech.Pronoun))
 		{
-			tags = token.Morph.Tagset;
+			tags = tag;
 			return true;
 		}
 		return false;
@@ -187,7 +189,7 @@ public class MorphologicalFilter
 	private static bool IsNumeral(Token? token, out string text)
 	{
 		text = string.Empty;
-		if (token?.Morph?.Tagset.PartOfSpeech == PartOfSpeech.Numeral)
+		if (token?.Morph?.Tag is UkMorphologyTag tag && tag.PartOfSpeech == PartOfSpeech.Numeral)
 		{
 			text = token.NormalizedText;
 			return true;

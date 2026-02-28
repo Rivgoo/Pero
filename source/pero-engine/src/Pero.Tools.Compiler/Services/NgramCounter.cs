@@ -1,43 +1,73 @@
-﻿using System.Collections.Concurrent;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using Pero.Abstractions.Models.Morphology;
 using Pero.Kernel.Dictionaries;
 using Pero.Kernel.Utils;
 
 namespace Pero.Tools.Compiler.Services;
 
-public class NgramCounter
+public class NgramCounter<TTag> where TTag : MorphologicalTag
 {
 	public void ProcessFile(
 		string path,
-		CompiledDictionary dictionary,
-		ConcurrentDictionary<string, bool> validCache,
+		FstSuffixDictionary<TTag> dictionary,
 		Dictionary<ulong, int> bigrams,
 		Dictionary<ulong, int> trigrams)
 	{
-		using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 64 * 1024);
+		using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 1024 * 1024);
 		using var reader = new StreamReader(stream);
 
 		var validHashes = new List<ulong>(128);
+		Span<char> wordBuffer = stackalloc char[128];
 
 		string? line;
 		while ((line = reader.ReadLine()) != null)
 		{
-			var words = line.Split(new[] { ' ', '.', ',', '!', '?', ';', ':', '(', ')', '"', '-', '—', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 			validHashes.Clear();
+			int length = 0;
+			var lineSpan = line.AsSpan();
 
-			for (int i = 0; i < words.Length; i++)
+			for (int i = 0; i <= lineSpan.Length; i++)
 			{
-				string lowerWord = words[i].ToLowerInvariant();
-				bool isValid = validCache.GetOrAdd(lowerWord, w => dictionary.Analyze(w).Any());
+				bool isWordChar = false;
+				char c = '\0';
 
-				if (isValid)
+				if (i < lineSpan.Length)
 				{
-					validHashes.Add(MurmurHash3.Hash(lowerWord));
+					c = lineSpan[i];
+					isWordChar = char.IsLetter(c) || IsApostrophe(c);
 				}
-				else
+
+				if (isWordChar)
 				{
-					AccumulateHashes(validHashes, bigrams, trigrams);
-					validHashes.Clear();
+					if (length < 128)
+					{
+						wordBuffer[length++] = char.ToLowerInvariant(c);
+					}
+				}
+				else if (length > 0)
+				{
+					int startIdx = 0;
+					int endIdx = length - 1;
+
+					while (startIdx <= endIdx && IsApostrophe(wordBuffer[startIdx])) startIdx++;
+					while (endIdx >= startIdx && IsApostrophe(wordBuffer[endIdx])) endIdx--;
+
+					int finalLen = endIdx - startIdx + 1;
+					if (finalLen > 0)
+					{
+						var wordSpan = wordBuffer.Slice(startIdx, finalLen);
+
+						if (dictionary.Contains(wordSpan))
+						{
+							validHashes.Add(MurmurHash3.Hash(wordSpan));
+						}
+						else
+						{
+							AccumulateHashes(validHashes, bigrams, trigrams);
+							validHashes.Clear();
+						}
+					}
+					length = 0;
 				}
 			}
 			AccumulateHashes(validHashes, bigrams, trigrams);
@@ -62,6 +92,8 @@ public class NgramCounter
 			}
 		}
 	}
+
+	private static bool IsApostrophe(char c) => c == '\'' || c == '’' || c == 'ʼ';
 
 	private static ulong CombineHashes(ulong seed, ulong value) =>
 		seed ^ (value + 0x9e3779b97f4a7c15UL + (seed << 6) + (seed >> 2));

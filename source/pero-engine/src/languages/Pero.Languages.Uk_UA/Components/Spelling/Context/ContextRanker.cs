@@ -18,10 +18,10 @@ public class ContextRanker
 		_ngramModel = ngramModel;
 	}
 
-	public IReadOnlyList<CorrectionCandidate> Rank(
+	public IReadOnlyList<CorrectionCandidate<UkMorphologyTag>> Rank(
 		Sentence sentence,
 		Token errorToken,
-		IReadOnlyList<CorrectionCandidate> candidates)
+		IReadOnlyList<CorrectionCandidate<UkMorphologyTag>> candidates)
 	{
 		var prevToken = sentence.GetPreviousSignificantToken(errorToken);
 		var nextToken = sentence.GetNextSignificantToken(errorToken);
@@ -29,16 +29,14 @@ public class ContextRanker
 		ulong prevHash = prevToken != null && prevToken.Type == TokenType.Word ? MurmurHash3.Hash(prevToken.NormalizedText) : 0;
 		ulong nextHash = nextToken != null && nextToken.Type == TokenType.Word ? MurmurHash3.Hash(nextToken.NormalizedText) : 0;
 
-		var rankedList = new List<CorrectionCandidate>(candidates.Count);
+		var rankedList = new List<CorrectionCandidate<UkMorphologyTag>>(candidates.Count);
 
 		foreach (var candidate in candidates)
 		{
 			float bonus = 0f;
 
-			// 1. Document Session Cache
 			bonus += _sessionCache.GetSessionBonus(candidate.Word);
 
-			// 2. Statistical Context (N-grams)
 			ulong candidateHash = MurmurHash3.Hash(candidate.Word);
 
 			if (prevHash != 0)
@@ -64,7 +62,7 @@ public class ContextRanker
 			float adjustedScore = candidate.Score - bonus;
 			if (adjustedScore < -10.0f) adjustedScore = -10.0f;
 
-			rankedList.Add(new CorrectionCandidate(
+			rankedList.Add(new CorrectionCandidate<UkMorphologyTag>(
 				candidate.Word,
 				candidate.Distance,
 				candidate.Frequency,

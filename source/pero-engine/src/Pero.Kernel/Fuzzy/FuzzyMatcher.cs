@@ -5,27 +5,27 @@ using System.Collections.Concurrent;
 
 namespace Pero.Kernel.Fuzzy;
 
-public class FuzzyMatcher
+public class FuzzyMatcher<TTag> where TTag : MorphologicalTag
 {
 	private const int TargetResults = 1;
-	private const int MaxWordLength = 24;
+	private const int MaxWordLength = 32;
 	private const float FrequencyBonusWeight = 0.05f;
 	private const float MaxFrequencyBonus = 31 * FrequencyBonusWeight;
 
-	private readonly CompiledDictionary _dictionary;
-	private readonly ConcurrentDictionary<string, CorrectionCandidate[]> _cache = new(StringComparer.Ordinal);
+	private readonly FstSuffixDictionary<TTag> _dictionary;
+	private readonly ConcurrentDictionary<string, CorrectionCandidate<TTag>[]> _cache = new(StringComparer.Ordinal);
 	private readonly MatcherContext _context;
 
-	public FuzzyMatcher(CompiledDictionary dictionary, BasePenaltyMatrix penaltyMatrix)
+	public FuzzyMatcher(FstSuffixDictionary<TTag> dictionary, BasePenaltyMatrix penaltyMatrix)
 	{
 		_dictionary = dictionary;
 		_context = new MatcherContext(penaltyMatrix);
 	}
 
-	public CorrectionCandidate[] Suggest(string targetWord)
+	public CorrectionCandidate<TTag>[] Suggest(string targetWord)
 	{
 		if (string.IsNullOrWhiteSpace(targetWord) || _dictionary.FstData.Length == 0 || targetWord.Length > MaxWordLength)
-			return Array.Empty<CorrectionCandidate>();
+			return Array.Empty<CorrectionCandidate<TTag>>();
 
 		if (_cache.TryGetValue(targetWord, out var cached)) return cached;
 
@@ -107,20 +107,20 @@ public class FuzzyMatcher
 
 		if (ruleCount > 0)
 		{
-			var tagsets = new MorphologyTagset[ruleCount];
+			var tagsets = new TTag[ruleCount];
 			for (int i = 0; i < ruleCount; i++)
 			{
 				ushort ruleId = BinaryPrimitives.ReadUInt16LittleEndian(_dictionary.FstData.AsSpan(payloadPtr + (i * 2)));
 				tagsets[i] = _dictionary.Tagsets[_dictionary.Rules[ruleId].TagId];
 			}
 			float score = distance - (frequency * FrequencyBonusWeight);
-			pool.TryAdd(new CorrectionCandidate(form.ToString(), distance, frequency, score, tagsets));
+			pool.TryAdd(new CorrectionCandidate<TTag>(form.ToString(), distance, frequency, score, tagsets));
 		}
 	}
 
 	private class CandidatePool
 	{
-		private readonly CorrectionCandidate[] _items;
+		private readonly CorrectionCandidate<TTag>[] _items;
 		private int _count;
 		private readonly int _targetCapacity;
 		public float WorstScore { get; private set; }
@@ -129,11 +129,11 @@ public class FuzzyMatcher
 		public CandidatePool(int targetCapacity, float initialMaxDistance)
 		{
 			_targetCapacity = targetCapacity;
-			_items = new CorrectionCandidate[targetCapacity];
+			_items = new CorrectionCandidate<TTag>[targetCapacity];
 			WorstScore = initialMaxDistance;
 		}
 
-		public void TryAdd(CorrectionCandidate candidate)
+		public void TryAdd(CorrectionCandidate<TTag> candidate)
 		{
 			if (IsFull && candidate.Score >= WorstScore) return;
 
@@ -162,9 +162,10 @@ public class FuzzyMatcher
 			if (IsFull) WorstScore = _items[_count - 1].Score;
 		}
 
-		public CorrectionCandidate[] GetFinalResults()
+		public CorrectionCandidate<TTag>[] GetFinalResults()
 		{
-			var result = new CorrectionCandidate[_count];
+			if (_count == 0) return Array.Empty<CorrectionCandidate<TTag>>();
+			var result = new CorrectionCandidate<TTag>[_count];
 			Array.Copy(_items, result, _count);
 			return result;
 		}

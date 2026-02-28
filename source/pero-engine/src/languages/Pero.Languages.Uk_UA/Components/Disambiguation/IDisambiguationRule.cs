@@ -1,4 +1,5 @@
 ﻿using Pero.Abstractions.Models;
+using Pero.Abstractions.Models.Morphology;
 
 namespace Pero.Languages.Uk_UA.Components.Disambiguation;
 

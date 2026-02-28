@@ -2,15 +2,15 @@
 
 namespace Pero.Kernel.Fuzzy;
 
-public readonly struct CorrectionCandidate : IComparable<CorrectionCandidate>
+public readonly struct CorrectionCandidate<TTag> : IComparable<CorrectionCandidate<TTag>> where TTag : MorphologicalTag
 {
 	public string Word { get; }
 	public float Distance { get; }
 	public byte Frequency { get; }
 	public float Score { get; }
-	public MorphologyTagset[] Tagsets { get; }
+	public TTag[] Tagsets { get; }
 
-	public CorrectionCandidate(string word, float distance, byte frequency, float score, MorphologyTagset[] tagsets)
+	public CorrectionCandidate(string word, float distance, byte frequency, float score, TTag[] tagsets)
 	{
 		Word = word;
 		Distance = distance;
@@ -19,7 +19,7 @@ public readonly struct CorrectionCandidate : IComparable<CorrectionCandidate>
 		Tagsets = tagsets;
 	}
 
-	public int CompareTo(CorrectionCandidate other)
+	public int CompareTo(CorrectionCandidate<TTag> other)
 	{
 		int scoreComparison = Score.CompareTo(other.Score);
 		if (scoreComparison != 0) return scoreComparison;

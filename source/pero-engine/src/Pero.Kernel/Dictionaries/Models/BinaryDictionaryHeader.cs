@@ -10,7 +10,7 @@ public readonly struct BinaryDictionaryHeader
 
 	public uint Magic { get; }
 	public ushort Version { get; }
-	public uint TagsetsCount { get; }
+	public uint TagsBlobSize { get; }
 	public uint RulesCount { get; }
 	public uint ReverseRulesCount { get; }
 	public uint ParadigmsCount { get; }
@@ -18,7 +18,7 @@ public readonly struct BinaryDictionaryHeader
 	public uint LemmaFstSize { get; }
 
 	public BinaryDictionaryHeader(
-		uint tagsetsCount,
+		uint tagsBlobSize,
 		uint rulesCount,
 		uint reverseRulesCount,
 		uint paradigmsCount,
@@ -27,7 +27,7 @@ public readonly struct BinaryDictionaryHeader
 	{
 		Magic = MagicNumber;
 		Version = CurrentVersion;
-		TagsetsCount = tagsetsCount;
+		TagsBlobSize = tagsBlobSize;
 		RulesCount = rulesCount;
 		ReverseRulesCount = reverseRulesCount;
 		ParadigmsCount = paradigmsCount;

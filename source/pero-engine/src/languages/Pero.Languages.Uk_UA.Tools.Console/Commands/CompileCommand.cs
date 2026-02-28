@@ -9,10 +9,10 @@ public class CompileCommand
 {
 	private readonly ConsoleInterface ui;
 	private readonly FileLocator fileLocator;
-	private readonly DictionaryCompilerFacade compiler;
+	private readonly FstSuffixDictionaryCompilerFacade compiler;
 	private readonly CacheManager cacheManager;
 
-	public CompileCommand(ConsoleInterface ui, FileLocator fileLocator, DictionaryCompilerFacade compiler)
+	public CompileCommand(ConsoleInterface ui, FileLocator fileLocator, FstSuffixDictionaryCompilerFacade compiler)
 	{
 		this.ui = ui;
 		this.fileLocator = fileLocator;

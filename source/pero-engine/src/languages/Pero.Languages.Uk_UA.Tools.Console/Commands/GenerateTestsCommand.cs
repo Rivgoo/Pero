@@ -1,10 +1,11 @@
-﻿using System.Diagnostics;
-using System.Text.Json;
-using Pero.Kernel.Dictionaries;
+﻿using Pero.Kernel.Dictionaries;
+using Pero.Languages.Uk_UA.Models.Morphology;
 using Pero.Languages.Uk_UA.Tools.Console.Models;
 using Pero.Languages.Uk_UA.Tools.Console.Services;
 using Pero.Languages.Uk_UA.Tools.Console.Services.Typo;
 using Pero.Languages.Uk_UA.Tools.Console.UI;
+using System.Diagnostics;
+using System.Text.Json;
 
 namespace Pero.Languages.Uk_UA.Tools.Console.Commands;
 
@@ -33,10 +34,11 @@ public class GenerateTestsCommand
 		}
 
 		var selectedDictPath = dictFiles[_ui.SelectOption("Select Dictionary", dictFiles.Select(Path.GetFileName).ToList()!)];
-		var dictionary = new CompiledDictionary();
+		var dictionary = new FstSuffixDictionary<UkMorphologyTag>();
+		var decoder = new UkMorphologyDecoder();
 		using (var stream = new FileStream(selectedDictPath, FileMode.Open, FileAccess.Read))
 		{
-			dictionary.Load(stream);
+			dictionary.Load(stream, decoder);
 		}
 
 		var corpusDir = _ui.PromptInput("Enter path to corpus directory");
@@ -102,18 +104,14 @@ public class GenerateTestsCommand
 					var typoResult = typoGenerator.Generate(expectedWord);
 					if (typoResult == null) continue;
 
-					// Reconstruct the original phrase with the typo injected
-					// This preserves original punctuation and casing
 					string typoWord = typoResult.Value.Typo;
 
-					// Match case of the original word
 					bool isFirstUpper = char.IsUpper(words[targetIdx][0]);
 					bool isAllUpper = words[targetIdx].All(c => !char.IsLetter(c) || char.IsUpper(c));
 
 					if (isAllUpper) typoWord = typoWord.ToUpperInvariant();
 					else if (isFirstUpper) typoWord = char.ToUpperInvariant(typoWord[0]) + typoWord.Substring(1);
 
-					// Use regex to replace the whole word to avoid partial matches
 					string pattern = $@"\b{System.Text.RegularExpressions.Regex.Escape(words[targetIdx])}\b";
 					string inputContext = System.Text.RegularExpressions.Regex.Replace(phrase, pattern, typoWord, System.Text.RegularExpressions.RegexOptions.None, TimeSpan.FromMilliseconds(100));
 
@@ -123,7 +121,7 @@ public class GenerateTestsCommand
 						{
 							Name = $"{typoResult.Value.Type} | {expectedWord}",
 							Input = inputContext,
-							Expected = words[targetIdx] // Keep original case in expected
+							Expected = words[targetIdx]
 						});
 
 						if (testSuite.Cases.Count % 100 == 0)

@@ -1,6 +1,7 @@
 ﻿using Pero.Abstractions.Models;
 using Pero.Abstractions.Models.Morphology;
 using Pero.Kernel.Utils;
+using Pero.Languages.Uk_UA.Models.Morphology;
 
 namespace Pero.Languages.Uk_UA.Components.Disambiguation.Rules;
 
@@ -12,11 +13,11 @@ public class PrepositionCaseRule : IDisambiguationRule
 {
 	public IReadOnlyList<MorphologicalInfo> Apply(Sentence sentence, Token token, IReadOnlyList<MorphologicalInfo> candidates)
 	{
-		// Rule applies only to nouns, adjectives, and pronouns
 		bool isApplicablePart = candidates.Any(c =>
-			c.Tagset.PartOfSpeech == PartOfSpeech.Noun ||
-			c.Tagset.PartOfSpeech == PartOfSpeech.Adjective ||
-			c.Tagset.PartOfSpeech == PartOfSpeech.Pronoun);
+			c.Tag is UkMorphologyTag tag &&
+			(tag.PartOfSpeech == PartOfSpeech.Noun ||
+			 tag.PartOfSpeech == PartOfSpeech.Adjective ||
+			 tag.PartOfSpeech == PartOfSpeech.Pronoun));
 
 		if (!isApplicablePart) return candidates;
 
@@ -26,9 +27,8 @@ public class PrepositionCaseRule : IDisambiguationRule
 		var allowedCases = GetAllowedCases(prevToken.NormalizedText);
 		if (allowedCases.Length == 0) return candidates;
 
-		var filtered = candidates.Where(c => allowedCases.Contains(c.Tagset.Case)).ToList();
+		var filtered = candidates.Where(c => c.Tag is UkMorphologyTag tag && allowedCases.Contains(tag.Case)).ToList();
 
-		// Only return filtered if it doesn't leave us empty (safety fallback)
 		return filtered.Count > 0 ? filtered : candidates;
 	}
 
@@ -36,8 +36,7 @@ public class PrepositionCaseRule : IDisambiguationRule
 	{
 		var prev = sentence.GetPreviousSignificantToken(current);
 
-		// If previous is an adjective, we look one more step back (e.g., "на" -> "великому" -> "столі")
-		if (prev != null && prev.MorphologicalCandidates?.Any(c => c.Tagset.PartOfSpeech == PartOfSpeech.Adjective) == true)
+		if (prev != null && prev.MorphologicalCandidates?.Any(c => c.Tag is UkMorphologyTag tag && tag.PartOfSpeech == PartOfSpeech.Adjective) == true)
 		{
 			var prevPrev = sentence.GetPreviousSignificantToken(prev);
 			if (IsPreposition(prevPrev)) return prevPrev;
@@ -48,7 +47,7 @@ public class PrepositionCaseRule : IDisambiguationRule
 
 	private static bool IsPreposition(Token? token)
 	{
-		return token != null && token.MorphologicalCandidates?.Any(c => c.Tagset.PartOfSpeech == PartOfSpeech.Preposition) == true;
+		return token != null && token.MorphologicalCandidates?.Any(c => c.Tag is UkMorphologyTag tag && tag.PartOfSpeech == PartOfSpeech.Preposition) == true;
 	}
 
 	private static GrammarCase[] GetAllowedCases(string preposition) => preposition switch

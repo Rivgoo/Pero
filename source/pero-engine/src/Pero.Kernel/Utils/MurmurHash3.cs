@@ -10,11 +10,21 @@ public static class MurmurHash3
 
 	public static ulong Hash(string text)
 	{
-		int byteCount = Encoding.UTF8.GetByteCount(text);
-		Span<byte> bytes = byteCount <= 256 ? stackalloc byte[byteCount] : new byte[byteCount];
-		Encoding.UTF8.GetBytes(text, bytes);
+		return Hash(text.AsSpan());
+	}
 
-		return Hash(bytes);
+	/// <summary>
+	/// Generates a hash directly from a Span, avoiding string allocations.
+	/// </summary>
+	public static ulong Hash(ReadOnlySpan<char> text)
+	{
+		// A word is rarely longer than 30 chars. UTF-8 max is 3 bytes per Cyrillic char.
+		// 128 chars * 3 = 384 bytes, perfectly safe for stackalloc.
+		int maxBytes = text.Length * 3;
+		Span<byte> bytes = maxBytes <= 512 ? stackalloc byte[maxBytes] : new byte[maxBytes];
+
+		int byteCount = Encoding.UTF8.GetBytes(text, bytes);
+		return Hash(bytes.Slice(0, byteCount));
 	}
 
 	public static ulong Hash(ReadOnlySpan<byte> data)
