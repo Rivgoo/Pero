@@ -50,7 +50,12 @@ public partial class Engine
 				return CreateErrorResponse("Invalid JSON");
 			}
 
-			var issues = _analyzer.Analyze(request.Text, request.LanguageCode);
+			var issues = _analyzer.Analyze(
+				request.Text,
+				request.LanguageCode,
+				enableTelemetry: true,
+				disabledRules: request.DisabledRules
+				);
 
 			var response = new AnalysisResponse
 			{

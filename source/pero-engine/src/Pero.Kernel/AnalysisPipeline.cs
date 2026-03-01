@@ -19,7 +19,7 @@ public class AnalysisPipeline
 			new SegmentationStage(module.CreateSentenceSegmenter()),
 			new MorphologyStage(module.CreateMorphologyAnalyzer()),
 			new SpellCheckStage(module.CreateSpellChecker()),
-			new GrammarRulesStage(module.GetRules())
+			new GrammarRulesStage(module.GetAnalyzers())
 		};
 
 		if (enableTelemetry)
@@ -32,10 +32,10 @@ public class AnalysisPipeline
 		}
 	}
 
-	public AnalysisResult Run(string rawText, bool enableTelemetry = false)
+	public AnalysisResult Run(string rawText, bool enableTelemetry = false, IEnumerable<string>? disabledRules = null)
 	{
 		var tracker = enableTelemetry ? (ITelemetryTracker)new TelemetryTracker() : new NullTelemetryTracker();
-		var context = new AnalysisContext(rawText, tracker);
+		var context = new AnalysisContext(rawText, tracker, disabledRules);
 
 		using (tracker.Measure("Pipeline.Total"))
 		{

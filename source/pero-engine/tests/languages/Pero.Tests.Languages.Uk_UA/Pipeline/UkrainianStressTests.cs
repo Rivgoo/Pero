@@ -76,22 +76,22 @@ public class UkrainianStressTests
 			output.WriteLine($"{kvp.Key.Replace("SpellCheck.", ""),-25}: {kvp.Value,8:F2} ms");
 		}
 
-		output.WriteLine("\n--- GRAMMAR & SPELLING RULES (Slowest First) ---");
-		var ruleMetrics = result.Telemetry.Metrics
-			.Where(k => k.Key.StartsWith("Rule."))
+		output.WriteLine("\n--- GRAMMAR & SPELLING ANALYZERS (Slowest First) ---");
+		var analyzerMetrics = result.Telemetry.Metrics
+			.Where(k => k.Key.StartsWith("Analyzer."))
 			.OrderByDescending(x => x.Value)
 			.ToList();
 
-		if (ruleMetrics.Count > 0)
+		if (analyzerMetrics.Count > 0)
 		{
-			foreach (var kvp in ruleMetrics)
+			foreach (var kvp in analyzerMetrics)
 			{
-				output.WriteLine($"{kvp.Key.Replace("Rule.", ""),-35}: {kvp.Value,8:F2} ms");
+				output.WriteLine($"{kvp.Key.Replace("Analyzer.", ""),-35}: {kvp.Value,8:F2} ms");
 			}
 		}
 		else
 		{
-			output.WriteLine("No rules executed or no telemetry collected.");
+			output.WriteLine("No analyzers executed or no telemetry collected.");
 		}
 
 		output.WriteLine($"\n[Total Internally Tracked Pipeline Time: {result.Telemetry.Metrics.GetValueOrDefault("Pipeline.Total", 0):F2} ms]");

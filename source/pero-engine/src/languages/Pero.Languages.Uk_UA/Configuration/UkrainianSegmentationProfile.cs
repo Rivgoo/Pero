@@ -22,8 +22,10 @@ public class UkrainianSegmentationProfile : ISegmentationProfile
 			throw new FileNotFoundException("Segmentation profile resource 'uk_UA_segmentation.json' not found.");
 		}
 
-		var dto = JsonSerializer.Deserialize<SegmentationProfileDto>(stream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-			?? throw new InvalidOperationException("Failed to parse segmentation profile.");
+		var dto = JsonSerializer.Deserialize(
+			stream,
+			UkrainianSegmentationContext.Default.SegmentationProfileDto
+		) ?? throw new InvalidOperationException("Failed to parse segmentation profile.");
 
 		Terminators = new HashSet<string>(dto.Terminators, StringComparer.Ordinal);
 		ClosingQuotes = new HashSet<string>(dto.ClosingQuotes, StringComparer.Ordinal);
@@ -31,13 +33,13 @@ public class UkrainianSegmentationProfile : ISegmentationProfile
 		TitleAbbreviations = new HashSet<string>(dto.TitleAbbreviations, StringComparer.OrdinalIgnoreCase);
 		UnitAbbreviations = new HashSet<string>(dto.UnitAbbreviations, StringComparer.OrdinalIgnoreCase);
 	}
+}
 
-	private class SegmentationProfileDto
-	{
-		public List<string> Terminators { get; set; } = new();
-		public List<string> ClosingQuotes { get; set; } = new();
-		public List<string> StructuralAbbreviations { get; set; } = new();
-		public List<string> TitleAbbreviations { get; set; } = new();
-		public List<string> UnitAbbreviations { get; set; } = new();
-	}
+internal class SegmentationProfileDto
+{
+	public List<string> Terminators { get; set; } = new();
+	public List<string> ClosingQuotes { get; set; } = new();
+	public List<string> StructuralAbbreviations { get; set; } = new();
+	public List<string> TitleAbbreviations { get; set; } = new();
+	public List<string> UnitAbbreviations { get; set; } = new();
 }

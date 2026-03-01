@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Pero",
-  "version": "0.2.3",
+  "version": "0.2.6",
   "description": "Smart assistant for Ukrainian writing. Pero identifies grammar, punctuation, and typography errors.",
   "permissions": [
     "storage",

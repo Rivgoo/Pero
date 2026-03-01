@@ -19,7 +19,6 @@ export class Overlay {
     this.resizeObserver = new ResizeObserver(() => this.refreshPosition());
     this.resizeObserver.observe(target);
     
-    this.target.addEventListener('scroll', this.handleScroll);
     this.syncGeometry();
   }
 
@@ -46,7 +45,12 @@ export class Overlay {
 
     this.element.innerHTML = '';
     this.element.appendChild(fragment);
-    this.syncGeometry();
+    this.syncScroll();
+  }
+
+  clear(): void {
+    if (this.isDestroyed) return;
+    this.element.innerHTML = '';
   }
 
   getElementByErrorId(id: string): HTMLElement | null {
@@ -58,10 +62,15 @@ export class Overlay {
     this.syncGeometry();
   }
 
+  syncScroll(): void {
+    if (this.isDestroyed) return;
+    this.element.scrollTop = this.target.scrollTop;
+    this.element.scrollLeft = this.target.scrollLeft;
+  }
+
   destroy(): void {
     this.isDestroyed = true;
     this.resizeObserver.disconnect();
-    this.target.removeEventListener('scroll', this.handleScroll);
     this.element.remove();
   }
 
@@ -80,16 +89,8 @@ export class Overlay {
     return span;
   }
 
-  private handleScroll = (): void => {
-    requestAnimationFrame(() => {
-      if (this.isDestroyed) return;
-      this.element.scrollTop = this.target.scrollTop;
-      this.element.scrollLeft = this.target.scrollLeft;
-    });
-  };
-
   private syncGeometry(): void {
     mirrorStyles(this.target, this.element);
-    this.handleScroll(); 
+    this.syncScroll();
   }
 }

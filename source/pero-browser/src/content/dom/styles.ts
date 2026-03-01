@@ -1,8 +1,8 @@
 export const CopyStyles = [
-  'fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 
+  'direction', 'fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing',
   'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
   'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth',
-  'boxSizing', 'textAlign', 'whiteSpace', 'wordWrap', 'letterSpacing',
+  'boxSizing', 'textAlign', 'whiteSpace', 'wordWrap', 'wordBreak',
   'marginTop', 'marginRight', 'marginBottom', 'marginLeft'
 ] as const;
 
@@ -14,10 +14,15 @@ export function mirrorStyles(source: HTMLElement, target: HTMLElement): void {
   const leftPosition = rect.left + window.scrollX;
 
   const styleUpdates: Partial<CSSStyleDeclaration> = {
+    position: 'absolute',
     top: `${topPosition}px`,
     left: `${leftPosition}px`,
     width: `${rect.width}px`,
-    height: `${rect.height}px`
+    height: `${rect.height}px`,
+    overflow: 'hidden',
+    pointerEvents: 'none',
+    color: 'transparent',
+    backgroundColor: 'transparent'
   };
   
   CopyStyles.forEach(prop => {

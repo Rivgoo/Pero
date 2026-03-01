@@ -4,13 +4,13 @@ namespace Pero.Kernel.Pipeline.Stages;
 
 public class GrammarRulesStage : IPipelineStage
 {
-	private readonly IEnumerable<IRule> rules;
+	private readonly IEnumerable<IAnalyzer> analyzers;
 
 	public string Name => "GrammarRules";
 
-	public GrammarRulesStage(IEnumerable<IRule> rules)
+	public GrammarRulesStage(IEnumerable<IAnalyzer> analyzers)
 	{
-		this.rules = rules;
+		this.analyzers = analyzers;
 	}
 
 	public void Execute(AnalysisContext context)
@@ -19,9 +19,10 @@ public class GrammarRulesStage : IPipelineStage
 
 		foreach (var sentence in context.Document.Sentences)
 		{
-			foreach (var rule in rules)
+			foreach (var analyzer in analyzers)
 			{
-				context.Issues.AddRange(rule.Check(sentence, context.Telemetry));
+				var issues = analyzer.Analyze(sentence, context.DisabledRules, context.Telemetry);
+				context.Issues.AddRange(issues);
 			}
 		}
 	}

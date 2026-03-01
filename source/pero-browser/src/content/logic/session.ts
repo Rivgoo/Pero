@@ -4,25 +4,33 @@ import { Bridge } from './bridge';
 import { Overlay } from '../ui/overlay';
 import { Tooltip } from '../ui/tooltip';
 
-const SessionConfig = {
-  DebounceDelayMs: 500
+const SESSION_CONFIG = {
+  DebounceDelayMs: 750
 } as const;
+
+interface ScrollState {
+  readonly top: number;
+  readonly left: number;
+}
 
 export class InputSession {
   private readonly element: HTMLInputElement | HTMLTextAreaElement;
   private readonly overlay: Overlay;
+  
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
-  private animationFrameId: number | null = null;
+  private currentVersion = 0;
   private errors: ReadonlyArray<HydratedIssue> = [];
+  private isDestroyed = false;
 
   constructor(element: HTMLInputElement | HTMLTextAreaElement) {
     this.element = element;
     this.overlay = new Overlay(element);
     this.bindEvents();
-    this.runCheck(); 
+    this.runImmediateCheck();
   }
 
   destroy(): void {
+    this.isDestroyed = true;
     this.unbindEvents();
     this.clearPendingTasks();
     this.overlay.destroy();
@@ -31,39 +39,34 @@ export class InputSession {
 
   private bindEvents(): void {
     this.element.addEventListener('input', this.handleInput);
-    this.element.addEventListener('scroll', this.handleScroll); 
+    this.element.addEventListener('scroll', this.handleScroll);
     this.element.addEventListener('click', this.handleClick);
-    window.addEventListener('resize', this.handleWindowResize); 
+    this.element.addEventListener('keydown', this.handleKeyDown);
   }
 
   private unbindEvents(): void {
     this.element.removeEventListener('input', this.handleInput);
     this.element.removeEventListener('scroll', this.handleScroll);
     this.element.removeEventListener('click', this.handleClick);
-    window.removeEventListener('resize', this.handleWindowResize);
+    this.element.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  private clearPendingTasks(): void {
-    if (this.debounceTimer) clearTimeout(this.debounceTimer);
-    if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
-  }
-
-  private handleWindowResize = (): void => {
-    if (this.animationFrameId) return;
-    this.animationFrameId = requestAnimationFrame(() => {
-      this.overlay.refreshPosition();
-      this.animationFrameId = null;
-    });
+  private handleKeyDown = (event: Event): void => {
+    const keyEvent = event as KeyboardEvent;
+    if (keyEvent.key === 'Escape') {
+      Tooltip.getInstance().hide();
+    }
   };
 
   private handleInput = (): void => {
     Tooltip.getInstance().hide();
-    if (this.debounceTimer) clearTimeout(this.debounceTimer);
-    this.debounceTimer = setTimeout(() => this.runCheck(), SessionConfig.DebounceDelayMs);
+    this.clearErrorsVisually();
+    this.scheduleCheck();
   };
 
   private handleScroll = (): void => {
     Tooltip.getInstance().hide();
+    this.overlay.syncScroll();
   };
 
   private handleClick = (event: Event): void => {
@@ -81,7 +84,7 @@ export class InputSession {
   };
 
   private displayTooltipForError(event: Event, error: HydratedIssue): void {
-    const errorId = `${error.start}-${error.end}`;
+    const errorId = this.buildErrorId(error);
     const targetElement = this.overlay.getElementByErrorId(errorId);
     
     if (targetElement) {
@@ -96,15 +99,49 @@ export class InputSession {
     }
   }
 
-  private async runCheck(): Promise<void> {
+  private buildErrorId(error: HydratedIssue): string {
+    return `${error.start}-${error.end}`;
+  }
+
+  private clearErrorsVisually(): void {
+    this.errors = [];
+    this.overlay.clear();
+  }
+
+  private scheduleCheck(): void {
+    this.clearPendingTasks();
+    this.debounceTimer = setTimeout(() => this.executeAnalysis(), SESSION_CONFIG.DebounceDelayMs);
+  }
+
+  private runImmediateCheck(): void {
+    this.clearPendingTasks();
+    this.executeAnalysis();
+  }
+
+  private clearPendingTasks(): void {
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+      this.debounceTimer = null;
+    }
+  }
+
+  private async executeAnalysis(): Promise<void> {
+    if (this.isDestroyed) return;
+
     const text = this.element.value;
     if (!text.trim()) {
       this.updateErrors(text, []);
       return;
     }
 
+    this.currentVersion++;
+    const requestVersion = this.currentVersion;
+
     const response = await Bridge.checkText(text);
-    if (this.element.value !== text) return; 
+    
+    if (this.isDestroyed || requestVersion !== this.currentVersion) {
+      return;
+    }
 
     if (response.isSuccess) {
       const hydratedErrors = response.issues.map(IssuePresenter.hydrate);
@@ -122,17 +159,40 @@ export class InputSession {
     const currentSegment = originalText.substring(error.start, error.end);
     
     if (currentSegment !== error.original) {
-      this.runCheck(); 
+      this.runImmediateCheck();
       return;
     }
 
-    const newText = originalText.substring(0, error.start) + fixValue + originalText.substring(error.end);
-    const newCursorPos = error.start + fixValue.length;
+    const scrollState = this.captureScrollState();
+    
+    this.replaceText(error.start, error.end, fixValue);
+    this.restoreScrollState(scrollState);
+    
+    this.runImmediateCheck();
+  }
 
-    this.element.value = newText;
+  private replaceText(start: number, end: number, replacement: string): void {
     this.element.focus();
-    this.element.setSelectionRange(newCursorPos, newCursorPos);
+    this.element.setSelectionRange(start, end);
 
-    this.element.dispatchEvent(new Event('input', { bubbles: true })); 
+    const success = document.execCommand('insertText', false, replacement);
+    
+    if (!success) {
+      this.element.setRangeText(replacement, start, end, 'end');
+      this.element.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  }
+
+  private captureScrollState(): ScrollState {
+    return {
+      top: this.element.scrollTop,
+      left: this.element.scrollLeft
+    };
+  }
+
+  private restoreScrollState(state: ScrollState): void {
+    this.element.scrollTop = state.top;
+    this.element.scrollLeft = state.left;
+    this.overlay.syncScroll();
   }
 }

@@ -37,9 +37,10 @@ public interface ILanguageModule
 	IMorphologyAnalyzer CreateMorphologyAnalyzer();
 
 	/// <summary>
-	/// Gets the collection of analysis rules for the language.
+	/// Returns the list of Analyzers responsible for grammar/style checks.
+	/// Replaces the old GetRules() method.
 	/// </summary>
-	IEnumerable<IRule> GetRules();
+	IEnumerable<IAnalyzer> GetAnalyzers();
 
 	/// <summary>
 	/// Creates the document-level spellchecking subsystem.

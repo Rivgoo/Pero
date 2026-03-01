@@ -1,36 +1,171 @@
 {
   "rules": {
-    "GEN_DOUBLE_SPACE": {
-      "title": "Зайві пробіли",
-      "description": "Між словами повинен бути лише один пробіл."
-    },
-    "TYPO_SPACE_BEFORE_PUNCT": {
-      "title": "Пробіл перед розділовим знаком",
-      "description": "Перед знаком '{punct}' пробіл не ставиться."
-    },
-    "TYPO_MISSING_SPACE_AFTER": {
-      "title": "Відсутній пробіл",
-      "description": "Після знаку '{punct}' потрібен пробіл."
-    },
-    "UK_UA_GRAMMAR_ADJ_NOUN_AGREEMENT": {
-      "title": "Граматична помилка",
-      "description": "Прикметник '{adj}' не узгоджується з іменником '{noun}'."
-    },
     "UK_UA_SPELLING_ERROR": {
-      "title": "Помилка у написанні",
-      "description": "Слово '{word}' написано з помилкою."
-    },
-    "UK_UA_SPELLING_MIXED_ALPHABETS": {
-      "title": "Змішання алфавітів",
-      "description": "У слові використано літери з різних алфавітів."
-    },
-    "UK_UA_SPELLING_INVALID_BOUNDARY":{
-      "title": "Помилка у написанні",
-      "description": "Можливе злиття кількох слів або зайві символи у слові."
+      "title": "Орфографічна помилка",
+      "description": "Ви написали слово '{word}' з помилкою. Виберіть правильний варіант зі списку."
     },
     "UK_UA_SPELLING_UNKNOWN_WORD": {
       "title": "Невідоме слово",
-      "description": "Слово '{word}' не знайдено або ж його не вдалось розпізнати."
+      "description": "Словник не містить слова '{word}'. Перевірте написання або додайте слово до винятків."
+    },
+
+    "UK_UA_SPACING_GLUED_WORDS": {
+      "title": "Злиття слів",
+      "description": "Ви пропустили пробіл між словами. Розділіть їх."
+    },
+    "UK_UA_SPACING_CAMEL_CASE": {
+      "title": "Пропущений пробіл",
+      "description": "Ви написали два слова разом без пробілу (CamelCase). Розділіть їх."
+    },
+    "UK_UA_SPACING_SPLIT_WORD": {
+      "title": "Розірване слово",
+      "description": "Ви розділили одне слово пробілом. Об'єднайте його."
+    },
+    "UK_UA_SPACING_PDF_HYPHENATION": {
+      "title": "Артефакт перенесення",
+      "description": "Текст містить розрив рядка та дефіс. Видаліть їх."
+    },
+    "UK_UA_SPACING_MULTIPLE_SPACES": {
+      "title": "Зайві пробіли",
+      "description": "Ви поставили кілька пробілів поспіль. Залиште лише один."
+    },
+    "UK_UA_SPACING_TRAILING_WHITESPACE": {
+      "title": "Пробіл в кінці рядка",
+      "description": "Ви залишили пробіл перед перенесенням рядка. Видаліть його."
+    },
+
+    "UK_UA_CASE_SENTENCE_START": {
+      "title": "Початок речення",
+      "description": "Починайте перше слово у реченні з великої літери."
+    },
+    "UK_UA_CASE_MIXED": {
+      "title": "Змішаний регістр",
+      "description": "Ви використали великі та малі літери всередині слова. Виправте регістр."
+    },
+    "UK_UA_CASE_INVERTED": {
+      "title": "Інверсія регістру",
+      "description": "Перша літера мала, а решта великі. Вимкніть Caps Lock або виправте слово."
+    },
+
+    "UK_UA_NUM_MISSING_SPACE_UNIT": {
+      "title": "Відсутній пробіл",
+      "description": "Додайте пробіл між числом та одиницею виміру."
+    },
+    "UK_UA_NUM_MISSING_SPACE_PERCENT": {
+      "title": "Пробіл перед відсотком",
+      "description": "Відокремте знак відсотка від числа пробілом."
+    },
+    "UK_UA_NUM_MISSING_HYPHEN_ENDING": {
+      "title": "Нарощення числівника",
+      "description": "Пишіть порядкові числівники через дефіс."
+    },
+    "UK_UA_NUM_WRONG_ENDING": {
+      "title": "Неправильне нарощення",
+      "description": "Використовуйте коротке закінчення для числівника (наприклад, '5-го', а не '5-ого')."
+    },
+    "UK_UA_NUM_SPACED_RANGE": {
+      "title": "Діапазон чисел",
+      "description": "Ставте тире у діапазонах чисел без пробілів."
+    },
+    "UK_UA_NUM_WRONG_DASH_RANGE": {
+      "title": "Тире у діапазоні",
+      "description": "Використовуйте тире замість дефіса між числами."
+    },
+    "UK_UA_NUM_ROMAN_CYRILLIC": {
+      "title": "Римські цифри",
+      "description": "Використовуйте латинські літери (I, V, X) для римських цифр замість кирилиці."
+    },
+
+    "UK_UA_PUNCT_SPACE_BEFORE": {
+      "title": "Зайвий пробіл",
+      "description": "Видаліть пробіл перед розділовим знаком."
+    },
+    "UK_UA_PUNCT_MISSING_SPACE_AFTER": {
+      "title": "Відсутній пробіл",
+      "description": "Додайте пробіл після розділового знака."
+    },
+    "UK_UA_PUNCT_DOUBLE": {
+      "title": "Подвійний знак",
+      "description": "Ви поставили два розділові знаки поспіль. Залиште один."
+    },
+    "UK_UA_PUNCT_EXCESSIVE_EXCLAMATION": {
+      "title": "Зайві знаки оклику",
+      "description": "Використовуйте лише один знак оклику."
+    },
+    "UK_UA_PUNCT_EXCESSIVE_QUESTION": {
+      "title": "Зайві знаки питання",
+      "description": "Використовуйте лише один знак питання."
+    },
+    "UK_UA_PUNCT_SPACE_BEFORE_APOSTROPHE": {
+      "title": "Пробіл перед апострофом",
+      "description": "Видаліть пробіл перед апострофом."
+    },
+    "UK_UA_PUNCT_SPACE_AFTER_APOSTROPHE": {
+      "title": "Пробіл після апострофа",
+      "description": "Видаліть пробіл після апострофа."
+    },
+    "UK_UA_PUNCT_HYPHEN_FOR_DASH": {
+      "title": "Дефіс замість тире",
+      "description": "Використовуйте тире (—) для відокремлення частин речення."
+    },
+    "UK_UA_PUNCT_DOUBLE_HYPHEN": {
+      "title": "Подвійний дефіс",
+      "description": "Замініть два дефіси на одне тире (—)."
+    },
+    "UK_UA_PUNCT_MISSING_SPACE_DASH": {
+      "title": "Пробіли навколо тире",
+      "description": "Додайте пробіли з обох боків від тире."
+    },
+    "UK_UA_PUNCT_SPACE_INSIDE_QUOTES": {
+      "title": "Пробіли в лапках",
+      "description": "Видаліть пробіли між текстом та лапками."
+    },
+    "UK_UA_PUNCT_SPACE_INSIDE_PARENTHESES": {
+      "title": "Пробіли в дужках",
+      "description": "Видаліть пробіли між текстом та дужками."
+    },
+    "UK_UA_PUNCT_MISSING_SPACE_BEFORE_PARENTHESIS": {
+      "title": "Пробіл перед дужкою",
+      "description": "Додайте пробіл перед дужкою, що відкривається."
+    },
+
+    "UK_UA_STRUCTURAL_UNMATCHED_OPEN": {
+      "title": "Незакритий символ",
+      "description": "Ви відкрили '{char}', але не закрили. Додайте закриваючий символ."
+    },
+    "UK_UA_STRUCTURAL_UNPAIRED_QUOTE": {
+      "title": "Непарна лапка",
+      "description": "Ви залишили непарну кількість лапок '{char}'. Перевірте текст."
+    },
+
+    "UK_UA_ARTIFACT_WRONG_LAYOUT": {
+      "title": "Неправильна розкладка",
+      "description": "Ви набрали текст англійською розкладкою клавіатури."
+    },
+    "UK_UA_ARTIFACT_HOMOGLYPH": {
+      "title": "Змішані алфавіти",
+      "description": "Ви змішали кириличні та латинські літери в одному слові."
+    },
+    "UK_UA_ARTIFACT_OCR_DIGIT": {
+      "title": "Цифри замість літер",
+      "description": "Ви використали цифри замість схожих літер."
+    },
+    "UK_UA_ARTIFACT_STRAY_SYMBOL": {
+      "title": "Зайвий символ",
+      "description": "Ви випадково додали символ або цифру всередину слова."
+    },
+    "UK_UA_ARTIFACT_SPACED_WORD": {
+      "title": "Розірване слово",
+      "description": "Ви написали слово з пробілами між літерами. Об'єднайте його."
+    },
+
+    "UK_UA_DUPLICATION_PHRASE": {
+      "title": "Повторення фрази",
+      "description": "Ви написали однакову фразу двічі. Видаліть дублікат."
+    },
+    "UK_UA_DUPLICATION_WORD": {
+      "title": "Повторення слова",
+      "description": "Ви написали слово двічі поспіль. Залиште одне."
     }
   }
 }

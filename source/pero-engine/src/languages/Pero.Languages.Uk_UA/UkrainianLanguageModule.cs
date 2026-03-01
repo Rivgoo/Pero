@@ -9,12 +9,14 @@ using Pero.Kernel.Utils;
 using Pero.Languages.Uk_UA.Components;
 using Pero.Languages.Uk_UA.Components.Caching;
 using Pero.Languages.Uk_UA.Components.Disambiguation;
-using Pero.Languages.Uk_UA.Components.Disambiguation.Rules;
 using Pero.Languages.Uk_UA.Components.Spelling.Heuristics;
 using Pero.Languages.Uk_UA.Configuration;
 using Pero.Languages.Uk_UA.Dictionaries.Fuzzy;
 using Pero.Languages.Uk_UA.Models.Morphology;
+using Pero.Languages.Uk_UA.Rules.Grammar;
 using Pero.Languages.Uk_UA.Rules.Spelling;
+using Pero.Languages.Uk_UA.Rules.Structural;
+using Pero.Languages.Uk_UA.Rules.Typography;
 using System.Reflection;
 
 namespace Pero.Languages.Uk_UA;
@@ -78,10 +80,7 @@ public class UkrainianLanguageModule : ILanguageModule
 
 	public IMorphologyAnalyzer CreateMorphologyAnalyzer()
 	{
-		var disambiguationRules = new IDisambiguationRule[]
-		{
-			new PrepositionCaseRule()
-		};
+		var disambiguationRules = new IDisambiguationRule[] { };
 
 		return new UkrainianMorphologyAnalyzer(lexicon, disambiguationRules);
 	}
@@ -93,10 +92,15 @@ public class UkrainianLanguageModule : ILanguageModule
 		ngramLanguageModel,
 		spellingHeuristics);
 
-	public IEnumerable<IRule> GetRules()
+	public IEnumerable<IAnalyzer> GetAnalyzers()
 	{
-		yield return new MixedAlphabetRule();
-		yield return new WordBoundaryRule(dictionary);
+		yield return new StructuralIntegrityAnalyzer();
+		yield return new DuplicationAnalyzer();
+		yield return new OcrAndLayoutArtifactAnalyzer(dictionary);
+		yield return new NumberAndUnitAnalyzer(dictionary);
+		yield return new CaseAndCapitalizationAnalyzer();
+		yield return new WordBoundaryAndSpacingAnalyzer(dictionary);
+		yield return new PunctuationAnalyzer();
 	}
 
 	private static FstSuffixDictionary<UkMorphologyTag> LoadDictionary(IResourceLoader loader)

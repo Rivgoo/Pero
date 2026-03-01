@@ -13,14 +13,14 @@ public class Analyzer
 		this.registry = registry;
 	}
 
-	public IReadOnlyList<TextIssue> Analyze(string text, string languageCode, bool enableTelemetry = false)
+	public IReadOnlyList<TextIssue> Analyze(string text, string languageCode, bool enableTelemetry = false, IEnumerable<string>? disabledRules = null)
 	{
 		if (string.IsNullOrEmpty(text))
 			return new List<TextIssue>();
 
 		var module = registry.GetByCode(languageCode);
 		var pipeline = new AnalysisPipeline(module, enableTelemetry);
-		var result = pipeline.Run(text, enableTelemetry);
+		var result = pipeline.Run(text, enableTelemetry, disabledRules);
 
 		return result.Issues;
 	}
